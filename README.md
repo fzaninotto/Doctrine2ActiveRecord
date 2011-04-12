@@ -1,7 +1,7 @@
 Doctrine2 ActiveRecord with Twig
 ================================
 
-This is an experiment for building ActiveRecord functionality on top of Doctrine2 using the Twig templating engine.
+This is an experiment for building ActiveRecord functionality on top of Doctrine2 using the Twig templating engine. Whether it is called Propel2 or not is irrelevant.
 
 Requirements
 ------------
@@ -20,6 +20,11 @@ Demo
 From the root of the project, type:
 
     $ php tests/demo.php
+
+Features
+--------
+
+Not much for now. Although the builder architecture already allows for partial template customization and extentions (a.k.a behaviors).
 
 Usage
 -----
@@ -44,9 +49,107 @@ Example build:
     $metadata->mapField(array('fieldName' => 'status', 'type' => 'string', 'default' => 'published'));
     
     $builder = new BaseActiveRecord($metadata);
-    // using custom templates to tweak EntityManager
-    $builder->addTemplateDir(__DIR__ . '/templates');
-    // using extensions
-    $builder->addExtension(new Timestampable());
-    $builder->addExtension(new GenerationTimestamp());
     echo $builder->getCode();
+
+This generates the following code:
+
+    <?php
+    
+    namespace Bookstore\Base;
+    
+    /**
+     * Base class providing ActiveRecord features to Book.
+     * Do not modify this class: it will be overwritten each time you regenerate ActiveRecord.
+     */
+    class Book
+    {
+    
+        protected $id;
+    
+        protected $name;
+    
+        protected $status = 'published';
+    
+        /**
+         * Get the id field value
+         * @return mixed
+         */
+        public function getId()
+        {
+            return $this->id;
+        }
+    
+        /**
+         * Set the id field value
+         * @param $id mixed
+         */
+        public function setId($id)
+        {
+            $this->id = $id;
+        }
+    
+        /**
+         * Get the name field value
+         * @return mixed
+         */
+        public function getName()
+        {
+            return $this->name;
+        }
+    
+        /**
+         * Set the name field value
+         * @param $name mixed
+         */
+        public function setName($name)
+        {
+            $this->name = $name;
+        }
+    
+        /**
+         * Get the status field value
+         * @return mixed
+         */
+        public function getStatus()
+        {
+            return $this->status;
+        }
+    
+        /**
+         * Set the status field value
+         * @param $status mixed
+         */
+        public function setStatus($status)
+        {
+            $this->status = $status;
+        }
+    
+        /**
+         * Persist the current object and flush the entity manager
+         */
+        public function save()
+        {
+            $em = self::getEntityManager();
+            $em->persist($this);
+            $em->flush();
+        }
+    
+        /**
+         * Remove the current object and flush the entity manager
+         */
+        public function delete()
+        {
+            $em = self::getEntityManager();
+            $em->remove($this);
+            $em->flush();
+        }
+    
+        /**
+         * Get the entity manager for this class
+         */
+        static public function getEntityManager()
+        {
+            return \EntityManagerContainer::getContainer();
+        }
+    
+    }
