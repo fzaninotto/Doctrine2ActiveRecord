@@ -1,7 +1,7 @@
 <?php
 
 $config = array(
-    'symfony_src_dir'         => 'path/to/symfony/src',
+    'classloader_dir'         => 'path/to/Classloader',
     'doctrine_common_lib_dir' => 'path/to/doctrine2/lib/vendor/doctrine-common/lib',
     'doctrine_dbal_lib_dir'   => 'path/to/doctrine2/lib/vendor/doctrine-dbal/lib',
     'doctrine_orm_lib_dir'    => 'path/to/doctrine2/lib',

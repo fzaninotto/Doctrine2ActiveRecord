@@ -9,7 +9,7 @@ Requirements
 To run the demo, you need to clone the following repositories:
 
  * [Doctrine2](https://github.com/doctrine/doctrine2) (for the ORM layer)
- * [Symfony2](https://github.com/symfony/symfony) (for the universal autoloader)
+ * [Symfony2 ClassLoader component](https://github.com/symfony/ClassLoader)
  * [Twig](https://github.com/fabpot/Twig) (as templating engine)
 
 Then, copy the `config.php-dist` into a `config.php` file, edit the paths to the libraries, and you're good to go.

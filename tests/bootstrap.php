@@ -3,7 +3,7 @@
 include __DIR__ . '/../config.php';
 
 // autoloader
-require($config['symfony_src_dir'].'/Symfony/Component/ClassLoader/UniversalClassLoader.php');
+require($config['classloader_dir'].'/UniversalClassLoader.php');
 
 use Symfony\Component\ClassLoader\UniversalClassLoader;
 
