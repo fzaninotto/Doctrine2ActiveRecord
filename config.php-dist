@@ -1,0 +1,9 @@
+<?php
+
+$config = array(
+    'symfony_src_dir'         => 'path/to/symfony/src',
+    'doctrine_common_lib_dir' => 'path/to/doctrine2/lib/vendor/doctrine-common/lib',
+    'doctrine_dbal_lib_dir'   => 'path/to/doctrine2/lib/vendor/doctrine-dbal/lib',
+    'doctrine_orm_lib_dir'    => 'path/to/doctrine2/lib',
+    'twig_lib_dir'            => 'path/to/Twig/lib',
+);
