@@ -21,21 +21,12 @@ class {{ classname }}
 {
 {% block Body %}
 
-{% block Properties %}
-{% include 'BaseActiveRecord/Properties.php' %}
-{% endblock %}
 
-{% block GetterSetter %}
-{% include 'BaseActiveRecord/GetterSetter.php' %}
-{% endblock %}
+{% use 'BaseActiveRecord/Properties.php' %}
+{% use 'BaseActiveRecord/GetterSetter.php' %}
+{% use 'BaseActiveRecord/ActiveEntity.php' %}
+{% use 'BaseActiveRecord/EntityManager.php' %}
 
-{% block ActiveEntity %}
-{% include 'BaseActiveRecord/ActiveEntity.php' %}
-{% endblock %}
-
-{% block EntityManager %}
-{% include 'BaseActiveRecord/EntityManager.php' %}
-{% endblock %}
 
 {% block AdditionalMethods '' %}
 

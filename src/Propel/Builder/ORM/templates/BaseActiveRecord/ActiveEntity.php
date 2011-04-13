@@ -1,3 +1,4 @@
+{% block ActiveEntity %}
 
     /**
      * Persist the current object and flush the entity manager
@@ -19,3 +20,4 @@
         $em->remove($this);
         $em->flush();
     }
+{% endblock %}

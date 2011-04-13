@@ -1,3 +1,4 @@
+{% block GetterSetter %}
 {% for fieldMapping in metadata.fieldMappings %}
 
     /**
@@ -18,3 +19,4 @@
         $this->{{ fieldMapping.fieldName }} = ${{ fieldMapping.fieldName }};
     }
 {% endfor %}
+{% endblock %}
