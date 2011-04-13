@@ -1,5 +1,10 @@
 <?php
 
+{% use 'BaseActiveRecord/Properties.php' %}
+{% use 'BaseActiveRecord/GetterSetter.php' %}
+{% use 'BaseActiveRecord/ActiveEntity.php' %}
+{% use 'BaseActiveRecord/EntityManager.php' %}
+
 {% block NamespaceDeclaration %}
 {% if namespace %}
 namespace {{ namespace }}\Base;
@@ -20,14 +25,10 @@ class {{ classname }}
 {% endblock %}
 {
 {% block Body %}
-
-
-{% use 'BaseActiveRecord/Properties.php' %}
-{% use 'BaseActiveRecord/GetterSetter.php' %}
-{% use 'BaseActiveRecord/ActiveEntity.php' %}
-{% use 'BaseActiveRecord/EntityManager.php' %}
-
-
+{{ block('Properties') }}
+{{ block('GetterSetter') }}
+{{ block('ActiveEntity') }}
+{{ block('EntityManager') }}
 {% block AdditionalMethods '' %}
 
 {% endblock Body %}

@@ -1,3 +1,4 @@
+{% block EntityManager %}
 
     /**
      * Get the entity manager for this class
@@ -6,3 +7,4 @@
     {
         return \EntityManagerContainer::getContainer();
     }
+{% endblock %}
