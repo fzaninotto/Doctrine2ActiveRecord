@@ -6,7 +6,7 @@ use Propel\Builder\TwigBuilder;
 use Propel\Builder\TwigExtension;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 
-class ORM extends TwigBuilder
+class ORMBuilder extends TwigBuilder
 {
     protected $metadata;
     protected $extensions = array();
