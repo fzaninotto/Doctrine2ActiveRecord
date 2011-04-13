@@ -12,6 +12,7 @@
 {% endblock %}
 
 {% block preSave %}
+{{ parent() }}
         // Timestampable behavior
         $this->updated_at = time();
 {% endblock %}

@@ -8,3 +8,8 @@
         return '{{ timestamp }}';
     }
 {% endblock %}
+
+{% block preSave %}
+{{ parent() }}
+        // GenerationTimestamp behavior
+{% endblock %}
