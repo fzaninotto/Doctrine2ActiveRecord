@@ -24,10 +24,15 @@ class TwigBuilder
     public function getTemplateDirs()
     {
         if (!$this->templateDirs) {
-            $ref = new \ReflectionClass($this);
-            $this->templateDirs = array(dirname($ref->getFileName()) . '/templates');
+            $this->templateDirs = $this->getDefaultTemplateDirs();
         }
         return $this->templateDirs;
+    }
+    
+    public function getDefaultTemplateDirs()
+    {
+        $ref = new \ReflectionClass($this);
+        return array(dirname($ref->getFileName()) . '/templates');
     }
     
     public function setTemplateName($templateName)
@@ -38,11 +43,16 @@ class TwigBuilder
     public function getTemplateName()
     {
         if (null === $this->templateName) {
-            $classParts = explode('\\', get_class($this));
-            $simpleClassName = array_pop($classParts);
-            $this->templateName = $simpleClassName . '.php';
+            $this->templateName = $this->getDefaultTemplateName();
         }
         return $this->templateName;
+    }
+    
+    public function getDefaultTemplateName()
+    {
+        $classParts = explode('\\', get_class($this));
+        $simpleClassName = array_pop($classParts);
+        return $simpleClassName . '.php';
     }
     
     public function setVariables($variables = array())
