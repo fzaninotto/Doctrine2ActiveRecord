@@ -1,6 +1,6 @@
 <?php
 
-include __DIR__ . '/config.php';
+require __DIR__ . '/config.php';
 
 // autoloader
 require($config['classloader_dir'].'/UniversalClassLoader.php');

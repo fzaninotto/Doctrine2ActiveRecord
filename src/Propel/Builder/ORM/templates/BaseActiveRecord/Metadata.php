@@ -39,6 +39,35 @@
 {% endif %}
         ));
 {% endfor %}
+{% set associationTypes = { 1: 'OneToOne', 2:'ManyToOne', 3: 'ToOne', 4: 'OneToMany', 8: 'ManyToMany', 12: 'ToMany' } %}
+{% for associationMapping in metadata.associationMappings %}
+        $metadata->map{{ associationTypes[associationMapping.type] }}(array(
+            'fieldName' => '{{ associationMapping.fieldName }}',
+            'targetEntity' => '{{ associationMapping.targetEntity }}',
+{% if associationMapping.mappedBy %}
+            'mappedBy' => '{{ associationMapping.mappedBy }}',
+{% endif %}
+{% if associationMapping.inversedBy %}
+            'inversedBy' => '{{ associationMapping.inversedBy }}',
+{% endif %}
+{% if associationMapping.cascade %}
+            'cascade' => {{ associationMapping.cascade|var_export(true) }},
+{% endif %}
+{% if associationMapping.orderBy %}
+            'orderBy' => {{ associationMapping.orderBy|var_export(true) }},
+{% endif %}
+{% if associationMapping.fetch %}
+{% set fetchTypes = { 2: 'FETCH_LAZY', 3: 'FETCH_EAGER', 4: 'FETCH_EXTRA_LAZY' } %}
+            'fetch' => Doctrine\ORM\Mapping\ClassMetadata::{{ fetchTypes[associationMapping.fetch] }},
+{% endif %}
+{% if associationMapping.joinTable %}
+            'joinTable' => {{ associationMapping.joinTable|var_export(true) }},
+{% endif %}
+{% if associationMapping.indexBy %}
+            'indexBy' => '{{ associationMapping.indexBy }}',
+{% endif %}
+        ));
+{% endfor %}
 {% block AdditionalMapping '' %}
     }
 {% endblock %}
