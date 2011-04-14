@@ -2,6 +2,7 @@
 
 {% use 'BaseActiveRecord/Properties.php' %}
 {% use 'BaseActiveRecord/GetterSetter.php' %}
+{% use 'BaseActiveRecord/GenericGetterSetter.php' %}
 {% use 'BaseActiveRecord/Metadata.php' %}
 {% use 'BaseActiveRecord/EntityManager.php' %}
 {% use 'BaseActiveRecord/ArrayConverter.php' %}
@@ -33,6 +34,7 @@ class {{ classname }}
 {% block Body %}
 {{ block('Properties') }}
 {{ block('GetterSetter') }}
+{{ block('GenericGetterSetter') }}
 {{ block('Metadata') }}
 {{ block('EntityManager') }}
 {{ block('ArrayConverter') }}

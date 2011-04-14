@@ -49,6 +49,42 @@ class BaseActiveRecordTest extends TestCase
         $this->assertEquals('great', $author->getComment());
     }
     
+    public function testGenericGetter()
+    {
+        $author = new Base\Author();
+        $author->setId(123);
+        $author->setFirstName('Foo');
+        $this->assertEquals(123, $author->getByName('id'));
+        $this->assertEquals('Foo', $author->getByName('firstName'));
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testGenericGetterThrowsExceptionOnIncorrectProperty()
+    {
+        $author = new Base\Author();
+        $this->assertEquals(123, $author->getByName('bliuoiui'));
+    }
+
+    public function testGenericSetter()
+    {
+        $author = new Base\Author();
+        $author->setByName('id', 123);
+        $author->setByName('firstName', 'Foo');
+        $this->assertEquals(123, $author->getId());
+        $this->assertEquals('Foo', $author->getFirstName());
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testGenericSetterThrowsExceptionOnIncorrectProperty()
+    {
+        $author = new Base\Author();
+        $author->setByName('bliuoiui', 123);
+    }
+    
     public function testSave()
     {
         $author = new Base\Author();
