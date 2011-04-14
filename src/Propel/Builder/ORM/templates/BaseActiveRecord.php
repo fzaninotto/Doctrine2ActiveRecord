@@ -3,7 +3,6 @@
 {% use 'BaseActiveRecord/Properties.php' %}
 {% use 'BaseActiveRecord/GetterSetter.php' %}
 {% use 'BaseActiveRecord/ActiveEntity.php' %}
-{% use 'BaseActiveRecord/EntityManager.php' %}
 
 {% block NamespaceDeclaration %}
 {% if namespace %}
@@ -11,6 +10,9 @@ namespace {{ namespace }}\Base;
 {% else %}
 namespace Base;
 {% endif %}
+{% endblock %}
+
+{% block UseDeclaration %}
 {% endblock %}
 
 {% block DocBlock %}
@@ -28,7 +30,6 @@ class {{ classname }}
 {{ block('Properties') }}
 {{ block('GetterSetter') }}
 {{ block('ActiveEntity') }}
-{{ block('EntityManager') }}
 {% block AdditionalMethods '' %}
 
 {% endblock Body %}
