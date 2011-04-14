@@ -1,18 +1,34 @@
-{% block Properties %}
+{% block AdditionalProperties %}
 {{ parent() }}
-    protected $updated_at;
+    protected $updatedAt;
+{% endblock %}
+
+{% block AdditionalMapping %}
+{{ parent() }}
+        $metadata->mapField(array(
+            'fieldName' => 'updatedAt',
+            'type' => 'datetime',
+        ));
 {% endblock %}
 
 {% block AdditionalMethods %}
 {{ parent() }}
     public function getUpdatedAt()
     {
-        return $this->updated_at;
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt($updatedAt = null)
+    {
+        if (null === $updatedAt) {
+            $updated_at = new \DateTime("now");
+        }
+        $this->updatedAt = $updatedAt;
     }
 {% endblock %}
 
 {% block preSave %}
 {{ parent() }}
         // Timestampable behavior
-        $this->updated_at = time();
+        $this->setUpdatedAt();
 {% endblock %}

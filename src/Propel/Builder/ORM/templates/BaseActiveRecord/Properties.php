@@ -3,4 +3,5 @@
 
     protected ${{ fieldMapping.fieldName }}{% if fieldMapping.default %} = {{ fieldMapping.default|var_export(true) }}{% endif %};
 {% endfor %}
+{% block AdditionalProperties '' %}
 {% endblock %}
