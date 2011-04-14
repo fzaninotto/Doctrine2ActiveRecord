@@ -19,7 +19,7 @@ Demo
 
 From the root of the project, type:
 
-    $ php tests/demo.php
+    $ php tests/demo/demo.php
 
 Features
 --------
