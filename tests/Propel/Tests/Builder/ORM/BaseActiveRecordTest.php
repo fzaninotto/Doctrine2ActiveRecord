@@ -58,4 +58,50 @@ class BaseActiveRecordTest extends TestCase
         $this->assertEquals(UnitOfWork::STATE_MANAGED, $this->entityManager->getUnitOfWork()->getEntityState($author));
     }
     
+    public function testToArray()
+    {
+        $author = new Base\Author();
+        $author->setId(123);
+        $author->setFirstName('Leo');
+        $author->setLastName('Tolstoi');
+        $expected = array(
+            'id' => 123,
+            'firstName' => 'Leo',
+            'lastName' => 'Tolstoi',
+            'comment' => 'no comment',
+        );
+        $this->assertEquals($expected, $author->toArray());
+    }
+    
+    public function testFromArray()
+    {
+        $array = array(
+            'id' => 123,
+            'firstName' => 'Leo',
+            'comment' => 'comment',
+        );
+        $author = new Base\Author();
+        $author->fromArray($array);
+        $this->assertEquals(123, $author->getId());
+        $this->assertEquals('Leo', $author->getFirstName());
+        $this->assertNull($author->getLastName());
+        $this->assertEquals('comment', $author->getComment());
+    }
+    
+    public function testIsNew()
+    {
+        $author = new Base\Author();
+        $this->assertTrue($author->isNew());
+        $author->save();
+        $this->assertFalse($author->isNew());
+    }
+    
+    public function testIsModified()
+    {
+        $author = new Base\Author();
+        $this->assertFalse($author->isModified());
+        $author->save();
+        $this->assertFalse($author->isModified());
+    }
+    
 }

@@ -4,6 +4,8 @@
 {% use 'BaseActiveRecord/GetterSetter.php' %}
 {% use 'BaseActiveRecord/Metadata.php' %}
 {% use 'BaseActiveRecord/EntityManager.php' %}
+{% use 'BaseActiveRecord/ArrayConverter.php' %}
+{% use 'BaseActiveRecord/State.php' %}
 {% use 'BaseActiveRecord/ActiveEntity.php' %}
 
 {% block NamespaceDeclaration %}
@@ -33,6 +35,8 @@ class {{ classname }}
 {{ block('GetterSetter') }}
 {{ block('Metadata') }}
 {{ block('EntityManager') }}
+{{ block('ArrayConverter') }}
+{{ block('State') }}
 {{ block('ActiveEntity') }}
 {% block AdditionalMethods '' %}
 
