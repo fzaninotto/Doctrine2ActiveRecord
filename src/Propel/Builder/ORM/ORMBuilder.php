@@ -14,6 +14,8 @@ class ORMBuilder extends TwigBuilder
     public function __construct(ClassMetadataInfo $metadata)
     {
         $this->metadata = $metadata;
+
+        parent::__construct();
     }
     
     public function getMetadada()
@@ -68,9 +70,7 @@ class ORMBuilder extends TwigBuilder
     
     public function getCode($variables = array())
     {
-        $dir = sys_get_temp_dir() . '/propel_temp';
-        $this->addTemplateDir($dir);
-        @mkdir($dir);
+        $this->addTemplateDir($this->tmpDir);
         foreach ($this->extensions as $rank => $extension) {
             if ($rank) {
                 $prefix = "{% extends '" . $this->getTempTemplateName($rank -1) . "' %}\n";
@@ -78,7 +78,7 @@ class ORMBuilder extends TwigBuilder
                 $prefix = "{% extends '" . $this->getTrueTemplateName() . "' %}\n";
             }
             $name = $this->getTempTemplateName($rank);
-            file_put_contents($dir . '/' . $name, $prefix . $extension->getTemplate());
+            file_put_contents($this->tmpDir . '/' . $name, $prefix . $extension->getTemplate());
             $variables = array_merge($variables, $extension->getVariables());
         }
         return parent::getCode($variables);

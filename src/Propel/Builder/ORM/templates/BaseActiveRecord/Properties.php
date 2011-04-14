@@ -2,9 +2,9 @@
 {% for fieldMapping in metadata.fieldMappings %}
 
     /**
-     * @var {{ fieldMapping.type }} ${{ fieldMapping.fieldName }} {{ fieldMapping.columnDefinition }}
+     * @var {{ fieldMapping.type }} ${{ fieldMapping.fieldName }} {{ fieldMapping.columnDefinition is defined ? fieldMapping.columnDefinition : '' }}
      */
-    protected ${{ fieldMapping.fieldName }}{% if fieldMapping.default %} = {{ fieldMapping.default|var_export(true) }}{% endif %};
+    protected ${{ fieldMapping.fieldName }}{% if fieldMapping.default is defined %} = {{ fieldMapping.default|var_export(true) }}{% endif %};
 {% endfor %}
 {% for associationMapping in metadata.associationMappings %}
 

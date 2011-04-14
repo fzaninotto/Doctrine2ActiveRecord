@@ -16,25 +16,25 @@
 {% if fieldMapping.columnName %}
             'columnName' => '{{ fieldMapping.columnName }}',
 {% endif %}
-{% if fieldMapping.length %}
+{% if fieldMapping.length is defined %}
             'length' => {{ fieldMapping.length }},
 {% endif %}
-{% if fieldMapping.id %}
+{% if fieldMapping.id is defined %}
             'id' => true,
 {% endif %}
-{% if fieldMapping.nullable %}
+{% if fieldMapping.nullable is defined %}
             'nullable' => true,
 {% endif %}
-{% if fieldMapping.columnDefinition %}
+{% if fieldMapping.columnDefinition is defined %}
             'columnDefinition' => '{{ fieldMapping.columnDefinition }}',
 {% endif %}
-{% if fieldMapping.precision %}
+{% if fieldMapping.precision is defined %}
             'precision' => {{ fieldMapping.precision }},
 {% endif %}
-{% if fieldMapping.scale %}
+{% if fieldMapping.scale is defined %}
             'scale' => {{ fieldMapping.scale }},
 {% endif %}
-{% if fieldMapping.unique %}
+{% if fieldMapping.unique is defined %}
             'unique' => '{{ fieldMapping.unique }}',
 {% endif %}
         ));
@@ -44,26 +44,26 @@
         $metadata->map{{ associationTypes[associationMapping.type] }}(array(
             'fieldName' => '{{ associationMapping.fieldName }}',
             'targetEntity' => '{{ associationMapping.targetEntity }}',
-{% if associationMapping.mappedBy %}
+{% if associationMapping.mappedBy is defined %}
             'mappedBy' => '{{ associationMapping.mappedBy }}',
 {% endif %}
-{% if associationMapping.inversedBy %}
+{% if associationMapping.inversedBy is defined %}
             'inversedBy' => '{{ associationMapping.inversedBy }}',
 {% endif %}
-{% if associationMapping.cascade %}
+{% if associationMapping.cascade is defined %}
             'cascade' => {{ associationMapping.cascade|var_export(true) }},
 {% endif %}
-{% if associationMapping.orderBy %}
+{% if associationMapping.orderBy is defined %}
             'orderBy' => {{ associationMapping.orderBy|var_export(true) }},
 {% endif %}
-{% if associationMapping.fetch %}
+{% if associationMapping.fetch is defined %}
 {% set fetchTypes = { 2: 'FETCH_LAZY', 3: 'FETCH_EAGER', 4: 'FETCH_EXTRA_LAZY' } %}
             'fetch' => Doctrine\ORM\Mapping\ClassMetadata::{{ fetchTypes[associationMapping.fetch] }},
 {% endif %}
-{% if associationMapping.joinTable %}
+{% if associationMapping.joinTable is defined %}
             'joinTable' => {{ associationMapping.joinTable|var_export(true) }},
 {% endif %}
-{% if associationMapping.indexBy %}
+{% if associationMapping.indexBy is defined %}
             'indexBy' => '{{ associationMapping.indexBy }}',
 {% endif %}
         ));
