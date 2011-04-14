@@ -24,7 +24,19 @@ From the root of the project, type:
 Features
 --------
 
-Not much for now. Although the builder architecture already allows for partial template customization and extentions (a.k.a behaviors).
+ * Working ActiveRecord builder (no handling of relations for now)
+   * Generated entities are empty classes extending generated Base Entities extending nothing
+   * Getter & setter generation
+   * Metadata loader
+   * Access to the EntityManager from within an Entity
+   * fromArray and toArray
+   * isNew, isModified, etc.
+   * ActiveEntity methods: save(), delete()
+ * Basic behavior support
+   * Ability to alter the data structure
+   * Ability to modify the generated code pretty much everywhere
+   * Timestampable behavior example
+ * Template customization via partials
 
 Usage
 -----
