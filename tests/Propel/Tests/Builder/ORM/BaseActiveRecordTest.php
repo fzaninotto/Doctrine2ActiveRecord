@@ -15,6 +15,7 @@ class BaseActiveRecordTest extends TestCase
     static public function setUpBeforeClass()
     {
         $metadata = new ClassMetadataInfo('Propel\\Tests\\Builder\\ORM\\Author');
+        $metadata->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_AUTO);
         $metadata->mapField(array('fieldName' => 'id', 'type' => 'integer', 'id' => true));
         $metadata->mapField(array('fieldName' => 'firstName', 'type' => 'string'));
         $metadata->mapField(array('fieldName' => 'lastName', 'type' => 'string'));

@@ -4,6 +4,7 @@ namespace Propel\Tests\Builder\ORM;
 
 use Propel\Builder\ORM\BaseActiveRecord;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
+use Doctrine\ORM\Mapping\ClassMetadata;
 use ReflectionClass;
 use ReflectionProperty;
 
@@ -13,8 +14,8 @@ class BaseActiveRecordReflectionTest extends \PHPUnit_Framework_TestCase
     {
         $metadata = new ClassMetadataInfo('Propel\\Tests\\Builder\\ORM\\Book');
         $metadata->mapField(array('fieldName' => 'id', 'type' => 'integer', 'id' => true));
-        $metadata->mapField(array('fieldName' => 'name', 'type' => 'string'));
-        $metadata->mapField(array('fieldName' => 'status', 'type' => 'string', 'default' => 'published'));
+        $metadata->mapField(array('fieldName' => 'name', 'type' => 'string', 'columnName' => 'foo_name', 'length' => 25, 'nullable' => true, 'columnDefinition' => 'Hello world'));
+        $metadata->mapField(array('fieldName' => 'status', 'type' => 'integer', 'default' => 23, 'precision' => 2, 'scale' => 2, 'unique' => 'unique_status'));
         
         $builder = new BaseActiveRecord($metadata);
         eval('?>' . $builder->getCode());
@@ -38,6 +39,47 @@ class BaseActiveRecordReflectionTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($ref->hasMethod('setName'));
         $this->assertTrue($ref->hasMethod('getStatus'));
         $this->assertTrue($ref->hasMethod('setStatus'));
+    }
+    
+    public function testMetadadaGeneratorType()
+    {
+        $metadata = new ClassMetadata('Propel\\Tests\\Builder\\ORM\\Base\\Book');
+        Base\Book::loadMetadata($metadata);
+        $this->assertEquals(5, $metadata->generatorType);
+    }
+
+    public function testMetadataFieldMapping()
+    {
+        $metadata = new ClassMetadata('Propel\\Tests\\Builder\\ORM\\Base\\Book');
+        Base\Book::loadMetadata($metadata);
+        $expected = array(
+            'id' =>
+                array (
+                'fieldName' => 'id',
+                'type' => 'integer',
+                'columnName' => 'id',
+                'id' => true,
+                ),
+            'name' =>
+                array (
+                'fieldName' => 'name',
+                'type' => 'string',
+                'columnName' => 'foo_name',
+                'length' => 25,
+                'nullable' => true,
+                'columnDefinition' => 'Hello world',
+                ),
+            'status' =>
+                array (
+                'fieldName' => 'status',
+                'type' => 'integer',
+                'columnName' => 'status',
+                'precision' => 2,
+                'scale' => 2,
+                'unique' => 'unique_status',
+                ),
+        );
+        $this->assertEquals($expected, $metadata->fieldMappings);
     }
     
     

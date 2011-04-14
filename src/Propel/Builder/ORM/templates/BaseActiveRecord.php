@@ -2,7 +2,8 @@
 
 {% use 'BaseActiveRecord/Properties.php' %}
 {% use 'BaseActiveRecord/GetterSetter.php' %}
-{% use 'BaseActiveRecord/Mapping.php' %}
+{% use 'BaseActiveRecord/Metadata.php' %}
+{% use 'BaseActiveRecord/EntityManager.php' %}
 {% use 'BaseActiveRecord/ActiveEntity.php' %}
 
 {% block NamespaceDeclaration %}
@@ -30,7 +31,8 @@ class {{ classname }}
 {% block Body %}
 {{ block('Properties') }}
 {{ block('GetterSetter') }}
-{{ block('Mapping') }}
+{{ block('Metadata') }}
+{{ block('EntityManager') }}
 {{ block('ActiveEntity') }}
 {% block AdditionalMethods '' %}
 

@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping\ClassMetadataInfo;
 
 $metadata = new ClassMetadataInfo('Bookstore\\Book');
 $metadata->mapField(array('fieldName' => 'id', 'type' => 'integer', 'id' => true));
-$metadata->mapField(array('fieldName' => 'name', 'type' => 'string'));
+$metadata->mapField(array('fieldName' => 'name', 'type' => 'string', 'nullable' => true));
 $metadata->mapField(array('fieldName' => 'status', 'type' => 'string', 'default' => 'published'));
 
 $builder = new BaseActiveRecord($metadata);
