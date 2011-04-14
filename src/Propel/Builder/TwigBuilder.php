@@ -58,7 +58,7 @@ class TwigBuilder
     public function getCode($variables = array())
     {
         $loader = new \Twig_Loader_Filesystem($this->getTemplateDirs());
-        $twig = new \Twig_Environment($loader, array('autoescape' => false));
+        $twig = new \Twig_Environment($loader, array('autoescape' => false, 'strict_variables' => true));
         $this->addTwigFilters($twig);
         $template = $twig->loadTemplate($this->getTemplateName());
         $variables = array_merge($this->getVariables(), $variables);
