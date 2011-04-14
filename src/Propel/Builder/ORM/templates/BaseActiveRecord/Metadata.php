@@ -16,25 +16,25 @@
 {% if fieldMapping.columnName %}
             'columnName' => '{{ fieldMapping.columnName }}',
 {% endif %}
-{% if fieldMapping.length %}
+{% if fieldMapping.length is defined %}
             'length' => {{ fieldMapping.length }},
 {% endif %}
-{% if fieldMapping.id %}
+{% if fieldMapping.id is defined %}
             'id' => true,
 {% endif %}
-{% if fieldMapping.nullable %}
+{% if fieldMapping.nullable is defined %}
             'nullable' => true,
 {% endif %}
-{% if fieldMapping.columnDefinition %}
+{% if fieldMapping.columnDefinition is defined %}
             'columnDefinition' => '{{ fieldMapping.columnDefinition }}',
 {% endif %}
-{% if fieldMapping.precision %}
+{% if fieldMapping.precision is defined %}
             'precision' => {{ fieldMapping.precision }},
 {% endif %}
-{% if fieldMapping.scale %}
+{% if fieldMapping.scale is defined %}
             'scale' => {{ fieldMapping.scale }},
 {% endif %}
-{% if fieldMapping.unique %}
+{% if fieldMapping.unique is defined %}
             'unique' => '{{ fieldMapping.unique }}',
 {% endif %}
         ));

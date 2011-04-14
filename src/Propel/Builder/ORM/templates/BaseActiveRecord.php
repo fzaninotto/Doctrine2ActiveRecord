@@ -29,7 +29,7 @@ namespace Base;
  */
 {% endblock %}
 {% block ClassDeclaration %}
-class {{ classname }}{% if implements %} implements {{ implements }}{% endif %} 
+class {{ classname }}{% if implements is defined %} implements {{ implements }}{% endif %} 
 {% endblock %}
 {
 {% block Body %}

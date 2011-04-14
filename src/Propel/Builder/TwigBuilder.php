@@ -8,6 +8,15 @@ class TwigBuilder
     protected $templateName;
     protected $twigFilters = array('var_export', 'ucfirst');
     protected $variables = array();
+    protected $tmpDir;
+    
+    public function __construct()
+    {
+        $this->tmpDir = sys_get_temp_dir().'/Propel2';
+        if (!is_dir($this->tmpDir)) {
+            mkdir($this->tmpDir, 0777, true);
+        }
+    }
     
     public function addTemplateDir($templateDir)
     {
@@ -68,7 +77,12 @@ class TwigBuilder
     public function getCode($variables = array())
     {
         $loader = new \Twig_Loader_Filesystem($this->getTemplateDirs());
-        $twig = new \Twig_Environment($loader, array('autoescape' => false));
+        $twig = new \Twig_Environment($loader, array(
+            'autoescape'       => false,
+            'strict_variables' => true,
+            'debug'            => true,
+            'cache'            => $this->tmpDir,
+        ));
         $this->addTwigFilters($twig);
         $template = $twig->loadTemplate($this->getTemplateName());
         $variables = array_merge($this->getVariables(), $variables);
@@ -80,5 +94,30 @@ class TwigBuilder
         foreach ($this->twigFilters as $twigFilter) {
             $twig->addFilter($twigFilter, new \Twig_Filter_Function($twigFilter));
         }
+    }
+
+    public function __destruct()
+    {
+        if ($this->tmpDir && is_dir($this->tmpDir)) {
+            $this->removeDir($this->tmpDir);
+        }
+    }
+
+    private function removeDir($target)
+    {
+        $fp = opendir($target);
+        while (false !== $file = readdir($fp)) {
+            if (in_array($file, array('.', '..'))) {
+                continue;
+            }
+
+            if (is_dir($target.'/'.$file)) {
+                self::removeDir($target.'/'.$file);
+            } else {
+                unlink($target.'/'.$file);
+            }
+        }
+        closedir($fp);
+        rmdir($target);
     }
 }
