@@ -8,6 +8,7 @@
 {% use 'BaseActiveRecord/ArrayConverter.php' %}
 {% use 'BaseActiveRecord/State.php' %}
 {% use 'BaseActiveRecord/ActiveEntity.php' %}
+{% use 'BaseActiveRecord/ArrayAccess.php' %}
 
 {% block NamespaceDeclaration %}
 {% if namespace %}
@@ -28,7 +29,7 @@ namespace Base;
  */
 {% endblock %}
 {% block ClassDeclaration %}
-class {{ classname }}
+class {{ classname }}{% if implements %} implements {{ implements }}{% endif %} 
 {% endblock %}
 {
 {% block Body %}
@@ -40,6 +41,7 @@ class {{ classname }}
 {{ block('ArrayConverter') }}
 {{ block('State') }}
 {{ block('ActiveEntity') }}
+{{ block('ArrayAccess') }}
 {% block AdditionalMethods '' %}
 
 {% endblock Body %}
