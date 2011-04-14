@@ -2,7 +2,7 @@
 
    /**
      * Populates the object using an array.
-	 *
+     *
      * This is particularly useful when populating an object from one of the
      * request arrays (e.g. $_POST). This method goes through the column
      * names, checking to see whether a matching key exists in populated
