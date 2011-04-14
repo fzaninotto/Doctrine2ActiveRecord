@@ -41,7 +41,7 @@ class {{ classname }}{% if implements %} implements {{ implements }}{% endif %}
 {{ block('ArrayConverter') }}
 {{ block('State') }}
 {{ block('ActiveEntity') }}
-{{ block('ArrayAccess') }}
+{# block('ArrayAccess') #}
 {% block AdditionalMethods '' %}
 
 {% endblock Body %}
