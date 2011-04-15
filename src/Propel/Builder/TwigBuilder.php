@@ -16,6 +16,8 @@ class TwigBuilder
         if (!is_dir($this->tmpDir)) {
             mkdir($this->tmpDir, 0777, true);
         }
+        $this->templateDirs = $this->getDefaultTemplateDirs();
+        $this->templateName = $this->getDefaultTemplateName();
     }
     
     public function addTemplateDir($templateDir)
@@ -32,9 +34,6 @@ class TwigBuilder
 
     public function getTemplateDirs()
     {
-        if (!$this->templateDirs) {
-            $this->templateDirs = $this->getDefaultTemplateDirs();
-        }
         return $this->templateDirs;
     }
     
@@ -51,9 +50,6 @@ class TwigBuilder
     
     public function getTemplateName()
     {
-        if (null === $this->templateName) {
-            $this->templateName = $this->getDefaultTemplateName();
-        }
         return $this->templateName;
     }
     
