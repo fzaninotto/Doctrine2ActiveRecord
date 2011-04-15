@@ -16,21 +16,44 @@ class BaseActiveRecordReflectionTest extends \PHPUnit_Framework_TestCase
         $metadata->mapField(array('fieldName' => 'id', 'type' => 'integer', 'id' => true));
         $metadata->mapField(array('fieldName' => 'name', 'type' => 'string', 'columnName' => 'foo_name', 'length' => 25, 'nullable' => true, 'columnDefinition' => 'Hello world'));
         $metadata->mapField(array('fieldName' => 'status', 'type' => 'integer', 'default' => 23, 'precision' => 2, 'scale' => 2, 'unique' => 'unique_status'));
-        
+        $metadata->mapOneToOne(array(
+            'fieldName' => 'author',
+            'targetEntity' => 'Doctrine\Tests\ORM\Tools\EntityGeneratorAuthor',
+            'mappedBy' => 'book',
+            'joinColumns' => array(
+                array('name' => 'author_id', 'referencedColumnName' => 'id')
+            ),
+        ));
+        $metadata->mapManyToMany(array(
+            'fieldName' => 'comments',
+            'targetEntity' => 'Doctrine\Tests\ORM\Tools\EntityGeneratorComment',
+            'joinTable' => array(
+                'name' => 'book_comment',
+                'joinColumns' => array(array('name' => 'book_id', 'referencedColumnName' => 'id')),
+                'inverseJoinColumns' => array(array('name' => 'comment_id', 'referencedColumnName' => 'id')),
+            ),
+        ));
         $builder = new BaseActiveRecord($metadata);
         eval('?>' . $builder->getCode());
     }
     
-    public function testProperties()
+    public function testFieldProperties()
     {
         $ref = new ReflectionClass(new Base\Book());
-        $props = $ref->getProperties(ReflectionProperty::IS_PROTECTED);
-        $this->assertEquals('id', $props[0]->getName());
-        $this->assertEquals('name', $props[1]->getName());
-        $this->assertEquals('status', $props[2]->getName());
+        $this->assertTrue($ref->hasProperty('id'));
+        $this->assertTrue($ref->hasProperty('name'));
+        $this->assertTrue($ref->hasProperty('status'));
+    }
+
+    public function testRelationProperties()
+    {
+        $ref = new ReflectionClass(new Base\Book());
+        $this->assertTrue($ref->hasProperty('author'));
+        $this->assertFalse($ref->hasProperty('author_id'));
+        $this->assertTrue($ref->hasProperty('comments'));
     }
     
-    public function testGetterSetter()
+    public function testGetterSetterProperties()
     {
         $ref = new ReflectionClass(new Base\Book());
         $this->assertTrue($ref->hasMethod('getId'));
@@ -39,6 +62,15 @@ class BaseActiveRecordReflectionTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($ref->hasMethod('setName'));
         $this->assertTrue($ref->hasMethod('getStatus'));
         $this->assertTrue($ref->hasMethod('setStatus'));
+    }
+
+    public function testGetterSetterRelations()
+    {
+        $ref = new ReflectionClass(new Base\Book());
+        $this->assertTrue($ref->hasMethod('getAuthor'));
+        $this->assertTrue($ref->hasMethod('setAuthor'));
+        $this->assertTrue($ref->hasMethod('getComments'));
+        $this->assertTrue($ref->hasMethod('setComments'));
     }
     
     public function testMetadadaGeneratorType()

@@ -16,10 +16,14 @@ $metadata->table['name'] = 'book';
 $metadata->mapField(array('fieldName' => 'name', 'type' => 'string'));
 $metadata->mapField(array('fieldName' => 'status', 'type' => 'string', 'default' => 'published'));
 $metadata->mapField(array('fieldName' => 'id', 'type' => 'integer', 'id' => true));
-$metadata->mapOneToOne(array('fieldName' => 'author', 'targetEntity' => 'Doctrine\Tests\ORM\Tools\EntityGeneratorAuthor', 'mappedBy' => 'book'));
-$joinColumns = array(
-    array('name' => 'author_id', 'referencedColumnName' => 'id')
-);
+$metadata->mapOneToOne(array(
+    'fieldName' => 'author',
+    'targetEntity' => 'Doctrine\Tests\ORM\Tools\EntityGeneratorAuthor',
+    'mappedBy' => 'book',
+    'joinColumns' => array(
+        array('name' => 'author_id', 'referencedColumnName' => 'id')
+    ),
+));
 $metadata->mapManyToMany(array(
     'fieldName' => 'comments',
     'targetEntity' => 'Doctrine\Tests\ORM\Tools\EntityGeneratorComment',

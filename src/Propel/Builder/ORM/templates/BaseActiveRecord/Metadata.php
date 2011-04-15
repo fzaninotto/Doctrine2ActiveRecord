@@ -58,10 +58,13 @@
 {% endif %}
 {% if associationMapping.fetch is defined %}
 {% set fetchTypes = { 2: 'FETCH_LAZY', 3: 'FETCH_EAGER', 4: 'FETCH_EXTRA_LAZY' } %}
-            'fetch' => Doctrine\ORM\Mapping\ClassMetadata::{{ fetchTypes[associationMapping.fetch] }},
+            'fetch' => \Doctrine\ORM\Mapping\ClassMetadata::{{ fetchTypes[associationMapping.fetch] }},
 {% endif %}
 {% if associationMapping.joinTable is defined %}
             'joinTable' => {{ associationMapping.joinTable|var_export(true) }},
+{% endif %}
+{% if associationMapping.joinColumns is defined %}
+            'joinColumns' => {{ associationMapping.joinColumns|var_export(true) }},
 {% endif %}
 {% if associationMapping.indexBy is defined %}
             'indexBy' => '{{ associationMapping.indexBy }}',
