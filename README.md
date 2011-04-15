@@ -3,16 +3,20 @@ Doctrine2 ActiveRecord with Twig
 
 This is an experiment for building ActiveRecord functionality on top of Doctrine2 using the Twig templating engine. Whether it is called Propel2 or not is irrelevant.
 
-Requirements
+Installation
 ------------
 
-To run the demo, you need to clone the following repositories:
+Clone the Propel2 repository:
 
- * [Symfony2 ClassLoader component](https://github.com/symfony/ClassLoader)
- * [Doctrine2](https://github.com/doctrine/doctrine2) (for the ORM layer)
- * [Twig](https://github.com/fabpot/Twig) (as templating engine). Note that Propel2 only works with the 'traits' branch of the Twig library.
+    $ git clone --recursive https://github.com/fzaninotto/Propel2.git
 
-Then, copy the `config.php-dist` into a `config.php` file, edit the paths to the libraries, and you're good to go.
+Or if you use an old version of Git (pre 1.6.5):
+
+    $ git clone https://github.com/fzaninotto/Propel2.git
+    $ cd Propel2
+    $ git submodule update --init --recursive
+
+You're good to go.
 
 Demo
 ----
