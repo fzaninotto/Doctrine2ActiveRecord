@@ -19,12 +19,24 @@ Demo
 
 From the root of the project, type:
 
-    $ php tests/demo.php
+    $ php tests/demo/demo.php
 
 Features
 --------
 
-Not much for now. Although the builder architecture already allows for partial template customization and extentions (a.k.a behaviors).
+ * Working ActiveRecord builder (no handling of relations for now)
+   * Generated entities are empty classes extending generated Base Entities extending nothing
+   * Getter & setter generation
+   * Metadata loader
+   * Access to the EntityManager from within an Entity
+   * fromArray and toArray
+   * isNew, isModified, etc.
+   * ActiveEntity methods: save(), delete()
+ * Basic behavior support
+   * Ability to alter the data structure
+   * Ability to modify the generated code pretty much everywhere
+   * Timestampable behavior example
+ * Template customization via partials
 
 Usage
 -----
@@ -125,6 +137,130 @@ This generates the following code:
         }
     
         /**
+         * Load the metadata for a Doctrine\ORM\Mapping\Driver\StaticPHPDriver.
+         *
+         * @param \Doctrine\ORM\Mapping\ClassMetadata $metadata The metadata class.
+         */
+        static public function loadMetadata(\Doctrine\ORM\Mapping\ClassMetadata $metadata)
+        {
+            $metadata->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
+            $metadata->mapField(array(
+                'fieldName' => 'id',
+                'type' => 'integer',
+                'columnName' => 'id',
+                'id' => true,
+            ));
+            $metadata->mapField(array(
+                'fieldName' => 'name',
+                'type' => 'string',
+                'columnName' => 'name',
+            ));
+            $metadata->mapField(array(
+                'fieldName' => 'status',
+                'type' => 'string',
+                'columnName' => 'status',
+            ));
+        }
+    
+        static public function getEntityManager()
+        {
+            return \Propel\EntityManagerContainer::getEntityManager();
+        }
+    
+       /**
+         * Populates the object using an array.
+         *
+         * This is particularly useful when populating an object from one of the
+         * request arrays (e.g. $_POST). This method goes through the column
+         * names, checking to see whether a matching key exists in populated
+         * array. If so the set[ColumnName]() method is called for that column.
+         *
+         * @param array $array An array to populate the object from.
+         */
+        public function fromArray($array)
+        {
+            if (isset($array['id'])) {
+                $this->setId($array['id']);
+            }
+            if (isset($array['name'])) {
+                $this->setName($array['name']);
+            }
+            if (isset($array['status'])) {
+                $this->setStatus($array['status']);
+            }
+        }
+    
+        /**
+         * Exports the object as an array.
+         *
+         * @return array An associative array containing the field names (as keys) and field values.
+         */
+        public function toArray()
+        {
+            return array(
+                'id' => $this->getId(),
+                'name' => $this->getName(),
+                'status' => $this->getStatus(),
+            );
+        }
+    
+        /**
+         * Returns if the entity is new.
+         *
+         * @return bool If the entity is new.
+         */
+        public function isNew()
+        {
+            return !static::getEntityManager()->getUnitOfWork()->isInIdentityMap($this);
+        }
+    
+        /**
+         * Returns if the entity is modified.
+         *
+         * @return bool If the entity is modified.
+         */
+        public function isModified()
+        {
+            return (bool) count($this->getModified());
+        }
+    
+        /**
+         * Returns the entity modifications
+         *
+         * @return array The entity modifications.
+         */
+        public function getModified()
+        {
+            if ($this->isNew()) {
+                return array();
+            }
+    
+            $originalData = static::getEntityManager()->getUnitOfWork()->getOriginalEntityData($this);
+    
+            return array_diff($originalData, $this->toArray());
+        }
+    
+        /**
+         * Refresh the entity from the database.
+         *
+         * @return void
+         */
+        public function reload()
+        {
+            static::getEntityManager()->getUnitOfWork()->refresh($this);
+        }
+    
+        /**
+         * Returns the change set of the entity.
+         *
+         * @return array The change set.
+         */
+        public function changeSet()
+        {
+            return static::getEntityManager()->getUnitOfWork()->getEntityChangeSet($this);
+        }
+    
+        /**
          * Persist the current object and flush the entity manager
          */
         public function save()
@@ -142,14 +278,6 @@ This generates the following code:
             $em = self::getEntityManager();
             $em->remove($this);
             $em->flush();
-        }
-    
-        /**
-         * Get the entity manager for this class
-         */
-        static public function getEntityManager()
-        {
-            return \EntityManagerContainer::getContainer();
         }
     
     }

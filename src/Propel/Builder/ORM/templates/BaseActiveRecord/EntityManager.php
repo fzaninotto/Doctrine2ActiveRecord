@@ -1,5 +1,7 @@
+{% block EntityManager %}
 
     static public function getEntityManager()
     {
-        return \EntityManagerContainer::getContainer();
+        return \Propel\EntityManagerContainer::getEntityManager();
     }
+{% endblock %}

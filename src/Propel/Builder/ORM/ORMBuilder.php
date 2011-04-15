@@ -48,24 +48,6 @@ class ORMBuilder extends TwigBuilder
         $this->extensions[]= $extension;
     }
     
-    public function hook($hookName)
-    {
-        if (!$this->extensions) {
-            return;
-        }
-        $template = '';
-        foreach ($this->extensions as $extension) {
-            if (method_exists($extension, $hookName)) {
-                $template .= call_user_func(array($extension, $hookName));
-            }
-        }
-        $loader = new \Twig_Loader_String();
-        $twig = new \Twig_Environment($loader, array('autoescape' => false));
-        $this->addTwigFilters($twig);
-        $template = $twig->loadTemplate($template);
-        return $template->render($this->getVariables());
-    }
-    
     public function getTrueTemplateName()
     {
         return parent::getTemplateName();

@@ -1,6 +1,6 @@
 <?php
 
-include __DIR__ . '/../config.php';
+require __DIR__ . '/config.php';
 
 // autoloader
 require($config['classloader_dir'].'/UniversalClassLoader.php');
@@ -9,8 +9,8 @@ use Symfony\Component\ClassLoader\UniversalClassLoader;
 
 $loader = new UniversalClassLoader();
 $loader->registerNamespaces(array(
-    'Propel\\Tests'    => __DIR__,
-    'Propel'           => __DIR__.'/../src',
+    'Propel\\Tests'    => __DIR__.'/tests',
+    'Propel'           => __DIR__.'/src',
     'Doctrine\\Common' => $config['doctrine_common_lib_dir'],
     'Doctrine\\DBAL'   => $config['doctrine_dbal_lib_dir'],
     'Doctrine\\ORM'    => $config['doctrine_orm_lib_dir'],
