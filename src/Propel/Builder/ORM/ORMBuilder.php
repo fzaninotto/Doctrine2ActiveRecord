@@ -10,6 +10,7 @@ class ORMBuilder extends TwigBuilder
 {
     protected $metadata;
     protected $extensions = array();
+    protected $regenerateIfExists = true;
     
     public function __construct(ClassMetadataInfo $metadata)
     {
@@ -82,6 +83,31 @@ class ORMBuilder extends TwigBuilder
             $variables = array_merge($variables, $extension->getVariables());
         }
         return parent::getCode($variables);
+    }
+    
+    public function getRelativeFilePath()
+    {
+        return str_replace('\\', DIRECTORY_SEPARATOR, $this->getNamespace()) . DIRECTORY_SEPARATOR . $this->getClassName() . '.php';
+    }
+    
+    /**
+     * Generated and write class to disk
+     *
+     * @param string $outputDirectory 
+     * @param array  $variables
+     */
+    public function writeClass($outputDirectory, $variables = array())
+    {
+        $path = $outputDirectory . DIRECTORY_SEPARATOR . $this->getRelativeFilePath();
+        $dir = dirname($path);
+
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+
+        if (!file_exists($path) || (file_exists($path) && $this->regenerateIfExists)) {
+            file_put_contents($path, $this->getCode($variables));
+        }
     }
     
 }

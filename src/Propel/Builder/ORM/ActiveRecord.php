@@ -6,5 +6,6 @@ use Propel\Builder\ORM\ORMBuilder;
 
 class ActiveRecord extends ORMBuilder
 {
+    protected $regenerateIfExists = false;
     
 }

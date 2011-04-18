@@ -12,11 +12,7 @@
 {% use 'BaseActiveRecord/ArrayAccess.php' %}
 
 {% block NamespaceDeclaration %}
-{% if namespace %}
-namespace {{ namespace }}\Base;
-{% else %}
-namespace Base;
-{% endif %}
+namespace {{ namespace }};
 {% endblock %}
 
 {% block UseDeclaration %}
