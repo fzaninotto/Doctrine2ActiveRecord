@@ -71,6 +71,7 @@
 {% endif %}
         ));
 {% endfor %}
+        $metadata->setLifecycleCallbacks({{ metadata.lifecycleCallbacks|exportArray(12) }});
 {% block AdditionalMapping '' %}
     }
 {% endblock %}
