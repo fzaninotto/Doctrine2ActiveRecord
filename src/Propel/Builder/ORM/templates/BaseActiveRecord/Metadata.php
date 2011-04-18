@@ -51,20 +51,20 @@
             'inversedBy' => '{{ associationMapping.inversedBy }}',
 {% endif %}
 {% if associationMapping.cascade is defined %}
-            'cascade' => {{ associationMapping.cascade|var_export(true) }},
+            'cascade' => {{ associationMapping.cascade|exportArray }},
 {% endif %}
 {% if associationMapping.orderBy is defined %}
-            'orderBy' => {{ associationMapping.orderBy|var_export(true) }},
+            'orderBy' => {{ associationMapping.orderBy|exportArray }},
 {% endif %}
 {% if associationMapping.fetch is defined %}
 {% set fetchTypes = { 2: 'FETCH_LAZY', 3: 'FETCH_EAGER', 4: 'FETCH_EXTRA_LAZY' } %}
             'fetch' => \Doctrine\ORM\Mapping\ClassMetadata::{{ fetchTypes[associationMapping.fetch] }},
 {% endif %}
 {% if associationMapping.joinTable is defined %}
-            'joinTable' => {{ associationMapping.joinTable|var_export(true) }},
+            'joinTable' => {{ associationMapping.joinTable|exportArray }},
 {% endif %}
 {% if associationMapping.joinColumns is defined %}
-            'joinColumns' => {{ associationMapping.joinColumns|var_export(true) }},
+            'joinColumns' => {{ associationMapping.joinColumns|exportArray }},
 {% endif %}
 {% if associationMapping.indexBy is defined %}
             'indexBy' => '{{ associationMapping.indexBy }}',

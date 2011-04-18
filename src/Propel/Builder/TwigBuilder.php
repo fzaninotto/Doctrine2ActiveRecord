@@ -6,7 +6,7 @@ class TwigBuilder
 {
     protected $templateDirs = array();
     protected $templateName;
-    protected $twigFilters = array('var_export', 'ucfirst');
+    protected $twigFilters = array('var_export', 'ucfirst', '\Propel\Builder\TwigBuilder::exportArray');
     protected $variables = array();
     protected $tmpDir;
     
@@ -88,8 +88,41 @@ class TwigBuilder
     public function addTwigFilters(\Twig_Environment $twig)
     {
         foreach ($this->twigFilters as $twigFilter) {
-            $twig->addFilter($twigFilter, new \Twig_Filter_Function($twigFilter));
+            if (($pos = strpos($twigFilter, ':')) !== false) {
+                $twigFilterName = substr($twigFilter, $pos + 2);
+            } else {
+                $twigFilterName = $twigFilter;
+            }
+            $twig->addFilter($twigFilterName, new \Twig_Filter_Function($twigFilter));
         }
+    }
+
+    /**
+     * Export an array.
+     *
+     * Based on Symfony\Component\DependencyInjection\Dumper\PhpDumper::exportParameters
+     * http://github.com/symfony/symfony
+     *
+     * @param array $array  The array.
+     * @param int   $indent The indent.
+     *
+     * @return string The array exported.
+     */
+    static public function exportArray(array $array, $indent = 16)
+    {
+        $code = array();
+        foreach ($array as $key => $value) {
+            if (is_array($value)) {
+                $value = self::exportArray($value, $indent + 4);
+            } else {
+                $value = var_export($value, true);
+            }
+
+            $code[] = sprintf('%s%s => %s,', str_repeat(' ', $indent), var_export($key, true), $value);
+        }
+
+        return sprintf("array(\n%s\n%s)", implode("
+", $code), str_repeat(' ', $indent - 4));
     }
 
     public function __destruct()
