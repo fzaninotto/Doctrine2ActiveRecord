@@ -12,6 +12,9 @@
 {% if metadata.customRepositoryClassName is defined %}
         $metadata->setCustomRepositoryClass('{{ metadata.customRepositoryClassName }}');
 {% endif %}
+{% if metadata.table is defined %}
+        $metadata->setPrimaryTable({{ metadata.table|exportArray(12) }});
+{% endif %}
 {% for fieldMapping in metadata.fieldMappings %}
         $metadata->mapField(array(
             'fieldName' => '{{ fieldMapping.fieldName }}',
