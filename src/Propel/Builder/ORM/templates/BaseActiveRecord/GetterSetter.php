@@ -24,7 +24,7 @@
 {% set targetEntity %}\{{ associationMapping.targetEntity }}{% endset %}
 {% set targetEntityDescription %}The related entity{% endset %}
 {% else %}
-{% set targetEntity %}mixed{% endset %}
+{% set targetEntity %}\Doctrine\Common\Collections\ArrayCollection{% endset %}
 {% set targetEntityDescription %}The collection of related entities{% endset %}
 {% endif %}
 
