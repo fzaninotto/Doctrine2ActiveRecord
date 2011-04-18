@@ -1,6 +1,7 @@
 <?php
 
 {% use 'BaseActiveRecord/Properties.php' %}
+{% use 'BaseActiveRecord/Construct.php' %}
 {% use 'BaseActiveRecord/GetterSetter.php' %}
 {% use 'BaseActiveRecord/GenericGetterSetter.php' %}
 {% use 'BaseActiveRecord/Metadata.php' %}
@@ -34,6 +35,7 @@ class {{ classname }}{% if implements is defined %} implements {{ implements }}{
 {
 {% block Body %}
 {{ block('Properties') }}
+{{ block('Construct') }}
 {{ block('GetterSetter') }}
 {{ block('GenericGetterSetter') }}
 {{ block('Metadata') }}

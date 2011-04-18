@@ -37,7 +37,13 @@ class BaseActiveRecordReflectionTest extends \PHPUnit_Framework_TestCase
         eval('?>' . $builder->getCode());
     }
     
-    public function testFieldProperties()
+    public function testConstructorForAssociations()
+    {
+        $b = new Base\Book();
+        $this->assertInstanceOf('\Doctrine\Common\Collections\ArrayCollection', $b->getComments());
+    }
+    
+    public function testPropertiesForFields()
     {
         $ref = new ReflectionClass(new Base\Book());
         $this->assertTrue($ref->hasProperty('id'));
@@ -45,7 +51,7 @@ class BaseActiveRecordReflectionTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($ref->hasProperty('status'));
     }
 
-    public function testRelationProperties()
+    public function testPropertiesForAssociations()
     {
         $ref = new ReflectionClass(new Base\Book());
         $this->assertTrue($ref->hasProperty('author'));
@@ -53,7 +59,7 @@ class BaseActiveRecordReflectionTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($ref->hasProperty('comments'));
     }
     
-    public function testGetterSetterProperties()
+    public function testGetterSetterForFields()
     {
         $ref = new ReflectionClass(new Base\Book());
         $this->assertTrue($ref->hasMethod('getId'));
@@ -64,7 +70,7 @@ class BaseActiveRecordReflectionTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($ref->hasMethod('setStatus'));
     }
 
-    public function testGetterSetterRelations()
+    public function testGetterSetterForAssociations()
     {
         $ref = new ReflectionClass(new Base\Book());
         $this->assertTrue($ref->hasMethod('getAuthor'));
