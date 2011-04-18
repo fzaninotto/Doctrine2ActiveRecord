@@ -36,6 +36,7 @@ $metadata->mapManyToMany(array(
 $metadata->addLifecycleCallback('loading', 'postLoad');
 $metadata->addLifecycleCallback('willBeRemoved', 'preRemove');
 $metadata->setIdGeneratorType(ClassMetadataInfo::GENERATOR_TYPE_AUTO);
+$metadata->setChangeTrackingPolicy(ClassMetadataInfo::CHANGETRACKING_DEFERRED_EXPLICIT);
 
 
 $builder = new BaseActiveRecord($metadata);

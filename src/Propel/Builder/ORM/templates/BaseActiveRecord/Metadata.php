@@ -9,6 +9,13 @@
     {
 {% set generatorTypes = { 1: 'GENERATOR_TYPE_AUTO', 2:'GENERATOR_TYPE_SEQUENCE', 3: 'GENERATOR_TYPE_TABLE', 4: 'GENERATOR_TYPE_IDENTITY', 5: 'GENERATOR_TYPE_NONE' } %}
         $metadata->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::{{ generatorTypes[metadata.generatorType] }});
+{% if metadata.sequenceGeneratorDefinition is defined %}
+        $metadata->setSequenceGeneratorDefinition('{{ metadata.sequenceGeneratorDefinition|exportArray(12) }}');
+{% endif %}
+{% if metadata.changeTrackingPolicy is defined and metadata.changeTrackingPolicy != 1 %}
+{% set changeTrackingPolicyTypes = { 1: 'CHANGETRACKING_DEFERRED_IMPLICIT', 2:'CHANGETRACKING_DEFERRED_EXPLICIT', 3: 'CHANGETRACKING_NOTIFY' } %}
+        $metadata->setChangeTrackingPolicy(\Doctrine\ORM\Mapping\ClassMetadata::{{ changeTrackingPolicyTypes[metadata.changeTrackingPolicy] }});
+{% endif %}
 {% if metadata.customRepositoryClassName is defined %}
         $metadata->setCustomRepositoryClass('{{ metadata.customRepositoryClassName }}');
 {% endif %}
