@@ -9,6 +9,9 @@
     {
 {% set generatorTypes = { 1: 'GENERATOR_TYPE_AUTO', 2:'GENERATOR_TYPE_SEQUENCE', 3: 'GENERATOR_TYPE_TABLE', 4: 'GENERATOR_TYPE_IDENTITY', 5: 'GENERATOR_TYPE_NONE' } %}
         $metadata->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::{{ generatorTypes[metadata.generatorType] }});
+{% if metadata.customRepositoryClassName is defined %}
+        $metadata->setCustomRepositoryClass('{{ metadata.customRepositoryClassName }}');
+{% endif %}
 {% for fieldMapping in metadata.fieldMappings %}
         $metadata->mapField(array(
             'fieldName' => '{{ fieldMapping.fieldName }}',
