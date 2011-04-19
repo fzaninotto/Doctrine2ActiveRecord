@@ -38,20 +38,10 @@ $metadata->addLifecycleCallback('willBeRemoved', 'preRemove');
 $metadata->setIdGeneratorType(ClassMetadataInfo::GENERATOR_TYPE_AUTO);
 $metadata->setChangeTrackingPolicy(ClassMetadataInfo::CHANGETRACKING_DEFERRED_EXPLICIT);
 
-$outputDir = __DIR__ . '/Model';
-
 $builder = new BaseActiveRecord($metadata);
 // using custom templates to tweak EntityManager
 $builder->addTemplateDir(__DIR__ . '/templates');
 // using extensions
 $builder->addExtension(new Timestampable());
 $builder->addExtension(new GenerationTimestamp());
-$builder->writeClass($outputDir);
-
-$builder = new ActiveRecord($metadata);
-// using custom templates to tweak EntityManager
-$builder->addTemplateDir(__DIR__ . '/templates');
-// using extensions
-$builder->addExtension(new Timestampable());
-$builder->addExtension(new GenerationTimestamp());
-$builder->writeClass($outputDir);
+echo $builder->getCode();

@@ -7,6 +7,7 @@ use Propel\Builder\ORM\ActiveRecord;
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\Mapping\Driver\XmlDriver;
 use Doctrine\ORM\Tools\DisconnectedClassMetadataFactory;
+use Propel\Builder\Generator;
 
 $config = new Configuration();
 $config->setMetadataCacheImpl(new \Doctrine\Common\Cache\ArrayCache);
@@ -25,11 +26,11 @@ $em = \Doctrine\ORM\EntityManager::create($connectionOptions, $config);
 $cmf = new DisconnectedClassMetadataFactory();
 $cmf->setEntityManager($em);
 
-$outputDir = __DIR__ . '/Model';
+$generator = new Generator();
 foreach ($cmf->getAllMetadata() as $metadata) {
-    $builder = new BaseActiveRecord($metadata);
-    $builder->writeClass($outputDir);
-
-    $builder = new ActiveRecord($metadata);
-    $builder->writeClass($outputDir);
+    $generator->addBuilder(new BaseActiveRecord($metadata));
+    $generator->addBuilder(new ActiveRecord($metadata));
 }
+echo "Generating classes for xml schemas...\n";
+$generator->writeClasses(__DIR__ . '/Model');
+echo "Class generation complete\n";

@@ -10,11 +10,11 @@ class ORMBuilder extends TwigBuilder
 {
     protected $metadata;
     protected $extensions = array();
-    protected $regenerateIfExists = true;
     
     public function __construct(ClassMetadataInfo $metadata)
     {
         $this->metadata = $metadata;
+        $this->outputName = str_replace('\\', DIRECTORY_SEPARATOR, $this->getNamespace()) . DIRECTORY_SEPARATOR . $this->getClassName() . '.php';
 
         parent::__construct();
     }
@@ -71,7 +71,7 @@ class ORMBuilder extends TwigBuilder
     
     public function getCode($variables = array())
     {
-        $this->addTemplateDir($this->tmpDir);
+        $this->addTemplateDir($this->tempDir);
         foreach ($this->extensions as $rank => $extension) {
             if ($rank) {
                 $prefix = "{% extends '" . $this->getTempTemplateName($rank -1) . "' %}\n";
@@ -79,35 +79,10 @@ class ORMBuilder extends TwigBuilder
                 $prefix = "{% extends '" . $this->getTrueTemplateName() . "' %}\n";
             }
             $name = $this->getTempTemplateName($rank);
-            file_put_contents($this->tmpDir . '/' . $name, $prefix . $extension->getTemplate());
+            file_put_contents($this->tempDir . '/' . $name, $prefix . $extension->getTemplate());
             $variables = array_merge($variables, $extension->getVariables());
         }
         return parent::getCode($variables);
-    }
-    
-    public function getRelativeFilePath()
-    {
-        return str_replace('\\', DIRECTORY_SEPARATOR, $this->getNamespace()) . DIRECTORY_SEPARATOR . $this->getClassName() . '.php';
-    }
-    
-    /**
-     * Generated and write class to disk
-     *
-     * @param string $outputDirectory 
-     * @param array  $variables
-     */
-    public function writeClass($outputDirectory, $variables = array())
-    {
-        $path = $outputDirectory . DIRECTORY_SEPARATOR . $this->getRelativeFilePath();
-        $dir = dirname($path);
-
-        if (!is_dir($dir)) {
-            mkdir($dir, 0777, true);
-        }
-
-        if (!file_exists($path) || (file_exists($path) && $this->regenerateIfExists)) {
-            file_put_contents($path, $this->getCode($variables));
-        }
     }
     
 }

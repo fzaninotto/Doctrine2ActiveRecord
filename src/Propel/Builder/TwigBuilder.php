@@ -8,16 +8,20 @@ class TwigBuilder
     protected $templateName;
     protected $twigFilters = array('var_export', 'ucfirst', '\Propel\Builder\TwigBuilder::exportArray');
     protected $variables = array();
-    protected $tmpDir;
+    protected $tempDir;
+    protected $mustOverwriteIfExists = true;
+    protected $outputName;
     
     public function __construct()
     {
-        $this->tmpDir = sys_get_temp_dir().'/Propel2';
-        if (!is_dir($this->tmpDir)) {
-            mkdir($this->tmpDir, 0777, true);
-        }
         $this->templateDirs = $this->getDefaultTemplateDirs();
         $this->templateName = $this->getDefaultTemplateName();
+        $this->tempDir = sys_get_temp_dir();
+    }
+    
+    public function setTempDir($tempDir)
+    {
+        $this->tempDir = $tempDir;
     }
     
     public function addTemplateDir($templateDir)
@@ -60,6 +64,21 @@ class TwigBuilder
         return $simpleClassName . '.php';
     }
     
+    public function setOutputName($outputName)
+    {
+        $this->outputName = $outputName;
+    }
+
+    public function getOutputName()
+    {
+        return $this->outputName;
+    }
+    
+    public function mustOverwriteIfExists()
+    {
+        return $this->mustOverwriteIfExists;
+    }
+    
     public function setVariables($variables = array())
     {
         $this->variables = $variables;
@@ -77,12 +96,32 @@ class TwigBuilder
             'autoescape'       => false,
             'strict_variables' => true,
             'debug'            => true,
-            'cache'            => $this->tmpDir,
+            'cache'            => $this->tempDir,
         ));
         $this->addTwigFilters($twig);
         $template = $twig->loadTemplate($this->getTemplateName());
         $variables = array_merge($this->getVariables(), $variables);
         return $template->render($variables);
+    }
+
+    /**
+     * Generated and write class to disk
+     *
+     * @param string $outputDirectory 
+     * @param array  $variables
+     */
+    public function writeClass($outputDirectory, $variables = array())
+    {
+        $path = $outputDirectory . DIRECTORY_SEPARATOR . $this->getOutputName();
+        $dir = dirname($path);
+
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+
+        if (!file_exists($path) || (file_exists($path) && $this->mustOverwriteIfExists)) {
+            file_put_contents($path, $this->getCode($variables));
+        }
     }
     
     public function addTwigFilters(\Twig_Environment $twig)
@@ -125,28 +164,4 @@ class TwigBuilder
 ", $code), str_repeat(' ', $indent - 4));
     }
 
-    public function __destruct()
-    {
-        if ($this->tmpDir && is_dir($this->tmpDir)) {
-            $this->removeDir($this->tmpDir);
-        }
-    }
-
-    private function removeDir($target)
-    {
-        $fp = opendir($target);
-        while (false !== $file = readdir($fp)) {
-            if (in_array($file, array('.', '..'))) {
-                continue;
-            }
-
-            if (is_dir($target.'/'.$file)) {
-                self::removeDir($target.'/'.$file);
-            } else {
-                unlink($target.'/'.$file);
-            }
-        }
-        closedir($fp);
-        rmdir($target);
-    }
 }
