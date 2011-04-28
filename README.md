@@ -221,6 +221,24 @@ class Book
     }
 
     /**
+     * Add an element to the comments association value
+     * @param Doctrine\Tests\ORM\Tools\EntityGeneratorComment $comment
+     */
+    public function addComment($comment)
+    {
+        $this->comments->add($comment);
+    }
+
+    /**
+     * Remove an element from the comments association value
+     * @param Doctrine\Tests\ORM\Tools\EntityGeneratorComment $comment
+     */
+    public function removeComment($comment)
+    {
+        $this->comments->removeElement($comment);
+    }
+
+    /**
      * Set a property of the entity by name passed in as a string.
      *
      * @param string $name  The property name.

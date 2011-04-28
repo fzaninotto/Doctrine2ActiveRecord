@@ -1,4 +1,5 @@
 {% block GetterSetter %}
+{% block FieldMappingGetterSetter %}
 {% for fieldMapping in metadata.fieldMappings %}
 
     /**
@@ -19,6 +20,8 @@
         $this->{{ fieldMapping.fieldName }} = ${{ fieldMapping.fieldName }};
     }
 {% endfor %}
+{% endblock %}
+{% block AssociationMappingGetterSetter %}
 {% for key, associationMapping in metadata.associationMappings %}
 {% set associationDetail = associationDetails[key] %}
 
@@ -39,5 +42,27 @@
     {
         $this->{{ associationMapping.fieldName }} = ${{ associationMapping.fieldName }};
     }
+{% if not associationDetail.isToOne %}
+{% set singularFieldName = associationMapping.fieldName|makeSingular %}
+
+    /**
+     * Add an element to the {{ associationMapping.fieldName }} association value
+     * @param {{ associationMapping.targetEntity }} ${{ singularFieldName }}
+     */
+    public function add{{ singularFieldName|ucfirst }}(${{ singularFieldName }})
+    {
+        $this->{{ associationMapping.fieldName }}->add(${{ singularFieldName }});
+    }
+
+    /**
+     * Remove an element from the {{ associationMapping.fieldName }} association value
+     * @param {{ associationMapping.targetEntity }} ${{ singularFieldName }}
+     */
+    public function remove{{ singularFieldName|ucfirst }}(${{ singularFieldName }})
+    {
+        $this->{{ associationMapping.fieldName }}->removeElement(${{ singularFieldName }});
+    }
+{% endif %}
 {% endfor %}
+{% endblock %}
 {% endblock %}

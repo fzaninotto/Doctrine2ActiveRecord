@@ -6,7 +6,12 @@ class TwigBuilder
 {
     protected $templateDirs = array();
     protected $templateName;
-    protected $twigFilters = array('var_export', 'ucfirst', '\Propel\Builder\TwigBuilder::exportArray');
+    protected $twigFilters = array(
+        'var_export',
+        'ucfirst',
+        '\Propel\Builder\TwigBuilder::exportArray',
+        '\Propel\Builder\TwigBuilder::makeSingular'
+    );
     protected $variables = array();
     protected $tempDir;
     protected $mustOverwriteIfExists = true;
@@ -162,6 +167,15 @@ class TwigBuilder
 
         return $code ? sprintf("array(\n%s\n%s)", implode("
 ", $code), str_repeat(' ', $indent - 4)) : 'array()';
+    }
+    
+    /**
+     * Naive de-pluralizer
+     * e.g. 'comments' => 'comment'
+     */
+    static public function makeSingular($name)
+    {
+        return rtrim($name, 's');
     }
 
 }
