@@ -68,12 +68,12 @@ class BaseActiveRecord extends ORMBuilder
     
     static protected function isToOneAssociation($associationType)
     {
-        $toOneAssociationTypes = array(
-            ClassMetadata::ONE_TO_ONE,
-            ClassMetadata::MANY_TO_ONE,
-            ClassMetadata::TO_ONE,
-        );
-        return in_array($associationType, $toOneAssociationTypes);
+        return $associationType & ClassMetadata::TO_ONE;
+    }
+
+    static protected function isToManyAssociation($associationType)
+    {
+        return $associationType & ClassMetadata::TO_MANY;
     }
     
     protected function getAssociationDetails()
@@ -81,10 +81,8 @@ class BaseActiveRecord extends ORMBuilder
         $associationTypes = array(
             ClassMetadata::ONE_TO_ONE   => 'OneToOne',
             ClassMetadata::MANY_TO_ONE  => 'ManyToOne',
-            ClassMetadata::TO_ONE       => 'ToOne',
             ClassMetadata::ONE_TO_MANY  => 'OneToMany',
             ClassMetadata::MANY_TO_MANY => 'ManyToMany',
-            ClassMetadata::TO_MANY      => 'ToMany',
         );
         $fetchTypes = array(
             'FETCH_LAZY',
