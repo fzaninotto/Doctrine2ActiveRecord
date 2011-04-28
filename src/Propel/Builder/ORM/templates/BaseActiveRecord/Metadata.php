@@ -53,8 +53,8 @@
         ));
 {% endfor %}
 {% for key, associationMapping in metadata.associationMappings %}
-{% set associationDetails = additionalMetadata.associationDetails[key] %}
-        $metadata->map{{ associationDetails.type }}(array(
+{% set associationDetail = associationDetails[key] %}
+        $metadata->map{{ associationDetail.type }}(array(
             'fieldName'    => '{{ associationMapping.fieldName }}',
             'targetEntity' => '{{ associationMapping.targetEntity }}',
 {% if associationMapping.mappedBy is defined %}
@@ -69,8 +69,8 @@
 {% if associationMapping.orderBy is defined %}
             'orderBy'      => {{ associationMapping.orderBy|exportArray }},
 {% endif %}
-{% if associationDetails.fetch is defined %}
-            'fetch'        => ClassMetadata::{{ associationDetails.fetch }},
+{% if associationDetail.fetch is defined %}
+            'fetch'        => ClassMetadata::{{ associationDetail.fetch }},
 {% endif %}
 {% if associationMapping.joinTable is defined %}
             'joinTable'    => {{ associationMapping.joinTable|exportArray }},

@@ -56,7 +56,7 @@ class BaseActiveRecord extends ORMBuilder
         return false;
     }
     
-    static protected function getAssociationDetails($associationMappings)
+    protected function getAssociationDetails()
     {
         $associationTypes = array(
             ClassMetadata::ONE_TO_ONE   => 'OneToOne',
@@ -66,15 +66,27 @@ class BaseActiveRecord extends ORMBuilder
             ClassMetadata::MANY_TO_MANY => 'ManyToMany',
             ClassMetadata::TO_MANY      => 'ToMany',
         );
+        $toOneAssociationTypes = array(
+            ClassMetadata::ONE_TO_ONE,
+            ClassMetadata::MANY_TO_ONE,
+            ClassMetadata::TO_ONE,
+        );
         $fetchTypes = array(
             'FETCH_LAZY',
             'FETCH_EAGER',
             'FETCH_EXTRA_LAZY',
         );
         $associationDetails = array();
-        foreach ($associationMappings as $key => $associationMapping) {
+        foreach ($this->metadata->associationMappings as $key => $associationMapping) {
             $associationDetail = array();
             $associationDetail['type'] = $associationTypes[$associationMapping['type']];
+            if (in_array($associationMapping['type'], $toOneAssociationTypes)) {
+                $associationDetail['targetEntity'] = '\\' .  $associationMapping['targetEntity'];
+                $associationDetail['targetEntityDescription'] = 'The related entity';
+            } else {
+                $associationDetail['targetEntity'] = '\\Doctrine\\Common\\Collections\\ArrayCollection';
+                $associationDetail['targetEntityDescription'] = 'The collection of related entities';
+            }
             if (isset($associationMapping['fetch'])) {
                 $associationDetail['fetch'] = self::getConstantName($associationMapping['fetch'], $fetchTypes);
             }
@@ -87,6 +99,7 @@ class BaseActiveRecord extends ORMBuilder
     {
         return array_merge(parent::getVariables(), array(
             'additionalMetadata' => $this->getAdditionalMetadata(),
+            'associationDetails' => $this->getAssociationDetails(),
         ));
     }
     

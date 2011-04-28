@@ -6,15 +6,11 @@
      */
     protected ${{ fieldMapping.fieldName }}{% if fieldMapping.default is defined %} = {{ fieldMapping.default|var_export(true) }}{% endif %};
 {% endfor %}
-{% for associationMapping in metadata.associationMappings %}
-{% if associationMapping.type in [1, 2, 3] %}
-{% set targetEntity = '\\' ~ associationMapping.targetEntity %}
-{% else %}
-{% set targetEntity = '\Doctrine\Common\Collections\ArrayCollection' %}
-{% endif %}
+{% for key, associationMapping in metadata.associationMappings %}
+{% set associationDetail = associationDetails[key] %}
 
     /**
-     * @var {{ targetEntity }} ${{ associationMapping.fieldName }}
+     * @var {{ associationDetail.targetEntity }} ${{ associationMapping.fieldName }}
      */
     protected ${{ associationMapping.fieldName }};
 {% endfor %}

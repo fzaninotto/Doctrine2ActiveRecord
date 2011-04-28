@@ -19,18 +19,12 @@
         $this->{{ fieldMapping.fieldName }} = ${{ fieldMapping.fieldName }};
     }
 {% endfor %}
-{% for associationMapping in metadata.associationMappings %}
-{% if associationMapping.type in [1, 2, 3] %}
-{% set targetEntity = '\\' ~ associationMapping.targetEntity %}
-{% set targetEntityDescription = 'The related entity' %}
-{% else %}
-{% set targetEntity = '\Doctrine\Common\Collections\ArrayCollection' %}
-{% set targetEntityDescription = 'The collection of related entities' %}
-{% endif %}
+{% for key, associationMapping in metadata.associationMappings %}
+{% set associationDetail = associationDetails[key] %}
 
     /**
      * Get the {{ associationMapping.fieldName }} association value
-     * @return {{ targetEntity }} {{ targetEntityDescription }}
+     * @return {{ associationDetail.targetEntity }} {{ associationDetail.targetEntityDescription }}
      */
     public function get{{ associationMapping.fieldName|ucfirst }}()
     {
@@ -39,7 +33,7 @@
 
     /**
      * Set the {{ associationMapping.fieldName }} association value
-     * @param {{ targetEntity }} ${{ associationMapping.fieldName }} {{ targetEntityDescription }}
+     * @param {{ associationDetail.targetEntity }} ${{ associationMapping.fieldName }} {{ associationDetail.targetEntityDescription }}
      */
     public function set{{ associationMapping.fieldName|ucfirst }}(${{ associationMapping.fieldName }})
     {
