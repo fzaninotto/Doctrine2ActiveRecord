@@ -7,7 +7,7 @@
     {
 {% for associationMapping in metadata.associationMappings %}
 {% if associationMapping.type not in [1, 2, 3] %}
-        $this->{{ associationMapping.fieldName }} = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->{{ associationMapping.fieldName }} = new ArrayCollection();
 {% endif %}
 {% endfor %}
     }

@@ -16,6 +16,8 @@ namespace {{ namespace }};
 {% endblock %}
 
 {% block UseDeclaration %}
+use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\Common\Collections\ArrayCollection;
 {% endblock %}
 
 {% block DocBlock %}

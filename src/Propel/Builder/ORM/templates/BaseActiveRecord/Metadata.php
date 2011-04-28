@@ -3,18 +3,18 @@
     /**
      * Load the metadata for a Doctrine\ORM\Mapping\Driver\StaticPHPDriver.
      *
-     * @param \Doctrine\ORM\Mapping\ClassMetadata $metadata The metadata class.
+     * @param ClassMetadata $metadata The metadata class.
      */
-    static public function loadMetadata(\Doctrine\ORM\Mapping\ClassMetadata $metadata)
+    static public function loadMetadata(ClassMetadata $metadata)
     {
 {% if additionalMetadata.generatorType %}
-        $metadata->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::{{ additionalMetadata.generatorType }});
+        $metadata->setIdGeneratorType(ClassMetadata::{{ additionalMetadata.generatorType }});
 {% endif %}
 {% if metadata.sequenceGeneratorDefinition is defined %}
         $metadata->setSequenceGeneratorDefinition({{ metadata.sequenceGeneratorDefinition|exportArray(12) }});
 {% endif %}
 {% if additionalMetadata.changeTrackingPolicy %}
-        $metadata->setChangeTrackingPolicy(\Doctrine\ORM\Mapping\ClassMetadata::{{ additionalMetadata.changeTrackingPolicy }});
+        $metadata->setChangeTrackingPolicy(ClassMetadata::{{ additionalMetadata.changeTrackingPolicy }});
 {% endif %}
 {% if metadata.customRepositoryClassName is defined %}
         $metadata->setCustomRepositoryClass('{{ metadata.customRepositoryClassName }}');
@@ -71,7 +71,7 @@
 {% endif %}
 {% if associationMapping.fetch is defined %}
 {% set fetchTypes = { 2: 'FETCH_LAZY', 3: 'FETCH_EAGER', 4: 'FETCH_EXTRA_LAZY' } %}
-            'fetch' => \Doctrine\ORM\Mapping\ClassMetadata::{{ fetchTypes[associationMapping.fetch] }},
+            'fetch' => ClassMetadata::{{ fetchTypes[associationMapping.fetch] }},
 {% endif %}
 {% if associationMapping.joinTable is defined %}
             'joinTable' => {{ associationMapping.joinTable|exportArray }},
