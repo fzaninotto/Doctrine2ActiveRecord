@@ -12,7 +12,7 @@ class BaseActiveRecord extends ORMBuilder
         $additionalMetadata = array(
             'generatorType'        => self::getGeneratorTypeName($this->metadata->generatorType),
             'changeTrackingPolicy' => self::getChangeTrackingPolicyName($this->metadata->changeTrackingPolicy),
-            'associationDetails' => self::getAssociationDetails($this->metadata->associationMappings),
+            'hasToManyAssociations' => self::getHasToManyAssociations($this->metadata->associationMappings),
         );
         
         return $additionalMetadata;
@@ -46,6 +46,16 @@ class BaseActiveRecord extends ORMBuilder
         return self::getConstantName($changeTrackingPolicyNumber, $changeTrackingPolicies);
     }
     
+    static protected function getHasToManyAssociations($associationMappings = array())
+    {
+        foreach ($associationMappings as $associationMapping) {
+            if (!self::isToOneAssociation($associationMapping['type'])) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     static protected function getConstantName($value, $names = array())
     {
         foreach ($names as $name) {
@@ -54,6 +64,16 @@ class BaseActiveRecord extends ORMBuilder
             }
         }
         return false;
+    }
+    
+    static protected function isToOneAssociation($associationType)
+    {
+        $toOneAssociationTypes = array(
+            ClassMetadata::ONE_TO_ONE,
+            ClassMetadata::MANY_TO_ONE,
+            ClassMetadata::TO_ONE,
+        );
+        return in_array($associationType, $toOneAssociationTypes);
     }
     
     protected function getAssociationDetails()
@@ -66,11 +86,6 @@ class BaseActiveRecord extends ORMBuilder
             ClassMetadata::MANY_TO_MANY => 'ManyToMany',
             ClassMetadata::TO_MANY      => 'ToMany',
         );
-        $toOneAssociationTypes = array(
-            ClassMetadata::ONE_TO_ONE,
-            ClassMetadata::MANY_TO_ONE,
-            ClassMetadata::TO_ONE,
-        );
         $fetchTypes = array(
             'FETCH_LAZY',
             'FETCH_EAGER',
@@ -80,10 +95,12 @@ class BaseActiveRecord extends ORMBuilder
         foreach ($this->metadata->associationMappings as $key => $associationMapping) {
             $associationDetail = array();
             $associationDetail['type'] = $associationTypes[$associationMapping['type']];
-            if (in_array($associationMapping['type'], $toOneAssociationTypes)) {
+            if (self::isToOneAssociation($associationMapping['type'])) {
+                $associationDetail['isToOne'] = true;
                 $associationDetail['targetEntity'] = '\\' .  $associationMapping['targetEntity'];
                 $associationDetail['targetEntityDescription'] = 'The related entity';
             } else {
+                $associationDetail['isToOne'] = false;
                 $associationDetail['targetEntity'] = '\\Doctrine\\Common\\Collections\\ArrayCollection';
                 $associationDetail['targetEntityDescription'] = 'The collection of related entities';
             }

@@ -1,14 +1,16 @@
 {% block Construct %}
+{% if additionalMetadata.hasToManyAssociations %}
     /**
      * Class constructor.
      * Initializes -to-many associations
      */
     public function __construct()
     {
-{% for associationMapping in metadata.associationMappings %}
-{% if associationMapping.type not in [1, 2, 3] %}
+{% for key, associationMapping in metadata.associationMappings %}
+{% if not associationDetails[key].isToOne %}
         $this->{{ associationMapping.fieldName }} = new ArrayCollection();
 {% endif %}
 {% endfor %}
     }
+{% endif %}
 {% endblock %}
