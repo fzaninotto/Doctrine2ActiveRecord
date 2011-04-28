@@ -5,10 +5,7 @@
 {% use 'BaseActiveRecord/GetterSetter.php' %}
 {% use 'BaseActiveRecord/GenericGetterSetter.php' %}
 {% use 'BaseActiveRecord/Metadata.php' %}
-{% use 'BaseActiveRecord/EntityManager.php' %}
 {% use 'BaseActiveRecord/ArrayConverter.php' %}
-{% use 'BaseActiveRecord/State.php' %}
-{% use 'BaseActiveRecord/ActiveEntity.php' %}
 {% use 'BaseActiveRecord/ArrayAccess.php' %}
 
 {% block NamespaceDeclaration %}
@@ -18,6 +15,7 @@ namespace {{ namespace }};
 {% block UseDeclaration %}
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\Common\Collections\ArrayCollection;
+use Propel\ActiveEntity;
 {% endblock %}
 
 {% block DocBlock %}
@@ -28,7 +26,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 {% endblock %}
 {% block ClassDeclaration %}
-class {{ classname }}{% if implements is defined %} implements {{ implements }}{% endif %} 
+class {{ classname }} extends ActiveEntity{% if implements is defined %} implements {{ implements }}{% endif %} 
 {% endblock %}
 {
 {% block Body %}
@@ -37,10 +35,7 @@ class {{ classname }}{% if implements is defined %} implements {{ implements }}{
 {{ block('GetterSetter') }}
 {{ block('GenericGetterSetter') }}
 {{ block('Metadata') }}
-{{ block('EntityManager') }}
 {{ block('ArrayConverter') }}
-{{ block('State') }}
-{{ block('ActiveEntity') }}
 {# block('ArrayAccess') #}
 {% block AdditionalMethods '' %}
 

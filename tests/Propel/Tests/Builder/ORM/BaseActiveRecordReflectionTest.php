@@ -36,6 +36,12 @@ class BaseActiveRecordReflectionTest extends \PHPUnit_Framework_TestCase
         $builder = new BaseActiveRecord($metadata);
         eval('?>' . $builder->getCode());
     }
+
+    public function testActiveEntity()
+    {
+        $b = new Base\Book();
+        $this->assertInstanceOf('\\Propel\\ActiveEntity', $b);
+    }
     
     public function testConstructorForAssociations()
     {

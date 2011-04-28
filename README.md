@@ -63,9 +63,6 @@ Example build:
 // register autoloaders, etc.
 
 use Propel\Builder\ORM\BaseActiveRecord;
-use Propel\Builder\ORM\ActiveRecord;
-use Propel\Builder\Extension\Timestampable;
-use Propel\Builder\Extension\GenerationTimestamp;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 
 $metadata = new ClassMetadataInfo('Bookstore\\Book');
@@ -88,12 +85,13 @@ namespace Bookstore\Base;
 
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\Common\Collections\ArrayCollection;
+use Propel\ActiveEntity;
 
 /**
  * Base class providing ActiveRecord features to Book.
  * Do not modify this class: it will be overwritten each time you regenerate ActiveRecord.
  */
-class Book 
+class Book extends ActiveEntity 
 {
 
     /**
@@ -359,14 +357,6 @@ class Book
         ));
     }
 
-    /**
-     * Get the entity manager for this class
-     */
-    static public function getEntityManager()
-    {
-        return \EntityManagerContainer::getContainer();
-    }
-
    /**
      * Populates the object using an array.
      *
@@ -404,81 +394,7 @@ class Book
         );
     }
 
-    /**
-     * Returns if the entity is new.
-     *
-     * @return bool If the entity is new.
-     */
-    public function isNew()
-    {
-        return !static::getEntityManager()->getUnitOfWork()->isInIdentityMap($this);
-    }
-
-    /**
-     * Returns if the entity is modified.
-     *
-     * @return bool If the entity is modified.
-     */
-    public function isModified()
-    {
-        return (bool) count($this->getModified());
-    }
-
-    /**
-     * Returns the entity modifications
-     *
-     * @return array The entity modifications.
-     */
-    public function getModified()
-    {
-        if ($this->isNew()) {
-            return array();
-        }
-
-        $originalData = static::getEntityManager()->getUnitOfWork()->getOriginalEntityData($this);
-
-        return array_diff($originalData, $this->toArray());
-    }
-
-    /**
-     * Refresh the entity from the database.
-     *
-     * @return void
-     */
-    public function reload()
-    {
-        static::getEntityManager()->getUnitOfWork()->refresh($this);
-    }
-
-    /**
-     * Returns the change set of the entity.
-     *
-     * @return array The change set.
-     */
-    public function changeSet()
-    {
-        return static::getEntityManager()->getUnitOfWork()->getEntityChangeSet($this);
-    }
-
-    /**
-     * Persist the current object and flush the entity manager
-     */
-    public function save()
-    {
-        $em = self::getEntityManager();
-        $em->persist($this);
-        $em->flush();
-    }
-
-    /**
-     * Remove the current object and flush the entity manager
-     */
-    public function delete()
-    {
-        $em = self::getEntityManager();
-        $em->remove($this);
-        $em->flush();
-    }
-
 }
 ```
+
+Extending `ActiveEntity` is optional, but gives the same API as Propel1 (`save()`, `delete()`, `isNew()`, etc.).

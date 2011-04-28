@@ -1,5 +1,16 @@
-{% block State %}
+<?php
 
+namespace Propel;
+
+use Doctrine\ORM\EntityManager;
+
+/**
+ * Base class for Active Entities
+ *
+ * @package Propel
+ */
+class ActiveEntity
+{
     /**
      * Returns if the entity is new.
      *
@@ -51,8 +62,33 @@
      *
      * @return array The change set.
      */
-    public function changeSet()
+    public function getChangeSet()
     {
         return static::getEntityManager()->getUnitOfWork()->getEntityChangeSet($this);
     }
-{% endblock %}
+
+    /**
+     * Persist the current object and flush the entity manager
+     */
+    public function save()
+    {
+        $em = self::getEntityManager();
+        $em->persist($this);
+        $em->flush();
+    }
+
+    /**
+     * Remove the current object and flush the entity manager
+     */
+    public function delete()
+    {
+        $em = self::getEntityManager();
+        $em->remove($this);
+        $em->flush();
+    }
+
+    static public function getEntityManager()
+    {
+        return EntityManagerContainer::getEntityManager();
+    }
+}
