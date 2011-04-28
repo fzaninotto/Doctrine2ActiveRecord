@@ -117,7 +117,7 @@ class Book
     protected $author;
 
     /**
-     * @var DoctrineCommonCollectionsArrayCollection $comments
+     * @var \Doctrine\Common\Collections\ArrayCollection $comments
      */
     protected $comments;
 
@@ -204,7 +204,7 @@ class Book
 
     /**
      * Get the comments association value
-     * @return DoctrineCommonCollectionsArrayCollection The collection of related entities
+     * @return \Doctrine\Common\Collections\ArrayCollection The collection of related entities
      */
     public function getComments()
     {
@@ -213,7 +213,7 @@ class Book
 
     /**
      * Set the comments association value
-     * @param DoctrineCommonCollectionsArrayCollection $comments The collection of related entities
+     * @param \Doctrine\Common\Collections\ArrayCollection $comments The collection of related entities
      */
     public function setComments($comments)
     {
@@ -441,7 +441,6 @@ class Book
     {
         return static::getEntityManager()->getUnitOfWork()->getEntityChangeSet($this);
     }
-
 
     /**
      * Persist the current object and flush the entity manager
