@@ -21,11 +21,11 @@
 {% endfor %}
 {% for associationMapping in metadata.associationMappings %}
 {% if associationMapping.type in [1, 2, 3] %}
-{% set targetEntity %}\{{ associationMapping.targetEntity }}{% endset %}
-{% set targetEntityDescription %}The related entity{% endset %}
+{% set targetEntity = '\\' ~ associationMapping.targetEntity %}
+{% set targetEntityDescription = 'The related entity' %}
 {% else %}
-{% set targetEntity %}\Doctrine\Common\Collections\ArrayCollection{% endset %}
-{% set targetEntityDescription %}The collection of related entities{% endset %}
+{% set targetEntity = '\Doctrine\Common\Collections\ArrayCollection' %}
+{% set targetEntityDescription = 'The collection of related entities' %}
 {% endif %}
 
     /**

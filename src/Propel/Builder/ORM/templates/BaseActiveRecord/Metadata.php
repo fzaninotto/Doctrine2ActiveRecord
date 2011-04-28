@@ -84,7 +84,9 @@
 {% endif %}
         ));
 {% endfor %}
+{% if metadata.lifecycleCallbacks is not empty %}
         $metadata->setLifecycleCallbacks({{ metadata.lifecycleCallbacks|exportArray(12) }});
+{% endif %}
 {% block AdditionalMapping '' %}
     }
 {% endblock %}

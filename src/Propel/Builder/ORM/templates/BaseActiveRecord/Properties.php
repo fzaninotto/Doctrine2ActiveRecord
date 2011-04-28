@@ -8,9 +8,9 @@
 {% endfor %}
 {% for associationMapping in metadata.associationMappings %}
 {% if associationMapping.type in [1, 2, 3] %}
-{% set targetEntity %}\{{ associationMapping.targetEntity }}{% endset %}
+{% set targetEntity = '\\' ~ associationMapping.targetEntity %}
 {% else %}
-{% set targetEntity %}\Doctrine\Common\Collections\ArrayCollection{% endset %}
+{% set targetEntity = '\Doctrine\Common\Collections\ArrayCollection' %}
 {% endif %}
 
     /**
