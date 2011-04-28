@@ -24,63 +24,62 @@
 {% endif %}
 {% for fieldMapping in metadata.fieldMappings %}
         $metadata->mapField(array(
-            'fieldName' => '{{ fieldMapping.fieldName }}',
-            'type' => '{{ fieldMapping.type }}',
+            'fieldName'  => '{{ fieldMapping.fieldName }}',
+            'type'       => '{{ fieldMapping.type }}',
 {% if fieldMapping.columnName %}
             'columnName' => '{{ fieldMapping.columnName }}',
 {% endif %}
 {% if fieldMapping.length is defined %}
-            'length' => {{ fieldMapping.length }},
+            'length'     => {{ fieldMapping.length }},
 {% endif %}
 {% if fieldMapping.id is defined %}
-            'id' => true,
+            'id'         => true,
 {% endif %}
 {% if fieldMapping.nullable is defined %}
-            'nullable' => true,
+            'nullable'   => true,
 {% endif %}
 {% if fieldMapping.columnDefinition is defined %}
             'columnDefinition' => '{{ fieldMapping.columnDefinition }}',
 {% endif %}
 {% if fieldMapping.precision is defined %}
-            'precision' => {{ fieldMapping.precision }},
+            'precision'  => {{ fieldMapping.precision }},
 {% endif %}
 {% if fieldMapping.scale is defined %}
-            'scale' => {{ fieldMapping.scale }},
+            'scale'      => {{ fieldMapping.scale }},
 {% endif %}
 {% if fieldMapping.unique is defined %}
-            'unique' => '{{ fieldMapping.unique }}',
+            'unique'     => '{{ fieldMapping.unique }}',
 {% endif %}
         ));
 {% endfor %}
-{% set associationTypes = { 1: 'OneToOne', 2:'ManyToOne', 3: 'ToOne', 4: 'OneToMany', 8: 'ManyToMany', 12: 'ToMany' } %}
-{% for associationMapping in metadata.associationMappings %}
-        $metadata->map{{ associationTypes[associationMapping.type] }}(array(
-            'fieldName' => '{{ associationMapping.fieldName }}',
+{% for key, associationMapping in metadata.associationMappings %}
+{% set associationDetails = additionalMetadata.associationDetails[key] %}
+        $metadata->map{{ associationDetails.type }}(array(
+            'fieldName'    => '{{ associationMapping.fieldName }}',
             'targetEntity' => '{{ associationMapping.targetEntity }}',
 {% if associationMapping.mappedBy is defined %}
-            'mappedBy' => '{{ associationMapping.mappedBy }}',
+            'mappedBy'     => '{{ associationMapping.mappedBy }}',
 {% endif %}
 {% if associationMapping.inversedBy is defined %}
-            'inversedBy' => '{{ associationMapping.inversedBy }}',
+            'inversedBy'   => '{{ associationMapping.inversedBy }}',
 {% endif %}
 {% if associationMapping.cascade is defined %}
-            'cascade' => {{ associationMapping.cascade|exportArray }},
+            'cascade'      => {{ associationMapping.cascade|exportArray }},
 {% endif %}
 {% if associationMapping.orderBy is defined %}
-            'orderBy' => {{ associationMapping.orderBy|exportArray }},
+            'orderBy'      => {{ associationMapping.orderBy|exportArray }},
 {% endif %}
-{% if associationMapping.fetch is defined %}
-{% set fetchTypes = { 2: 'FETCH_LAZY', 3: 'FETCH_EAGER', 4: 'FETCH_EXTRA_LAZY' } %}
-            'fetch' => ClassMetadata::{{ fetchTypes[associationMapping.fetch] }},
+{% if associationDetails.fetch is defined %}
+            'fetch'        => ClassMetadata::{{ associationDetails.fetch }},
 {% endif %}
 {% if associationMapping.joinTable is defined %}
-            'joinTable' => {{ associationMapping.joinTable|exportArray }},
+            'joinTable'    => {{ associationMapping.joinTable|exportArray }},
 {% endif %}
 {% if associationMapping.joinColumns is defined %}
-            'joinColumns' => {{ associationMapping.joinColumns|exportArray }},
+            'joinColumns'  => {{ associationMapping.joinColumns|exportArray }},
 {% endif %}
 {% if associationMapping.indexBy is defined %}
-            'indexBy' => '{{ associationMapping.indexBy }}',
+            'indexBy'      => '{{ associationMapping.indexBy }}',
 {% endif %}
         ));
 {% endfor %}

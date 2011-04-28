@@ -12,6 +12,7 @@ class BaseActiveRecord extends ORMBuilder
         $additionalMetadata = array(
             'generatorType'        => self::getGeneratorTypeName($this->metadata->generatorType),
             'changeTrackingPolicy' => self::getChangeTrackingPolicyName($this->metadata->changeTrackingPolicy),
+            'associationDetails' => self::getAssociationDetails($this->metadata->associationMappings),
         );
         
         return $additionalMetadata;
@@ -53,6 +54,33 @@ class BaseActiveRecord extends ORMBuilder
             }
         }
         return false;
+    }
+    
+    static protected function getAssociationDetails($associationMappings)
+    {
+        $associationTypes = array(
+            ClassMetadata::ONE_TO_ONE   => 'OneToOne',
+            ClassMetadata::MANY_TO_ONE  => 'ManyToOne',
+            ClassMetadata::TO_ONE       => 'ToOne',
+            ClassMetadata::ONE_TO_MANY  => 'OneToMany',
+            ClassMetadata::MANY_TO_MANY => 'ManyToMany',
+            ClassMetadata::TO_MANY      => 'ToMany',
+        );
+        $fetchTypes = array(
+            'FETCH_LAZY',
+            'FETCH_EAGER',
+            'FETCH_EXTRA_LAZY',
+        );
+        $associationDetails = array();
+        foreach ($associationMappings as $key => $associationMapping) {
+            $associationDetail = array();
+            $associationDetail['type'] = $associationTypes[$associationMapping['type']];
+            if (isset($associationMapping['fetch'])) {
+                $associationDetail['fetch'] = self::getConstantName($associationMapping['fetch'], $fetchTypes);
+            }
+            $associationDetails[$key] = $associationDetail;
+        }
+        return $associationDetails;
     }
     
     public function getVariables()
