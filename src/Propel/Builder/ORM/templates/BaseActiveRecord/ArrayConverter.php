@@ -1,5 +1,4 @@
 {% block ArrayConverter %}
-
    /**
      * Populates the object using an array.
      *
@@ -13,7 +12,7 @@
     public function fromArray($array)
     {
 {% for fieldMapping in metadata.fieldMappings %}
-        if (isset($array['{{ fieldMapping.fieldName }}'])) {
+        if (array_key_exists('{{ fieldMapping.fieldName }}', $array)) {
             $this->set{{ fieldMapping.fieldName|ucfirst }}($array['{{ fieldMapping.fieldName }}']);
         }
 {% endfor %}
@@ -32,4 +31,5 @@
 {% endfor %}
         );
     }
+
 {% endblock %}

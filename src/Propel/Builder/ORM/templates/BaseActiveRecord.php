@@ -1,5 +1,3 @@
-<?php
-
 {% use 'BaseActiveRecord/Properties.php' %}
 {% use 'BaseActiveRecord/Construct.php' %}
 {% use 'BaseActiveRecord/GetterSetter.php' %}
@@ -7,6 +5,7 @@
 {% use 'BaseActiveRecord/Metadata.php' %}
 {% use 'BaseActiveRecord/ArrayConverter.php' %}
 {% use 'BaseActiveRecord/ArrayAccess.php' %}
+<?php
 
 {% block NamespaceDeclaration %}
 namespace {{ namespace }};
@@ -21,7 +20,8 @@ use Propel\ActiveEntity;
 {% block DocBlock %}
 /**
  * Base class providing ActiveRecord features to {{ classname }}.
- * Do not modify this class: it will be overwritten each time you regenerate ActiveRecord.
+ * Do not modify this class: it will be overwritten each time you regenerate
+ * ActiveRecord.
 {% block AdditionalDocBlock '' %}
  */
 {% endblock %}
@@ -30,14 +30,13 @@ class {{ classname }} extends ActiveEntity{% if implements is defined %} impleme
 {% endblock %}
 {
 {% block Body %}
-{{ block('Properties') }}
-{{ block('Construct') }}
-{{ block('GetterSetter') }}
-{{ block('GenericGetterSetter') }}
-{{ block('Metadata') }}
-{{ block('ArrayConverter') }}
+{{- block('Properties') -}}
+{{- block('Construct') -}}
+{{ block('GetterSetter') -}}
+{{ block('GenericGetterSetter') -}}
+{{ block('Metadata') -}}
+{{ block('ArrayConverter') -}}
 {# block('ArrayAccess') #}
 {% block AdditionalMethods '' %}
-
 {% endblock Body %}
 }

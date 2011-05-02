@@ -1,9 +1,8 @@
 {% block Metadata %}
-
     /**
-     * Load the metadata for a Doctrine\ORM\Mapping\Driver\StaticPHPDriver.
+     * Load the metadata for a Doctrine\ORM\Mapping\Driver\StaticPHPDriver
      *
-     * @param ClassMetadata $metadata The metadata class.
+     * @param ClassMetadata $metadata The metadata class
      */
     static public function loadMetadata(ClassMetadata $metadata)
     {
@@ -22,70 +21,74 @@
 {% if metadata.table is defined %}
         $metadata->setPrimaryTable({{ metadata.table|exportArray(12) }});
 {% endif %}
+
 {% for fieldMapping in metadata.fieldMappings %}
         $metadata->mapField(array(
-            'fieldName'  => '{{ fieldMapping.fieldName }}',
-            'type'       => '{{ fieldMapping.type }}',
+            'fieldName'         => '{{ fieldMapping.fieldName }}',
+            'type'              => '{{ fieldMapping.type }}',
 {% if fieldMapping.columnName %}
-            'columnName' => '{{ fieldMapping.columnName }}',
+            'columnName'        => '{{ fieldMapping.columnName }}',
 {% endif %}
 {% if fieldMapping.length is defined %}
-            'length'     => {{ fieldMapping.length }},
+            'length'            => {{ fieldMapping.length }},
 {% endif %}
 {% if fieldMapping.id is defined %}
-            'id'         => true,
+            'id'                => true,
 {% endif %}
 {% if fieldMapping.nullable is defined %}
-            'nullable'   => true,
+            'nullable'          => true,
 {% endif %}
 {% if fieldMapping.columnDefinition is defined %}
-            'columnDefinition' => '{{ fieldMapping.columnDefinition }}',
+            'columnDefinition'  => '{{ fieldMapping.columnDefinition }}',
 {% endif %}
 {% if fieldMapping.precision is defined %}
-            'precision'  => {{ fieldMapping.precision }},
+            'precision'         => {{ fieldMapping.precision }},
 {% endif %}
 {% if fieldMapping.scale is defined %}
-            'scale'      => {{ fieldMapping.scale }},
+            'scale'             => {{ fieldMapping.scale }},
 {% endif %}
 {% if fieldMapping.unique is defined %}
-            'unique'     => '{{ fieldMapping.unique }}',
+            'unique'            => '{{ fieldMapping.unique }}',
 {% endif %}
         ));
 {% endfor %}
+
 {% for key, associationMapping in metadata.associationMappings %}
 {% set associationDetail = associationDetails[key] %}
         $metadata->map{{ associationDetail.type }}(array(
-            'fieldName'    => '{{ associationMapping.fieldName }}',
-            'targetEntity' => '{{ associationMapping.targetEntity }}',
+            'fieldName'         => '{{ associationMapping.fieldName }}',
+            'targetEntity'      => '{{ associationMapping.targetEntity }}',
 {% if associationMapping.mappedBy is defined %}
-            'mappedBy'     => '{{ associationMapping.mappedBy }}',
+            'mappedBy'          => '{{ associationMapping.mappedBy }}',
 {% endif %}
 {% if associationMapping.inversedBy is defined %}
-            'inversedBy'   => '{{ associationMapping.inversedBy }}',
+            'inversedBy'        => '{{ associationMapping.inversedBy }}',
 {% endif %}
 {% if associationMapping.cascade is defined %}
-            'cascade'      => {{ associationMapping.cascade|exportArray }},
+            'cascade'           => {{ associationMapping.cascade|exportArray }},
 {% endif %}
 {% if associationMapping.orderBy is defined %}
-            'orderBy'      => {{ associationMapping.orderBy|exportArray }},
+            'orderBy'           => {{ associationMapping.orderBy|exportArray }},
 {% endif %}
 {% if associationDetail.fetch is defined %}
-            'fetch'        => ClassMetadata::{{ associationDetail.fetch }},
+            'fetch'             => ClassMetadata::{{ associationDetail.fetch }},
 {% endif %}
 {% if associationMapping.joinTable is defined %}
-            'joinTable'    => {{ associationMapping.joinTable|exportArray }},
+            'joinTable'         => {{ associationMapping.joinTable|exportArray }},
 {% endif %}
 {% if associationMapping.joinColumns is defined %}
-            'joinColumns'  => {{ associationMapping.joinColumns|exportArray }},
+            'joinColumns'       => {{ associationMapping.joinColumns|exportArray }},
 {% endif %}
 {% if associationMapping.indexBy is defined %}
-            'indexBy'      => '{{ associationMapping.indexBy }}',
+            'indexBy'           => '{{ associationMapping.indexBy }}',
 {% endif %}
         ));
 {% endfor %}
 {% if metadata.lifecycleCallbacks is not empty %}
+
         $metadata->setLifecycleCallbacks({{ metadata.lifecycleCallbacks|exportArray(12) }});
 {% endif %}
 {% block AdditionalMapping '' %}
     }
+
 {% endblock %}
