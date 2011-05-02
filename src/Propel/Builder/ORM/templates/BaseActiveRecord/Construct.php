@@ -8,7 +8,7 @@
     {
 {% for key, associationMapping in metadata.associationMappings %}
 {% if not associationDetails[key].isToOne %}
-        $this->{{ associationMapping.fieldName }} = new ArrayCollection();
+        $this->{{ associationMapping.fieldName }} = new \Doctrine\Common\Collections\ArrayCollection();
 {% endif %}
 {% endfor %}
     }

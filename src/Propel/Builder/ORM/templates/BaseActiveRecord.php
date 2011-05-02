@@ -13,7 +13,6 @@ namespace {{ namespace }};
 
 {% block UseDeclaration %}
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Doctrine\Common\Collections\ArrayCollection;
 use Propel\ActiveEntity;
 {% endblock %}
 
