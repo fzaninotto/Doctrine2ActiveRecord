@@ -12,5 +12,6 @@
 {% endif %}
 {% endfor %}
     }
+
 {% endif %}
 {% endblock %}
