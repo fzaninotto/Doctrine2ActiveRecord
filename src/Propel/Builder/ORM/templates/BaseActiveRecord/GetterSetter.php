@@ -37,7 +37,7 @@
      * Set the {{ associationMapping.fieldName }} association value
      * @param {{ associationDetail.targetEntity }} ${{ associationMapping.fieldName }} {{ associationDetail.targetEntityDescription }}
      */
-    public function set{{ associationMapping.fieldName|ucfirst }}(${{ associationMapping.fieldName }})
+    public function set{{ associationMapping.fieldName|ucfirst }}({{ associationDetail.targetEntity }} ${{ associationMapping.fieldName }})
     {
         $this->{{ associationMapping.fieldName }} = ${{ associationMapping.fieldName }};
     }
