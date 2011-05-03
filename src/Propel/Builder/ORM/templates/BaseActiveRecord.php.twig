@@ -1,5 +1,3 @@
-<?php
-
 {% use 'BaseActiveRecord/Properties.php.twig' %}
 {% use 'BaseActiveRecord/Construct.php.twig' %}
 {% use 'BaseActiveRecord/GetterSetter.php.twig' %}
@@ -7,6 +5,7 @@
 {% use 'BaseActiveRecord/Metadata.php.twig' %}
 {% use 'BaseActiveRecord/ArrayConverter.php.twig' %}
 {% use 'BaseActiveRecord/ArrayAccess.php.twig' %}
+<?php
 
 {% block NamespaceDeclaration %}
 namespace {{ namespace }};
@@ -14,14 +13,14 @@ namespace {{ namespace }};
 
 {% block UseDeclaration %}
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Doctrine\Common\Collections\ArrayCollection;
 use Propel\ActiveEntity;
 {% endblock %}
 
 {% block DocBlock %}
 /**
  * Base class providing ActiveRecord features to {{ classname }}.
- * Do not modify this class: it will be overwritten each time you regenerate ActiveRecord.
+ * Do not modify this class: it will be overwritten each time you regenerate
+ * ActiveRecord.
 {% block AdditionalDocBlock '' %}
  */
 {% endblock %}
@@ -30,14 +29,13 @@ class {{ classname }} extends ActiveEntity{% if implements is defined %} impleme
 {% endblock %}
 {
 {% block Body %}
-{{ block('Properties') }}
-{{ block('Construct') }}
-{{ block('GetterSetter') }}
-{{ block('GenericGetterSetter') }}
-{{ block('Metadata') }}
-{{ block('ArrayConverter') }}
+{{- block('Properties') -}}
+{{- block('Construct') -}}
+{{ block('GetterSetter') -}}
+{{ block('GenericGetterSetter') -}}
+{{ block('Metadata') -}}
+{{ block('ArrayConverter') -}}
 {# block('ArrayAccess') #}
 {% block AdditionalMethods '' %}
-
 {% endblock Body %}
 }

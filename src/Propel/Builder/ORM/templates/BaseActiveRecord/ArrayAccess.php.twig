@@ -36,7 +36,7 @@
     {
         throw new \LogicException('You cannot check if data exists in the entity.');
     }
-    
+
     /**
      * ArrayAccess implementation.
      *
