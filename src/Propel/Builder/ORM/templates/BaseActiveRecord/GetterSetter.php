@@ -37,7 +37,7 @@
      * Set the {{ associationMapping.fieldName }} association value
      * @param {{ associationDetail.targetEntity }} ${{ associationMapping.fieldName }} {{ associationDetail.targetEntityDescription }}
      */
-    public function set{{ associationMapping.fieldName|ucfirst }}({{ associationDetail.targetEntity }} ${{ associationMapping.fieldName }})
+    public function set{{ associationMapping.fieldName|ucfirst }}(${{ associationMapping.fieldName }})
     {
         $this->{{ associationMapping.fieldName }} = ${{ associationMapping.fieldName }};
     }
@@ -48,7 +48,7 @@
      * Add an element to the {{ associationMapping.fieldName }} association value
      * @param {{ associationMapping.targetEntity }} ${{ singularFieldName }}
      */
-    public function add{{ singularFieldName|ucfirst }}({{ associationMapping.targetEntity }} ${{ singularFieldName }})
+    public function add{{ singularFieldName|ucfirst }}(${{ singularFieldName }})
     {
         $this->{{ associationMapping.fieldName }}->add(${{ singularFieldName }});
     }
@@ -57,7 +57,7 @@
      * Remove an element from the {{ associationMapping.fieldName }} association value
      * @param {{ associationMapping.targetEntity }} ${{ singularFieldName }}
      */
-    public function remove{{ singularFieldName|ucfirst }}({{ associationMapping.targetEntity }} ${{ singularFieldName }})
+    public function remove{{ singularFieldName|ucfirst }}(${{ singularFieldName }})
     {
         $this->{{ associationMapping.fieldName }}->removeElement(${{ singularFieldName }});
     }
