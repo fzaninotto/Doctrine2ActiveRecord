@@ -66,7 +66,7 @@ class TwigBuilder
     {
         $classParts = explode('\\', get_class($this));
         $simpleClassName = array_pop($classParts);
-        return $simpleClassName . '.php';
+        return $simpleClassName . '.php.twig';
     }
     
     public function setOutputName($outputName)
