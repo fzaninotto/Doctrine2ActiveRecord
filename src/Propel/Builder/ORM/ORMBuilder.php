@@ -8,7 +8,14 @@ use Doctrine\ORM\Mapping\ClassMetadataInfo;
 
 class ORMBuilder extends TwigBuilder
 {
+    /**
+     * @var \Doctrine\ORM\Mapping\ClassMetadataInfo
+     */
     protected $metadata;
+
+    /**
+     * @var array
+     */
     protected $extensions = array();
     
     public function __construct(ClassMetadataInfo $metadata)
@@ -18,7 +25,10 @@ class ORMBuilder extends TwigBuilder
 
         parent::__construct();
     }
-    
+
+    /**
+     * @return \Doctrine\ORM\Mapping\ClassMetadataInfo
+     */
     public function getMetadada()
     {
         return $this->metadata;
@@ -27,12 +37,14 @@ class ORMBuilder extends TwigBuilder
     public function getNamespace()
     {
         $name = $this->metadata->name;
+
         return substr($name, 0, strrpos($name, '\\'));
     }
 
     public function getClassName()
     {
         $name = $this->metadata->name;
+
         return ($pos = strrpos($name, '\\')) ? substr($name, $pos + 1, strlen($name)) : $name;
     }
     
@@ -61,6 +73,7 @@ class ORMBuilder extends TwigBuilder
         if (!$this->extensions) {
             return $this->getTrueTemplateName();
         }
+
         return $this->getTempTemplateName(count($this->extensions)-1);
     }
     
@@ -82,6 +95,7 @@ class ORMBuilder extends TwigBuilder
             file_put_contents($this->tempDir . '/' . $name, $prefix . $extension->getTemplate());
             $variables = array_merge($variables, $extension->getVariables());
         }
+
         return parent::getCode($variables);
     }
     

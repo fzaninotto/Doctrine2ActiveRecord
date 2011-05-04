@@ -10,9 +10,11 @@
     public function setByName($name, $value)
     {
 {% for fieldMapping in metadata.fieldMappings %}
+{% if fieldMapping.id is not defined %}
         if ($name === '{{ fieldMapping.fieldName }}') {
             return $this->set{{ fieldMapping.fieldName|ucfirst }}($value);
         }
+{% endif %}
 {% endfor %}
 
         throw new \InvalidArgumentException(sprintf('The property "%s" does not exists.', $name));
