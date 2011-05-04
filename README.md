@@ -89,7 +89,6 @@ use Propel\ActiveEntity;
  * Base class providing ActiveRecord features to Book.
  * Do not modify this class: it will be overwritten each time you regenerate
  * ActiveRecord.
- * Generated on YYYY-MM-DD hh:mm:ss
  */
 class Book extends ActiveEntity 
 {
