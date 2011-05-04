@@ -1,5 +1,11 @@
 <?php
 
+$project = 'AcmePizza';
+
+$dir     = __DIR__ . '/Model/xml/' . $project;
+
+echo shell_exec(' php /var/www/' . $project . '/app/console doctrine:mapping:convert --force xml ' . $dir);
+
 require_once __DIR__ . '/../../autoload.php';
 
 use Propel\Builder\ORM\BaseActiveRecord;
@@ -11,7 +17,7 @@ use Propel\Builder\Generator;
 
 $config = new Configuration();
 $config->setMetadataCacheImpl(new \Doctrine\Common\Cache\ArrayCache);
-$driverImpl = new XmlDriver(__DIR__ . '/schema');
+$driverImpl = new XmlDriver($dir);
 $config->setMetadataDriverImpl($driverImpl);
 
 $config->setProxyDir(__DIR__ . '/Proxies');
