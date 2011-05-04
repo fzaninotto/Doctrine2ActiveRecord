@@ -1,10 +1,14 @@
+#!/usr/bin/env php
 <?php
 
+/*
 $project = 'AcmePizza';
 
 $dir     = __DIR__ . '/Model/xml/' . $project;
-
 echo shell_exec(' php /var/www/' . $project . '/app/console doctrine:mapping:convert --force xml ' . $dir);
+*/
+
+$dir = '/var/www/AcmePizza/src/Acme/PizzaBundle/Resources/config/';
 
 require_once __DIR__ . '/../../autoload.php';
 
