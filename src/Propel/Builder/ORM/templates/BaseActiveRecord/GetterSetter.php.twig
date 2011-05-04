@@ -10,6 +10,7 @@
         return $this->{{ fieldMapping.fieldName }};
     }
 
+{% if fieldMapping.id is not defined %}
     /**
      * Set the {{ fieldMapping.fieldName }} field value
      * @param ${{ fieldMapping.fieldName }} {{ fieldMapping.type }}
@@ -19,6 +20,7 @@
         $this->{{ fieldMapping.fieldName }} = ${{ fieldMapping.fieldName }};
     }
 
+{% endif %}
 {% endfor %}
 {% endblock %}
 {% block AssociationMappingGetterSetter %}
