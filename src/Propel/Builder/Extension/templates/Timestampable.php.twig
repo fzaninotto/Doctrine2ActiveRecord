@@ -1,6 +1,10 @@
 {% block AdditionalProperties %}
 {{ parent() }}
+    /**
+     * @var \DateTime $updatedAt
+     */
     protected $updatedAt;
+
 {% endblock %}
 
 {% block AdditionalMapping %}
