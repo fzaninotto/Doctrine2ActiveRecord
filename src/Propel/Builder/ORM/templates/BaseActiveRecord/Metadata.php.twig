@@ -23,34 +23,7 @@
 {% endif %}
 
 {% for fieldMapping in metadata.fieldMappings %}
-        $metadata->mapField(array(
-            'fieldName'         => '{{ fieldMapping.fieldName }}',
-            'type'              => '{{ fieldMapping.type }}',
-{% if fieldMapping.columnName %}
-            'columnName'        => '{{ fieldMapping.columnName }}',
-{% endif %}
-{% if fieldMapping.length is defined %}
-            'length'            => {{ fieldMapping.length }},
-{% endif %}
-{% if fieldMapping.id is defined %}
-            'id'                => true,
-{% endif %}
-{% if fieldMapping.nullable is defined %}
-            'nullable'          => true,
-{% endif %}
-{% if fieldMapping.columnDefinition is defined %}
-            'columnDefinition'  => '{{ fieldMapping.columnDefinition }}',
-{% endif %}
-{% if fieldMapping.precision is defined %}
-            'precision'         => {{ fieldMapping.precision }},
-{% endif %}
-{% if fieldMapping.scale is defined %}
-            'scale'             => {{ fieldMapping.scale }},
-{% endif %}
-{% if fieldMapping.unique is defined %}
-            'unique'            => '{{ fieldMapping.unique }}',
-{% endif %}
-        ));
+        $metadata->mapField({{ fieldMapping|exportArray(12) }});
 {% endfor %}
 
 {% for key, associationMapping in metadata.associationMappings %}
