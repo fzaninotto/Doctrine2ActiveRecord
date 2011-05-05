@@ -291,9 +291,7 @@ class Book extends ActiveEntity
         $metadata->setIdGeneratorType(ClassMetadata::GENERATOR_TYPE_AUTO);
         $metadata->setChangeTrackingPolicy(ClassMetadata::CHANGETRACKING_DEFERRED_EXPLICIT);
         $metadata->setCustomRepositoryClass('Bookstore\BookRepository');
-        $metadata->setPrimaryTable(array(
-            'name' => 'book',
-        ));
+        $metadata->setPrimaryTable(array('name' => 'book'));
 
         $metadata->mapField(array(
             'fieldName'  => 'id',
@@ -319,13 +317,11 @@ class Book extends ActiveEntity
             'mappedBy'          => 'book',
             'cascade'           => array(),
             'fetch'             => ClassMetadata::FETCH_LAZY,
-            'joinColumns'       => array(
-                0 => array(
-                    'name'                 => 'author_id',
-                    'referencedColumnName' => 'id',
-                    'unique'               => true,
-                ),
-            ),
+            'joinColumns'       => array(array(
+                'name'                 => 'author_id',
+                'referencedColumnName' => 'id',
+                'unique'               => true,
+            )),
         ));
         $metadata->mapManyToMany(array(
             'fieldName'         => 'comments',
@@ -334,28 +330,25 @@ class Book extends ActiveEntity
             'fetch'             => ClassMetadata::FETCH_LAZY,
             'joinTable'         => array(
                 'name'               => 'book_comment',
-                'joinColumns'        => array(
-                    0 => array(
-                        'name'                 => 'book_id',
-                        'referencedColumnName' => 'id',
-                    ),
-                ),
-                'inverseJoinColumns' => array(
-                    0 => array(
-                        'name'                 => 'comment_id',
-                        'referencedColumnName' => 'id',
-                    ),
-                ),
+                'joinColumns'        => array(array(
+                    'name'                 => 'book_id',
+                    'referencedColumnName' => 'id',
+                )),
+                'inverseJoinColumns' => array(array(
+                    'name'                 => 'comment_id',
+                    'referencedColumnName' => 'id',
+                )),
             ),
         ));
 
         $metadata->setLifecycleCallbacks(array(
-            'postLoad'  => array(
-                0 => 'loading',
-            ),
-            'preRemove' => array(
-                0 => 'willBeRemoved',
-            ),
+            'postLoad'  => array('loading'),
+            'preRemove' => array('willBeRemoved'),
+        ));
+
+        $metadata->mapField(array(
+            'fieldName' => 'updatedAt',
+            'type' => 'datetime',
         ));
     }
 
