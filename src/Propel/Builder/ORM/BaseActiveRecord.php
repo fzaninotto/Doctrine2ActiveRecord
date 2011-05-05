@@ -7,6 +7,26 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 
 class BaseActiveRecord extends ORMBuilder
 {
+    const MAPPING_STATIC_PHP = 1;
+    const MAPPING_ANNOTATION = 2;
+    
+    protected $mappingDriver = self::MAPPING_STATIC_PHP;
+    
+    public function setMappingDriver($mappingDriver)
+    {
+        $this->mappingDriver = $mappingDriver;
+    }
+    
+    public function isMappingStaticPhp()
+    {
+        return (bool) ($this->mappingDriver & self::MAPPING_STATIC_PHP);
+    }
+        
+    public function isMappingAnnotation()
+    {
+        return (bool) ($this->mappingDriver & self::MAPPING_ANNOTATION);
+    }
+    
     public function getAdditionalMetadata()
     {
         $additionalMetadata = array(
@@ -68,12 +88,12 @@ class BaseActiveRecord extends ORMBuilder
     
     static protected function isToOneAssociation($associationType)
     {
-        return $associationType & ClassMetadata::TO_ONE;
+        return (bool) ($associationType & ClassMetadata::TO_ONE);
     }
 
     static protected function isToManyAssociation($associationType)
     {
-        return $associationType & ClassMetadata::TO_MANY;
+        return (bool) ($associationType & ClassMetadata::TO_MANY);
     }
     
     protected function getAssociationDetails()
