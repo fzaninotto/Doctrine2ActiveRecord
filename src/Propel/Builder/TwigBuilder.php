@@ -155,22 +155,51 @@ class TwigBuilder
      */
     static public function exportArray(array $array, $indent = 16)
     {
-        $length = array_reduce(array_keys($array), function($length, $key) {
-            return max(array($length, strlen(var_export($key, true))));
-        });
+        $count = count($array);
+        $is_associative = array_keys($array) !== range(0, $count - 1);
 
-        $code = array();
+        if ($count > 1 && $is_associative) {
+            $length = array_reduce(array_keys($array), function($length, $key) {
+                return max(array($length, strlen(var_export($key, true))));
+            });
+        }
+
+        $lines = array();
+
         foreach ($array as $key => $value) {
+
             if (is_array($value)) {
-                $value = self::exportArray($value, $indent + 4);
+                if ($count > 1) {
+                    $value = self::exportArray($value, $indent + 4);
+                } else {
+                    $value = self::exportArray($value, $indent);
+                }
             } else {
                 $value = var_export($value, true);
             }
 
-            $code[] = sprintf('%s%-' . $length . 's => %s,', str_repeat(' ', $indent), var_export($key, true), $value);
+            if ($count > 1) {
+                if ($is_associative) {
+                    $lines[] = sprintf('%s%-' . $length . 's => %s,', str_repeat(' ', $indent), var_export($key, true), $value);
+                } else {
+                    $lines[] = sprintf('%s%s,', str_repeat(' ', $indent), $value);
+                }
+            } else {
+                if ($is_associative) {
+                    $lines[] = sprintf('%s => %s', var_export($key, true), $value);
+                } else {
+                    $lines[] = sprintf('%s', $value);
+                }
+            }
         }
 
-        return $code ? sprintf("array(\n%s\n%s)", implode(PHP_EOL, $code), str_repeat(' ', $indent - 4)) : 'array()';
+        if ($count > 1) {
+            return sprintf('array('. PHP_EOL . '%s'. PHP_EOL . '%s)', implode(PHP_EOL, $lines), str_repeat(' ', $indent - 4));
+        } else if ($count === 1) {
+            return sprintf('array(%s)', $lines[0]);
+        } else {
+            return 'array()';
+        }
     }
     
     /**
