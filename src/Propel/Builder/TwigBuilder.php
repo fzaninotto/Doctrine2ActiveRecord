@@ -154,6 +154,10 @@ class TwigBuilder
      */
     static public function exportArray(array $array, $indent = 16)
     {
+        $length = array_reduce(array_keys($array), function($length, $key) {
+            return max(array($length, strlen(var_export($key, true))));
+        });
+
         $code = array();
         foreach ($array as $key => $value) {
             if (is_array($value)) {
@@ -162,11 +166,10 @@ class TwigBuilder
                 $value = var_export($value, true);
             }
 
-            $code[] = sprintf('%s%s => %s,', str_repeat(' ', $indent), var_export($key, true), $value);
+            $code[] = sprintf('%s%-' . $length . 's => %s,', str_repeat(' ', $indent), var_export($key, true), $value);
         }
 
-        return $code ? sprintf("array(\n%s\n%s)", implode("
-", $code), str_repeat(' ', $indent - 4)) : 'array()';
+        return $code ? sprintf("array(\n%s\n%s)", implode(PHP_EOL, $code), str_repeat(' ', $indent - 4)) : 'array()';
     }
     
     /**
