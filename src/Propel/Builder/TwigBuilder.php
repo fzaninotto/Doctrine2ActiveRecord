@@ -169,7 +169,7 @@ class TwigBuilder
             $code[] = sprintf('%s%-' . $length . 's => %s,', str_repeat(' ', $indent), var_export($key, true), $value);
         }
 
-        return $code ? sprintf("array(\n%s\n%s)", implode("\n", $code), str_repeat(' ', $indent - 4)) : 'array()';
+        return $code ? sprintf("array(\n%s\n%s)", implode(PHP_EOL, $code), str_repeat(' ', $indent - 4)) : 'array()';
     }
     
     /**
