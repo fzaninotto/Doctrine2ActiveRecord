@@ -97,34 +97,31 @@ class BaseActiveRecordReflectionTest extends \PHPUnit_Framework_TestCase
         $metadata = new ClassMetadata('Propel\\Tests\\Builder\\ORM\\Base\\Book');
         Base\Book::loadMetadata($metadata);
         $expected = array(
-            'id' =>
-                array (
-                'fieldName' => 'id',
-                'type' => 'integer',
+           'id' => array (
+                'fieldName'  => 'id',
+                'type'       => 'integer',
+                'id'         => true,
                 'columnName' => 'id',
-                'id' => true,
-                ),
-            'name' =>
-                array (
-                'fieldName' => 'name',
-                'type' => 'string',
+           ),
+           'name' => array (
+                'fieldName'  => 'name',
+                'type'       => 'string',
                 'columnName' => 'foo_name',
-                'length' => 25,
-                'nullable' => true,
+                'length'     => 25,
+                'nullable'   => true,
                 'columnDefinition' => 'Hello world',
-                ),
-            'status' =>
-                array (
-                'fieldName' => 'status',
-                'type' => 'integer',
+           ),
+           'status' => array (
+                'fieldName'  => 'status',
+                'type'       => 'integer',
+                'default'    => 23,
+                'precision'  => 2,
+                'scale'      => 2,
+                'unique'     => 'unique_status',
                 'columnName' => 'status',
-                'precision' => 2,
-                'scale' => 2,
-                'unique' => 'unique_status',
-                ),
+           ),
         );
-        $this->assertEquals($expected, $metadata->fieldMappings);
+
+        $this->assertSame($expected, $metadata->fieldMappings);
     }
-    
-    
 }
