@@ -1,6 +1,7 @@
+#!/usr/bin/env php
 <?php
 
-require_once __DIR__ . '/../../autoload.php';
+require_once __DIR__ . '/../autoload.php';
 
 use Propel\Builder\ORM\BaseActiveRecord;
 use Propel\Builder\ORM\ActiveRecord;
