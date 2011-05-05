@@ -44,8 +44,6 @@ class TwigBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function testExportArrayAlignsKeyValuePairs($input, $expected)
     {
-        //$this->markTestSkipped();
-
         $output = TwigBuilder::exportArray($input, 4);
         $this->assertEquals($expected, $output);
     }
