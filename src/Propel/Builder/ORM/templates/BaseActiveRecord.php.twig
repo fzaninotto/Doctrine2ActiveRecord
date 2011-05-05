@@ -47,7 +47,9 @@ class {{ classname }} extends ActiveEntity{% if implements is defined %} impleme
 {{- block('Construct') -}}
 {{ block('GetterSetter') -}}
 {{ block('GenericGetterSetter') -}}
+{% if builder.isMappingStaticPhp %}
 {{ block('Metadata') -}}
+{% endif %}
 {{ block('ArrayConverter') -}}
 {# block('ArrayAccess') #}
 {% block AdditionalMethods '' %}
