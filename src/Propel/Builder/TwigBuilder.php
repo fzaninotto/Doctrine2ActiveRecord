@@ -9,6 +9,7 @@ class TwigBuilder
     protected $twigFilters = array(
         'var_export',
         'ucfirst',
+        'substr',
         '\Propel\Builder\TwigBuilder::exportArray',
         '\Propel\Builder\TwigBuilder::makeSingular'
     );

@@ -53,6 +53,9 @@ $metadata->setChangeTrackingPolicy(ClassMetadataInfo::CHANGETRACKING_DEFERRED_EX
 
 $builder = new BaseActiveRecord($metadata);
 
+$builder->setMappingDriver(BaseActiveRecord::MAPPING_STATIC_PHP | BaseActiveRecord::MAPPING_ANNOTATION);
+$builder->setAnnotationPrefix('orm');
+
 // using custom templates to tweak EntityManager
 $builder->addTemplateDir(__DIR__ . '/templates');
 

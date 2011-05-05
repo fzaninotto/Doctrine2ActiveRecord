@@ -11,6 +11,7 @@ class BaseActiveRecord extends ORMBuilder
     const MAPPING_ANNOTATION = 2;
     
     protected $mappingDriver = self::MAPPING_STATIC_PHP;
+    protected $annotationPrefix = '';
     
     public function setMappingDriver($mappingDriver)
     {
@@ -25,6 +26,24 @@ class BaseActiveRecord extends ORMBuilder
     public function isMappingAnnotation()
     {
         return (bool) ($this->mappingDriver & self::MAPPING_ANNOTATION);
+    }
+    
+    public function getAnnotationBuilder()
+    {
+        return new AnnotationBuilder($this->metadata);
+    }
+
+    public function setAnnotationPrefix($annotationPrefix)
+    {
+        $this->annotationPrefix = $annotationPrefix;
+    }
+        
+    public function getAnnotationPrefix()
+    {
+        if ($prefix = $this->annotationPrefix) {
+            return $prefix . ':';
+        }
+        return '';
     }
     
     public function getAdditionalMetadata()
@@ -51,6 +70,11 @@ class BaseActiveRecord extends ORMBuilder
             'GENERATOR_TYPE_NONE',
         );
         return self::getConstantName($generatorTypeNumber, $generatorTypes);
+    }
+    
+    public function getGeneratorTypeShortName($generatorTypeNumber)
+    {
+        return substr(self::getGeneratorTypeName($generatorTypeNumber), 45);
     }
     
     static protected function getChangeTrackingPolicyName($changeTrackingPolicyNumber)
