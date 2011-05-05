@@ -13,9 +13,22 @@ $metadata = new ClassMetadataInfo('Bookstore\\Book');
 $metadata->namespace = 'Bookstore';
 $metadata->customRepositoryClassName = 'Bookstore\BookRepository';
 $metadata->table['name'] = 'book';
-$metadata->mapField(array('fieldName' => 'name', 'type' => 'string'));
-$metadata->mapField(array('fieldName' => 'status', 'type' => 'string', 'default' => 'published'));
-$metadata->mapField(array('fieldName' => 'id', 'type' => 'integer', 'id' => true));
+
+$metadata->mapField(array(
+    'fieldName' => 'id',
+    'type'      => 'integer',
+    'id'        => true,
+));
+$metadata->mapField(array(
+    'fieldName' => 'name',
+    'type'      => 'string',
+));
+$metadata->mapField(array(
+    'fieldName' => 'status',
+    'type'      => 'string',
+    'default'   => 'published',
+));
+
 $metadata->mapOneToOne(array(
     'fieldName' => 'author',
     'targetEntity' => 'Doctrine\Tests\ORM\Tools\EntityGeneratorAuthor',
@@ -39,9 +52,12 @@ $metadata->setIdGeneratorType(ClassMetadataInfo::GENERATOR_TYPE_AUTO);
 $metadata->setChangeTrackingPolicy(ClassMetadataInfo::CHANGETRACKING_DEFERRED_EXPLICIT);
 
 $builder = new BaseActiveRecord($metadata);
+
 // using custom templates to tweak EntityManager
 $builder->addTemplateDir(__DIR__ . '/templates');
+
 // using extensions
 $builder->addExtension(new Timestampable());
 $builder->addExtension(new GenerationTimestamp());
+
 echo $builder->getCode();
