@@ -70,4 +70,47 @@ class AnnotationBuilder
 
         return 'SequenceGenerator(' . implode(', ', $sequenceGenerator) . ')';
     }
+
+    public function getDiscriminatorColumnAnnotation()
+    {
+        $discrColumn = $this->metadata->discriminatorColumn;
+        $discrColumnDetails = array();
+        if (isset($discrColumn['name'])) {
+            $discrColumnDetails[] = 'name="' . $discrColumn['name'] . '"';
+        }
+        if (isset($discrColumn['type'])) {
+            $discrColumnDetails[] = 'type="' . $discrColumn['type'] . '"';
+        }
+        if (isset($discrColumn['length']) && '' !== $discrColumn['length']) {
+            $discrColumnDetails[] = 'length=' . $discrColumn['length'];
+        }
+
+        return 'DiscriminatorColumn(' . implode(', ', $discrColumnDetails) . ')';
+    }
+
+    public function getDiscriminatorMapAnnotation()
+    {
+        $inheritanceClassMap = array();
+
+        foreach ($this->metadata->discriminatorMap as $type => $class) {
+            $inheritanceClassMap[] .= '"' . $type . '" = "' . $class . '"';
+        }
+
+        return 'DiscriminatorMap({' . implode(', ', $inheritanceClassMap) . '})';
+    }
+
+    public function getEntityAnnotation()
+    {
+        if ($this->metadata->isMappedSuperclass) {
+            $annotation = 'MappedSupperClass';
+        } else {
+            $annotation = 'Entity';
+        }
+
+        if ($this->metadata->customRepositoryClassName) {
+            $annotation .= '(repositoryClass="' . $this->metadata->customRepositoryClassName . '")';
+        }
+        
+        return $annotation;
+    }
 }

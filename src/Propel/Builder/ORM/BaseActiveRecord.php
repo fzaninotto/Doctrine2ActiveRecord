@@ -118,7 +118,7 @@ class BaseActiveRecord extends ORMBuilder
     static protected function isToManyAssociation($associationType)
     {
         return (bool) ($associationType & ClassMetadata::TO_MANY);
-    }
+    }    
     
     protected function getAssociationDetails()
     {
@@ -154,11 +154,28 @@ class BaseActiveRecord extends ORMBuilder
         return $associationDetails;
     }
     
+    public function getInheritanceDetails()
+    {
+        $inheritanceTypes = array(
+            'INHERITANCE_TYPE_NONE',
+            'INHERITANCE_TYPE_JOINED',
+            'INHERITANCE_TYPE_SINGLE_TABLE',
+            'INHERITANCE_TYPE_TABLE_PER_CLASS',
+        );
+        $inheritanceDetails = array();
+        if ($this->metadata->inheritanceType != ClassMetadata::INHERITANCE_TYPE_NONE) {
+            $inheritanceDetails['type'] = self::getConstantName($this->metadata->inheritanceType, $inheritanceTypes);
+            
+        }
+        return $inheritanceDetails;
+    }
+    
     public function getVariables()
     {
         return array_merge(parent::getVariables(), array(
             'additionalMetadata' => $this->getAdditionalMetadata(),
             'associationDetails' => $this->getAssociationDetails(),
+            'inheritanceDetails' => $this->getInheritanceDetails(),
         ));
     }
     

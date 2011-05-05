@@ -21,6 +21,20 @@ use Propel\ActiveEntity;
  * Base class providing ActiveRecord features to {{ classname }}.
  * Do not modify this class: it will be overwritten each time you regenerate
  * ActiveRecord.
+{% if builder.isMappingAnnotation %}
+ * @{{ builder.AnnotationPrefix }}{{ builder.AnnotationBuilder.EntityAnnotation }}
+{% if metadata.table['name'] is defined %}
+ * @{{ builder.AnnotationPrefix }}Table("{{ metadata.table['name'] }}")
+{% endif %}
+{% if inheritanceDetails is not empty %}
+ * @{{ builder.AnnotationPrefix }}InheritanceType("{{ inheritanceDetails.type|substr(17) }}")
+ * @{{ builder.AnnotationPrefix }}{{ builder.AnnotationBuilder.DiscriminatorColumnAnnotation }}
+ * @{{ builder.AnnotationPrefix }}{{ builder.AnnotationBuilder.DiscriminatorMapAnnotation }}
+{% endif %}
+{% if metadata.lifecycleCallbacks is defined and metadata.lifecycleCallbacks is not empty  %}
+ * @{{ builder.AnnotationPrefix }}HasLifecycleCallbacks
+{% endif %}
+{% endif %}
 {% block AdditionalDocBlock '' %}
  */
 {% endblock %}
