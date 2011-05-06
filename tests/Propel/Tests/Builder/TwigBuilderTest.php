@@ -151,6 +151,43 @@ array('colors' => array(
 ))
 NOWDOC;
 
+        $data[6][] = array(
+            'fieldName'         => 'comments',
+            'targetEntity'      => 'Doctrine\Tests\ORM\Tools\EntityGeneratorComment',
+            'cascade'           => array(),
+            'fetch'             => \Doctrine\ORM\Mapping\ClassMetadata::FETCH_LAZY,
+            'joinTable'         => array(
+                'name'               => 'book_comment',
+                'joinColumns'        => array(array(
+                    'name'                 => 'book_id',
+                    'referencedColumnName' => 'id',
+                )),
+                'inverseJoinColumns' => array(array(
+                    'name'                 => 'comment_id',
+                    'referencedColumnName' => 'id',
+                )),
+            ),
+        );
+        $data[6][] = <<< 'NOWDOC'
+array(
+    'fieldName'    => 'comments',
+    'targetEntity' => 'Doctrine\\Tests\\ORM\\Tools\\EntityGeneratorComment',
+    'cascade'      => array(),
+    'fetch'        => 2,
+    'joinTable'    => array(
+        'name'               => 'book_comment',
+        'joinColumns'        => array(array(
+            'name'                 => 'book_id',
+            'referencedColumnName' => 'id',
+        )),
+        'inverseJoinColumns' => array(array(
+            'name'                 => 'comment_id',
+            'referencedColumnName' => 'id',
+        )),
+    ),
+)
+NOWDOC;
+
         return $data;
     }
 
