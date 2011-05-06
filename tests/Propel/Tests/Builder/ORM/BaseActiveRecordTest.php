@@ -11,7 +11,7 @@ use Doctrine\ORM\UnitOfWork;
 class BaseActiveRecordTest extends TestCase
 {
     protected static $metadata;
-    
+
     static public function setUpBeforeClass()
     {
         $metadata = new ClassMetadataInfo('Propel\\Tests\\Builder\\ORM\\Author');
@@ -23,13 +23,13 @@ class BaseActiveRecordTest extends TestCase
         $builder = new BaseActiveRecord($metadata);
         eval('?>' . $builder->getCode());
     }
-    
+
     public function setUp()
     {
         parent::setUp();
         $this->entityManager->getConnection()->executeQuery('CREATE TABLE author(id INTEGER PRIMARY KEY,firstName VARCHAR(25),lastName VARCHAR(25),comment VARCHAR(25))');
     }
-    
+
     public function testDefaultValues()
     {
         $author = new Base\Author();
@@ -48,7 +48,7 @@ class BaseActiveRecordTest extends TestCase
         $author->setComment('great');
         $this->assertEquals('great', $author->getComment());
     }
-    
+
     public function testGenericGetter()
     {
         $author = new Base\Author();
@@ -84,7 +84,7 @@ class BaseActiveRecordTest extends TestCase
         $author = new Base\Author();
         $author->setByName('bliuoiui', 123);
     }
-    
+
     public function testSave()
     {
         $author = new Base\Author();
@@ -93,7 +93,7 @@ class BaseActiveRecordTest extends TestCase
         $this->assertNotNull($author->getId());
         $this->assertEquals(UnitOfWork::STATE_MANAGED, $this->entityManager->getUnitOfWork()->getEntityState($author));
     }
-    
+
     public function testToArray()
     {
         $author = new Base\Author();
@@ -108,7 +108,7 @@ class BaseActiveRecordTest extends TestCase
         );
         $this->assertEquals($expected, $author->toArray());
     }
-    
+
     public function testFromArray()
     {
         $array = array(
@@ -123,7 +123,17 @@ class BaseActiveRecordTest extends TestCase
         $this->assertNull($author->getLastName());
         $this->assertEquals('comment', $author->getComment());
     }
-    
+
+    public function testFromArrayNullValues()
+    {
+        $author = new Base\Author();
+        $author->setFirstName('pablodip');
+        $author->fromArray(array(
+            'firstName' => null,
+        ));
+        $this->assertNull($author->getFirstName());
+    }
+
     public function testIsNew()
     {
         $author = new Base\Author();
@@ -131,7 +141,7 @@ class BaseActiveRecordTest extends TestCase
         $author->save();
         $this->assertFalse($author->isNew());
     }
-    
+
     public function testIsModified()
     {
         $author = new Base\Author();
@@ -139,5 +149,5 @@ class BaseActiveRecordTest extends TestCase
         $author->save();
         $this->assertFalse($author->isModified());
     }
-    
+
 }

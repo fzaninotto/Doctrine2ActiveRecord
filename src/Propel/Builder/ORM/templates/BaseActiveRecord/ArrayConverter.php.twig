@@ -12,7 +12,7 @@
     public function fromArray($array)
     {
 {% for fieldMapping in metadata.fieldMappings %}
-        if (array_key_exists('{{ fieldMapping.fieldName }}', $array)) {
+        if (isset($array['{{ fieldMapping.fieldName }}']) || array_key_exists('{{ fieldMapping.fieldName }}', $array)) {
             $this->set{{ fieldMapping.fieldName|ucfirst }}($array['{{ fieldMapping.fieldName }}']);
         }
 {% endfor %}
