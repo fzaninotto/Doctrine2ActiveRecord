@@ -1,7 +1,7 @@
 {% block Properties %}
 {% for fieldMapping in metadata.fieldMappings %}
     /**
-     * @var {{ fieldMapping.type }} {{ fieldMapping.columnDefinition is defined ? ' ' ~ fieldMapping.columnDefinition : '' }}
+     * @var {{ fieldMapping.type }}{{ fieldMapping.columnDefinition is defined ? ' ' ~ fieldMapping.columnDefinition : '' }}
 {% if builder.isMappingAnnotation %}
      * @{{ builder.AnnotationPrefix }}{{ builder.AnnotationBuilder.FieldMappingColumnAnnotation(fieldMapping) }}
 {% if fieldMapping.id is defined %}
