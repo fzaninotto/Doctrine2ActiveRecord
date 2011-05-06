@@ -50,4 +50,24 @@ class TwigBuilderTest extends \PHPUnit_Framework_TestCase
         $output = TwigBuilder::exportArray($input, 4);
         $this->assertEquals($expected, $output);
     }
+
+    public static function makeSingularProvider()
+    {
+        return array(
+            array('books', 'book'),
+            array('men', 'man'),
+            array('entities', 'entity'),
+            array('people', 'person'),
+            array('fish', 'fish'),
+            array('wives', 'wife'),
+        );
+    }
+
+    /**
+     * @dataProvider makeSingularProvider
+     */
+    public function testMakeSingular($plural, $singular)
+    {
+        $this->assertEquals($singular, TwigBuilder::makeSingular($plural));
+    }
 }
