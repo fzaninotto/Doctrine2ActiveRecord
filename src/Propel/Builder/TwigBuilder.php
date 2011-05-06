@@ -2,6 +2,8 @@
 
 namespace Propel\Builder;
 
+use Propel\Util\Inflector;
+
 class TwigBuilder
 {
     protected $templateDirs = array();
@@ -11,7 +13,7 @@ class TwigBuilder
         'ucfirst',
         'substr',
         '\Propel\Builder\TwigBuilder::exportArray',
-        '\Propel\Builder\TwigBuilder::makeSingular'
+        '\Propel\Util\Inflector::singularize'
     );
     protected $variables = array();
     protected $tempDir;
@@ -171,14 +173,5 @@ class TwigBuilder
         }
 
         return $code ? sprintf("array(\n%s\n%s)", implode(PHP_EOL, $code), str_repeat(' ', $indent - 4)) : 'array()';
-    }
-    
-    /**
-     * Naive de-pluralizer
-     * e.g. 'comments' => 'comment'
-     */
-    static public function makeSingular($name)
-    {
-        return Inflect::singularize($name);
     }
 }

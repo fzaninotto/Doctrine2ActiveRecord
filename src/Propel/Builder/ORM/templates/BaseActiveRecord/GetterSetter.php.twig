@@ -43,7 +43,7 @@
     }
 
 {% if not associationDetail.isToOne %}
-{% set singularFieldName = associationMapping.fieldName|makeSingular %}
+{% set singularFieldName = associationMapping.fieldName|singularize %}
     /**
      * Add an element to the {{ associationMapping.fieldName }} association value
      * @param {{ associationMapping.targetEntity }} ${{ singularFieldName }}
