@@ -2,29 +2,20 @@
 {% for fieldMapping in metadata.fieldMappings %}
     /**
      * @var {{ fieldMapping.type }}{{ fieldMapping.columnDefinition is defined ? ' ' ~ fieldMapping.columnDefinition : '' }}
-{% if builder.isMappingAnnotation %}
-     * @{{ builder.AnnotationPrefix }}{{ builder.AnnotationBuilder.FieldMappingColumnAnnotation(fieldMapping) }}
-{% if fieldMapping.id is defined %}
-     * @{{ builder.AnnotationPrefix }}Id
-{% if additionalMetadata.generatorType %}
-     * @{{ builder.AnnotationPrefix }}GeneratedValue(strategy="{{  additionalMetadata.generatorType|substr(15) }}")
-{% endif %}
-{% if metadata.sequenceGeneratorDefinition is defined %}
-     * @{{ builder.AnnotationPrefix }}{{ builder.AnnotationBuilder.SequenceGeneratorAnnotation }}
-{% endif %}
-{% endif %}
-{% if fieldMapping.version is defined %}
-     * @{{ builder.AnnotationPrefix }}Version
-{% endif %}
-{% endif %}
+{%   if builder.isMappingAnnotation %}
+{%     include 'BaseActiveRecord/FieldMappingAnnotation.php.twig'  %}
+{%   endif %}
      */
     protected ${{ fieldMapping.fieldName }}{% if fieldMapping.default is defined %} = {{ fieldMapping.default|var_export(true) }}{% endif %};
 
 {% endfor %}
 {% for key, associationMapping in metadata.associationMappings %}
-{% set associationDetail = associationDetails[key] %}
+{%   set associationDetail = associationDetails[key] %}
     /**
      * @var {{ associationDetail.targetEntity }}
+{%   if builder.isMappingAnnotation %}
+{%     include 'BaseActiveRecord/AssociationMappingAnnotation.php.twig' %}
+{%   endif %}
      */
     protected ${{ associationMapping.fieldName }};
 

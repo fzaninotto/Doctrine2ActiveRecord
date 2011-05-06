@@ -1,0 +1,29 @@
+     * @{{ builder.AnnotationPrefix }}{{ builder.AnnotationBuilder.AssociationMappingAnnotation(associationMapping) }}
+{% if associationMapping.joinColumns is defined and associationMapping.joinColumns is not empty %}
+     * @{{ builder.AnnotationPrefix }}JoinColumns({
+{%   for joinColumn in associationMapping.joinColumns %}
+     *     @{{ builder.AnnotationPrefix }}{{ builder.AnnotationBuilder.JoinColumnAnnotation(joinColumn) }}
+{%   endfor %}
+     * })
+{% endif %}
+{% if associationMapping.joinTable is defined and associationMapping.joinTable is not empty %}
+     * @{{ builder.AnnotationPrefix }}{{ builder.AnnotationBuilder.JoinTableAnnotation(associationMapping.joinTable) }}
+     *   joinColumns={
+{%   for joinColumn in associationMapping.joinTable.joinColumns %}
+     *     @{{ builder.AnnotationPrefix }}{{ builder.AnnotationBuilder.JoinColumnAnnotation(joinColumn) }}
+{%   endfor %}
+     *   },
+     *   inverseJoinColumns={
+{%   for joinColumn in associationMapping.joinTable.inverseJoinColumns %}
+     *     @{{ builder.AnnotationPrefix }}{{ builder.AnnotationBuilder.JoinColumnAnnotation(joinColumn) }}
+{%   endfor %}
+     *   }
+     * )
+{% endif %}
+{% if associationMapping.orderBy is defined %}
+     * @{{ builder.AnnotationPrefix }}OrderBy({
+{% for name, direction in associationMapping.orderBy %}
+     *     "{{ name }}"="{{ direction }}"{{ loop.last ? '' : ',' }}
+{% endfor %}
+     * })
+{% endif %}

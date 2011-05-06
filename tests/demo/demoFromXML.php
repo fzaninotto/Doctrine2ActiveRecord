@@ -28,7 +28,10 @@ $cmf->setEntityManager($em);
 
 $generator = new Generator();
 foreach ($cmf->getAllMetadata() as $metadata) {
-    $generator->addBuilder(new BaseActiveRecord($metadata));
+    $builder = new BaseActiveRecord($metadata);
+    $builder->setMappingDriver(BaseActiveRecord::MAPPING_STATIC_PHP | BaseActiveRecord::MAPPING_ANNOTATION);
+    $builder->setAnnotationPrefix('orm');
+    $generator->addBuilder($builder);
     $generator->addBuilder(new ActiveRecord($metadata));
 }
 echo "Generating classes for xml schemas...\n";

@@ -1,0 +1,13 @@
+     * @{{ builder.AnnotationPrefix }}{{ builder.AnnotationBuilder.FieldMappingColumnAnnotation(fieldMapping) }}
+{% if fieldMapping.id is defined %}
+     * @{{ builder.AnnotationPrefix }}Id
+{%   if additionalMetadata.generatorType %}
+     * @{{ builder.AnnotationPrefix }}GeneratedValue(strategy="{{  additionalMetadata.generatorType|substr(15) }}")
+{%   endif %}
+{%   if metadata.sequenceGeneratorDefinition is defined %}
+     * @{{ builder.AnnotationPrefix }}{{ builder.AnnotationBuilder.SequenceGeneratorAnnotation }}
+{%   endif %}
+{% endif %}
+{% if fieldMapping.version is defined %}
+     * @{{ builder.AnnotationPrefix }}Version
+{% endif %}

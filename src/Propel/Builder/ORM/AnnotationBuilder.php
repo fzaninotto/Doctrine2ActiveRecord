@@ -113,4 +113,101 @@ class AnnotationBuilder
         
         return $annotation;
     }
+    
+    public function getAssociationMappingAnnotation(array $associationMapping)
+    {
+        $type = null;
+        switch ($associationMapping['type']) {
+            case ClassMetadataInfo::ONE_TO_ONE:
+                $type = 'OneToOne';
+                break;
+            case ClassMetadataInfo::MANY_TO_ONE:
+                $type = 'ManyToOne';
+                break;
+            case ClassMetadataInfo::ONE_TO_MANY:
+                $type = 'OneToMany';
+                break;
+            case ClassMetadataInfo::MANY_TO_MANY:
+                $type = 'ManyToMany';
+                break;
+        }
+        $typeOptions = array();
+
+        if (isset($associationMapping['targetEntity'])) {
+            $typeOptions[] = 'targetEntity="' . $associationMapping['targetEntity'] . '"';
+        }
+
+        if (isset($associationMapping['inversedBy'])) {
+            $typeOptions[] = 'inversedBy="' . $associationMapping['inversedBy'] . '"';
+        }
+
+        if (isset($associationMapping['mappedBy'])) {
+            $typeOptions[] = 'mappedBy="' . $associationMapping['mappedBy'] . '"';
+        }
+
+        if ($associationMapping['cascade']) {
+            $cascades = array();
+
+            if ($associationMapping['isCascadePersist']) $cascades[] = '"persist"';
+            if ($associationMapping['isCascadeRemove']) $cascades[] = '"remove"';
+            if ($associationMapping['isCascadeDetach']) $cascades[] = '"detach"';
+            if ($associationMapping['isCascadeMerge']) $cascades[] = '"merge"';
+            if ($associationMapping['isCascadeRefresh']) $cascades[] = '"refresh"';
+
+            $typeOptions[] = 'cascade={' . implode(',', $cascades) . '}';            
+        }
+
+        if (isset($associationMapping['orphanRemoval']) && $associationMapping['orphanRemoval']) {
+            $typeOptions[] = 'orphanRemoval=' . ($associationMapping['orphanRemoval'] ? 'true' : 'false');
+        }
+
+        return $type . '(' . implode(', ', $typeOptions) . ')';
+   }
+   
+   public function getJoinColumnAnnotation($joinColumn)
+   {
+        $joinColumnAnnot = array();
+
+        if (isset($joinColumn['name'])) {
+            $joinColumnAnnot[] = 'name="' . $joinColumn['name'] . '"';
+        }
+
+        if (isset($joinColumn['referencedColumnName'])) {
+            $joinColumnAnnot[] = 'referencedColumnName="' . $joinColumn['referencedColumnName'] . '"';
+        }
+
+        if (isset($joinColumn['unique']) && $joinColumn['unique']) {
+            $joinColumnAnnot[] = 'unique=' . ($joinColumn['unique'] ? 'true' : 'false');
+        }
+
+        if (isset($joinColumn['nullable'])) {
+            $joinColumnAnnot[] = 'nullable=' . ($joinColumn['nullable'] ? 'true' : 'false');
+        }
+
+        if (isset($joinColumn['onDelete'])) {
+            $joinColumnAnnot[] = 'onDelete=' . ($joinColumn['onDelete'] ? 'true' : 'false');
+        }
+
+        if (isset($joinColumn['onUpdate'])) {
+            $joinColumnAnnot[] = 'onUpdate=' . ($joinColumn['onUpdate'] ? 'true' : 'false');
+        }
+
+        if (isset($joinColumn['columnDefinition'])) {
+            $joinColumnAnnot[] = 'columnDefinition="' . $joinColumn['columnDefinition'] . '"';
+        }
+
+        return 'JoinColumn(' . implode(', ', $joinColumnAnnot) . ')';
+   }
+
+   public function getJoinTableAnnotation($joinTable)
+   {
+        $joinTableAnnot = array();
+        $joinTableAnnot[] = 'name="' . $joinTable['name'] . '"';
+
+        if (isset($joinTable['schema'])) {
+            $joinTableAnnot[] = 'schema="' . $joinTable['schema'] . '"';
+        }
+
+        return 'JoinTable(' . implode(', ', $joinTableAnnot) . ',';
+   }
 }
