@@ -2,7 +2,8 @@
 {% block FieldMappingGetterSetter %}
 {% for fieldMapping in metadata.fieldMappings %}
     /**
-     * Get the {{ fieldMapping.fieldName }} field value
+     * Get the {{ fieldMapping.fieldName }}
+     * 
      * @return {{ fieldMapping.type }}
      */
     public function get{{ fieldMapping.fieldName|ucfirst }}()
@@ -11,8 +12,9 @@
     }
 
     /**
-     * Set the {{ fieldMapping.fieldName }} field value
-     * @param ${{ fieldMapping.fieldName }} {{ fieldMapping.type }}
+     * Set the {{ fieldMapping.fieldName }}
+     * 
+     * @param {{ fieldMapping.type }} ${{ fieldMapping.fieldName }}
      */
     public function set{{ fieldMapping.fieldName|ucfirst }}(${{ fieldMapping.fieldName }})
     {
@@ -25,8 +27,9 @@
 {% for key, associationMapping in metadata.associationMappings %}
 {% set associationDetail = associationDetails[key] %}
     /**
-     * Get the {{ associationMapping.fieldName }} association value
-     * @return {{ associationDetail.targetEntity }} {{ associationDetail.targetEntityDescription }}
+     * Get the {% if not associationDetail.isToOne %}collection of {% endif %}related {{ associationMapping.fieldName }}
+     * 
+     * @return {{ associationDetail.targetEntity }}
      */
     public function get{{ associationMapping.fieldName|ucfirst }}()
     {
@@ -34,8 +37,9 @@
     }
 
     /**
-     * Set the {{ associationMapping.fieldName }} association value
-     * @param {{ associationDetail.targetEntity }} ${{ associationMapping.fieldName }} {{ associationDetail.targetEntityDescription }}
+     * Set the {% if not associationDetail.isToOne %}collection of {% endif %}related {{ associationMapping.fieldName }}
+     * 
+     * @param {{ associationDetail.targetEntity }} ${{ associationMapping.fieldName }}
      */
     public function set{{ associationMapping.fieldName|ucfirst }}(${{ associationMapping.fieldName }})
     {
@@ -45,7 +49,8 @@
 {% if not associationDetail.isToOne %}
 {% set singularFieldName = associationMapping.fieldName|singularize %}
     /**
-     * Add an element to the {{ associationMapping.fieldName }} association value
+     * Add a {{ singularFieldName }} to the collection of related {{ associationMapping.fieldName }}
+     * 
      * @param {{ associationMapping.targetEntity }} ${{ singularFieldName }}
      */
     public function add{{ singularFieldName|ucfirst }}(${{ singularFieldName }})
@@ -54,7 +59,8 @@
     }
 
     /**
-     * Remove an element from the {{ associationMapping.fieldName }} association value
+     * Remove a {{ singularFieldName }} from the collection of related {{ associationMapping.fieldName }}
+     * 
      * @param {{ associationMapping.targetEntity }} ${{ singularFieldName }}
      */
     public function remove{{ singularFieldName|ucfirst }}(${{ singularFieldName }})

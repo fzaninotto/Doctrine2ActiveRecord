@@ -140,12 +140,10 @@ class BaseActiveRecord extends ORMBuilder
             if (self::isToOneAssociation($associationMapping['type'])) {
                 $associationDetail['isToOne'] = true;
                 $associationDetail['targetEntity'] = '\\' .  $associationMapping['targetEntity'];
-                $associationDetail['targetEntityDescription'] = 'The related entity';
-            } else {
+             } else {
                 $associationDetail['isToOne'] = false;
                 $associationDetail['targetEntity'] = '\\Doctrine\\Common\\Collections\\ArrayCollection';
-                $associationDetail['targetEntityDescription'] = 'The collection of related entities';
-            }
+             }
             if (isset($associationMapping['fetch'])) {
                 $associationDetail['fetch'] = self::getConstantName($associationMapping['fetch'], $fetchTypes);
             }
