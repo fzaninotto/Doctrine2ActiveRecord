@@ -80,34 +80,32 @@ This generates the following code:
 ``` php
 <?php
 
-
 namespace Bookstore\Base;
 
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Doctrine\Common\Collections\ArrayCollection;
 use Propel\ActiveEntity;
 
 /**
  * Base class providing ActiveRecord features to Book.
- * Do not modify this class: it will be overwritten each time you regenerate ActiveRecord.
+ * Do not modify this class: it will be overwritten each time you regenerate
+ * ActiveRecord.
  */
 class Book extends ActiveEntity 
 {
+    /**
+     * @var integer $id
+     */
+    protected $id;
 
     /**
-     * @var string $name 
+     * @var string $name
      */
     protected $name;
 
     /**
-     * @var string $status 
+     * @var string $status
      */
     protected $status = 'published';
-
-    /**
-     * @var integer $id 
-     */
-    protected $id;
 
     /**
      * @var \Doctrine\Tests\ORM\Tools\EntityGeneratorAuthor $author
@@ -125,48 +123,12 @@ class Book extends ActiveEntity
      */
     public function __construct()
     {
-        $this->comments = new ArrayCollection();
-    }
-
-    /**
-     * Get the name field value
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Set the name field value
-     * @param $name mixed
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * Get the status field value
-     * @return mixed
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
-     * Set the status field value
-     * @param $status mixed
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
+        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
      * Get the id field value
-     * @return mixed
+     * @return integer
      */
     public function getId()
     {
@@ -175,11 +137,47 @@ class Book extends ActiveEntity
 
     /**
      * Set the id field value
-     * @param $id mixed
+     * @param $id integer
      */
     public function setId($id)
     {
         $this->id = $id;
+    }
+
+    /**
+     * Get the name field value
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set the name field value
+     * @param $name string
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * Get the status field value
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set the status field value
+     * @param $status string
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
     }
 
     /**
@@ -237,64 +235,69 @@ class Book extends ActiveEntity
     }
 
     /**
-     * Set a property of the entity by name passed in as a string.
+     * Set a property of the entity by name passed in as a string
      *
-     * @param string $name  The property name.
-     * @param mixed  $value The value.
+     * @param string $name  The property name
+     * @param mixed  $value The value
      *
-     * @throws \InvalidArgumentException If the property does not exists.
+     * @throws \InvalidArgumentException If the property does not exists
      */
     public function setByName($name, $value)
     {
-        if ('name' == $name) {
+        if ($name === 'id') {
+            return $this->setId($value);
+        }
+        if ($name === 'name') {
             return $this->setName($value);
         }
-        if ('status' == $name) {
+        if ($name === 'status') {
             return $this->setStatus($value);
-        }
-        if ('id' == $name) {
-            return $this->setId($value);
         }
 
         throw new \InvalidArgumentException(sprintf('The property "%s" does not exists.', $name));
     }
 
     /**
-     * Retrieve a property from the entity by name passed in as a string.
+     * Retrieve a property from the entity by name passed in as a string
      *
-     * @param string $name  The property name.
+     * @param string $name  The property name
      *
-     * @return mixed The value.
+     * @return mixed The value
      *
-     * @throws \InvalidArgumentException If the property does not exists.
+     * @throws \InvalidArgumentException If the property does not exists
      */
     public function getByName($name)
     {
-        if ('name' == $name) {
+        if ($name === 'id') {
+            return $this->getId();
+        }
+        if ($name === 'name') {
             return $this->getName();
         }
-        if ('status' == $name) {
+        if ($name === 'status') {
             return $this->getStatus();
-        }
-        if ('id' == $name) {
-            return $this->getId();
         }
 
         throw new \InvalidArgumentException(sprintf('The property "%s" does not exists.', $name));
     }
 
     /**
-     * Load the metadata for a Doctrine\ORM\Mapping\Driver\StaticPHPDriver.
+     * Load the metadata for a Doctrine\ORM\Mapping\Driver\StaticPHPDriver
      *
-     * @param ClassMetadata $metadata The metadata class.
+     * @param ClassMetadata $metadata The metadata class
      */
     static public function loadMetadata(ClassMetadata $metadata)
     {
         $metadata->setIdGeneratorType(ClassMetadata::GENERATOR_TYPE_AUTO);
         $metadata->setChangeTrackingPolicy(ClassMetadata::CHANGETRACKING_DEFERRED_EXPLICIT);
         $metadata->setCustomRepositoryClass('Bookstore\BookRepository');
-        $metadata->setPrimaryTable(array(
-            'name' => 'book',
+        $metadata->setPrimaryTable(array('name' => 'book'));
+
+        $metadata->mapField(array(
+            'fieldName'  => 'id',
+            'type'       => 'integer',
+            'id'         => true,
+            'columnName' => 'id',
         ));
         $metadata->mapField(array(
             'fieldName'  => 'name',
@@ -304,56 +307,48 @@ class Book extends ActiveEntity
         $metadata->mapField(array(
             'fieldName'  => 'status',
             'type'       => 'string',
+            'default'    => 'published',
             'columnName' => 'status',
         ));
-        $metadata->mapField(array(
-            'fieldName'  => 'id',
-            'type'       => 'integer',
-            'columnName' => 'id',
-            'id'         => true,
-        ));
+
         $metadata->mapOneToOne(array(
-            'fieldName'    => 'author',
-            'targetEntity' => 'Doctrine\Tests\ORM\Tools\EntityGeneratorAuthor',
-            'mappedBy'     => 'book',
-            'cascade'      => array(),
-            'fetch'        => ClassMetadata::FETCH_LAZY,
-            'joinColumns'  => array(
-                0 => array(
-                    'name' => 'author_id',
-                    'referencedColumnName' => 'id',
-                    'unique' => true,
-                ),
-            ),
+            'fieldName'         => 'author',
+            'targetEntity'      => 'Doctrine\Tests\ORM\Tools\EntityGeneratorAuthor',
+            'mappedBy'          => 'book',
+            'cascade'           => array(),
+            'fetch'             => ClassMetadata::FETCH_LAZY,
+            'joinColumns'       => array(array(
+                'name'                 => 'author_id',
+                'referencedColumnName' => 'id',
+                'unique'               => true,
+            )),
         ));
         $metadata->mapManyToMany(array(
-            'fieldName'    => 'comments',
-            'targetEntity' => 'Doctrine\Tests\ORM\Tools\EntityGeneratorComment',
-            'cascade'      => array(),
-            'fetch'        => ClassMetadata::FETCH_LAZY,
-            'joinTable'    => array(
-                'name' => 'book_comment',
-                'joinColumns' => array(
-                    0 => array(
-                        'name' => 'book_id',
-                        'referencedColumnName' => 'id',
-                    ),
-                ),
-                'inverseJoinColumns' => array(
-                    0 => array(
-                        'name' => 'comment_id',
-                        'referencedColumnName' => 'id',
-                    ),
-                ),
+            'fieldName'         => 'comments',
+            'targetEntity'      => 'Doctrine\Tests\ORM\Tools\EntityGeneratorComment',
+            'cascade'           => array(),
+            'fetch'             => ClassMetadata::FETCH_LAZY,
+            'joinTable'         => array(
+                'name'               => 'book_comment',
+                'joinColumns'        => array(array(
+                    'name'                 => 'book_id',
+                    'referencedColumnName' => 'id',
+                )),
+                'inverseJoinColumns' => array(array(
+                    'name'                 => 'comment_id',
+                    'referencedColumnName' => 'id',
+                )),
             ),
         ));
+
         $metadata->setLifecycleCallbacks(array(
-            'postLoad' => array(
-                0 => 'loading',
-            ),
-            'preRemove' => array(
-                0 => 'willBeRemoved',
-            ),
+            'postLoad'  => array('loading'),
+            'preRemove' => array('willBeRemoved'),
+        ));
+
+        $metadata->mapField(array(
+            'fieldName' => 'updatedAt',
+            'type' => 'datetime',
         ));
     }
 
@@ -369,14 +364,14 @@ class Book extends ActiveEntity
      */
     public function fromArray($array)
     {
-        if (isset($array['name'])) {
+        if (array_key_exists('id', $array)) {
+            $this->setId($array['id']);
+        }
+        if (array_key_exists('name', $array)) {
             $this->setName($array['name']);
         }
-        if (isset($array['status'])) {
+        if (array_key_exists('status', $array)) {
             $this->setStatus($array['status']);
-        }
-        if (isset($array['id'])) {
-            $this->setId($array['id']);
         }
     }
 
@@ -388,13 +383,14 @@ class Book extends ActiveEntity
     public function toArray()
     {
         return array(
+            'id' => $this->getId(),
             'name' => $this->getName(),
             'status' => $this->getStatus(),
-            'id' => $this->getId(),
         );
     }
 
 }
+
 ```
 
 Extending `ActiveEntity` is optional, but gives the same API as Propel1 (`save()`, `delete()`, `isNew()`, etc.).
