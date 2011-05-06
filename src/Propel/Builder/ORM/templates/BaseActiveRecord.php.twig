@@ -12,7 +12,9 @@ namespace {{ namespace }};
 {% endblock %}
 
 {% block UseDeclaration %}
+{% if builder.isMappingStaticPhp %}
 use Doctrine\ORM\Mapping\ClassMetadata;
+{% endif %}
 use Propel\ActiveEntity;
 {% endblock %}
 
@@ -24,7 +26,7 @@ use Propel\ActiveEntity;
 {% if builder.isMappingAnnotation %}
  * @{{ builder.AnnotationPrefix }}{{ builder.AnnotationBuilder.EntityAnnotation }}
 {% if metadata.table['name'] is defined %}
- * @{{ builder.AnnotationPrefix }}Table("{{ metadata.table['name'] }}")
+ * @{{ builder.AnnotationPrefix }}Table(name="{{ metadata.table['name'] }}")
 {% endif %}
 {% if inheritanceDetails is not empty %}
  * @{{ builder.AnnotationPrefix }}InheritanceType("{{ inheritanceDetails.type|substr(17) }}")
