@@ -156,9 +156,9 @@ class TwigBuilder
     static public function exportArray(array $array, $indent = 16)
     {
         $count = count($array);
-        $is_associative = array_keys($array) !== range(0, $count - 1);
+        $isAssociative = array_keys($array) !== range(0, $count - 1);
 
-        if ($count > 1 && $is_associative) {
+        if ($count > 1 && $isAssociative) {
             $length = array_reduce(array_keys($array), function($length, $key) {
                 return max(array($length, strlen(var_export($key, true))));
             });
@@ -179,13 +179,13 @@ class TwigBuilder
             }
 
             if ($count > 1) {
-                if ($is_associative) {
+                if ($isAssociative) {
                     $lines[] = sprintf('%s%-' . $length . 's => %s,', str_repeat(' ', $indent), var_export($key, true), $value);
                 } else {
                     $lines[] = sprintf('%s%s,', str_repeat(' ', $indent), $value);
                 }
             } else {
-                if ($is_associative) {
+                if ($isAssociative) {
                     $lines[] = sprintf('%s => %s', var_export($key, true), $value);
                 } else {
                     $lines[] = sprintf('%s', $value);
