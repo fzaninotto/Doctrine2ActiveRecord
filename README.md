@@ -93,27 +93,27 @@ use Propel\ActiveEntity;
 class Book extends ActiveEntity 
 {
     /**
-     * @var integer $id
+     * @var integer
      */
     protected $id;
 
     /**
-     * @var string $name
+     * @var string
      */
     protected $name;
 
     /**
-     * @var string $status
+     * @var string
      */
     protected $status = 'published';
 
     /**
-     * @var \Doctrine\Tests\ORM\Tools\EntityGeneratorAuthor $author
+     * @var \Doctrine\Tests\ORM\Tools\EntityGeneratorAuthor
      */
     protected $author;
 
     /**
-     * @var \Doctrine\Common\Collections\ArrayCollection $comments
+     * @var \Doctrine\Common\Collections\ArrayCollection
      */
     protected $comments;
 
@@ -127,7 +127,8 @@ class Book extends ActiveEntity
     }
 
     /**
-     * Get the id field value
+     * Get the id
+     * 
      * @return integer
      */
     public function getId()
@@ -136,8 +137,9 @@ class Book extends ActiveEntity
     }
 
     /**
-     * Set the id field value
-     * @param $id integer
+     * Set the id
+     * 
+     * @param integer $id
      */
     public function setId($id)
     {
@@ -145,7 +147,8 @@ class Book extends ActiveEntity
     }
 
     /**
-     * Get the name field value
+     * Get the name
+     * 
      * @return string
      */
     public function getName()
@@ -154,8 +157,9 @@ class Book extends ActiveEntity
     }
 
     /**
-     * Set the name field value
-     * @param $name string
+     * Set the name
+     * 
+     * @param string $name
      */
     public function setName($name)
     {
@@ -163,7 +167,8 @@ class Book extends ActiveEntity
     }
 
     /**
-     * Get the status field value
+     * Get the status
+     * 
      * @return string
      */
     public function getStatus()
@@ -172,8 +177,9 @@ class Book extends ActiveEntity
     }
 
     /**
-     * Set the status field value
-     * @param $status string
+     * Set the status
+     * 
+     * @param string $status
      */
     public function setStatus($status)
     {
@@ -181,8 +187,9 @@ class Book extends ActiveEntity
     }
 
     /**
-     * Get the author association value
-     * @return \Doctrine\Tests\ORM\Tools\EntityGeneratorAuthor The related entity
+     * Get the related author
+     * 
+     * @return \Doctrine\Tests\ORM\Tools\EntityGeneratorAuthor
      */
     public function getAuthor()
     {
@@ -190,8 +197,9 @@ class Book extends ActiveEntity
     }
 
     /**
-     * Set the author association value
-     * @param \Doctrine\Tests\ORM\Tools\EntityGeneratorAuthor $author The related entity
+     * Set the related author
+     * 
+     * @param \Doctrine\Tests\ORM\Tools\EntityGeneratorAuthor $author
      */
     public function setAuthor($author)
     {
@@ -199,8 +207,9 @@ class Book extends ActiveEntity
     }
 
     /**
-     * Get the comments association value
-     * @return \Doctrine\Common\Collections\ArrayCollection The collection of related entities
+     * Get the collection of related comments
+     * 
+     * @return \Doctrine\Common\Collections\ArrayCollection
      */
     public function getComments()
     {
@@ -208,8 +217,9 @@ class Book extends ActiveEntity
     }
 
     /**
-     * Set the comments association value
-     * @param \Doctrine\Common\Collections\ArrayCollection $comments The collection of related entities
+     * Set the collection of related comments
+     * 
+     * @param \Doctrine\Common\Collections\ArrayCollection $comments
      */
     public function setComments($comments)
     {
@@ -217,7 +227,8 @@ class Book extends ActiveEntity
     }
 
     /**
-     * Add an element to the comments association value
+     * Add a comment to the collection of related comments
+     * 
      * @param Doctrine\Tests\ORM\Tools\EntityGeneratorComment $comment
      */
     public function addComment($comment)
@@ -226,7 +237,8 @@ class Book extends ActiveEntity
     }
 
     /**
-     * Remove an element from the comments association value
+     * Remove a comment from the collection of related comments
+     * 
      * @param Doctrine\Tests\ORM\Tools\EntityGeneratorComment $comment
      */
     public function removeComment($comment)
