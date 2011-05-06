@@ -1,7 +1,7 @@
 {% block Properties %}
 {% for fieldMapping in metadata.fieldMappings %}
     /**
-     * @var {{ fieldMapping.type }} ${{ fieldMapping.fieldName }}{{ fieldMapping.columnDefinition is defined ? ' ' ~ fieldMapping.columnDefinition : '' }}
+     * @var {{ fieldMapping.type }} {{ fieldMapping.columnDefinition is defined ? ' ' ~ fieldMapping.columnDefinition : '' }}
 {% if builder.isMappingAnnotation %}
      * @{{ builder.AnnotationPrefix }}{{ builder.AnnotationBuilder.FieldMappingColumnAnnotation(fieldMapping) }}
 {% if fieldMapping.id is defined %}
@@ -24,7 +24,7 @@
 {% for key, associationMapping in metadata.associationMappings %}
 {% set associationDetail = associationDetails[key] %}
     /**
-     * @var {{ associationDetail.targetEntity }} ${{ associationMapping.fieldName }}
+     * @var {{ associationDetail.targetEntity }}
      */
     protected ${{ associationMapping.fieldName }};
 
