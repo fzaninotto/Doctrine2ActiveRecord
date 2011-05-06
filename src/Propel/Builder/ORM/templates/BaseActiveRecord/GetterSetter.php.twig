@@ -5,7 +5,7 @@
      * Get the {{ fieldMapping.fieldName }} field value
      * @return {{ fieldMapping.type }}
      */
-    public function get{{ fieldMapping.fieldName|ucfirst }}()
+    public function get{{ fieldMapping.fieldName|classify }}()
     {
         return $this->{{ fieldMapping.fieldName }};
     }
@@ -14,7 +14,7 @@
      * Set the {{ fieldMapping.fieldName }} field value
      * @param ${{ fieldMapping.fieldName }} {{ fieldMapping.type }}
      */
-    public function set{{ fieldMapping.fieldName|ucfirst }}(${{ fieldMapping.fieldName }})
+    public function set{{ fieldMapping.fieldName|classify }}(${{ fieldMapping.fieldName }})
     {
         $this->{{ fieldMapping.fieldName }} = ${{ fieldMapping.fieldName }};
     }
@@ -28,7 +28,7 @@
      * Get the {{ associationMapping.fieldName }} association value
      * @return {{ associationDetail.targetEntity }} {{ associationDetail.targetEntityDescription }}
      */
-    public function get{{ associationMapping.fieldName|ucfirst }}()
+    public function get{{ associationMapping.fieldName|classify }}()
     {
         return $this->{{ associationMapping.fieldName }};
     }
@@ -37,7 +37,7 @@
      * Set the {{ associationMapping.fieldName }} association value
      * @param {{ associationDetail.targetEntity }} ${{ associationMapping.fieldName }} {{ associationDetail.targetEntityDescription }}
      */
-    public function set{{ associationMapping.fieldName|ucfirst }}(${{ associationMapping.fieldName }})
+    public function set{{ associationMapping.fieldName|classify }}(${{ associationMapping.fieldName }})
     {
         $this->{{ associationMapping.fieldName }} = ${{ associationMapping.fieldName }};
     }
@@ -48,7 +48,7 @@
      * Add an element to the {{ associationMapping.fieldName }} association value
      * @param {{ associationMapping.targetEntity }} ${{ singularFieldName }}
      */
-    public function add{{ singularFieldName|ucfirst }}(${{ singularFieldName }})
+    public function add{{ singularFieldName|classify }}(${{ singularFieldName }})
     {
         $this->{{ associationMapping.fieldName }}->add(${{ singularFieldName }});
     }
@@ -57,7 +57,7 @@
      * Remove an element from the {{ associationMapping.fieldName }} association value
      * @param {{ associationMapping.targetEntity }} ${{ singularFieldName }}
      */
-    public function remove{{ singularFieldName|ucfirst }}(${{ singularFieldName }})
+    public function remove{{ singularFieldName|classify }}(${{ singularFieldName }})
     {
         $this->{{ associationMapping.fieldName }}->removeElement(${{ singularFieldName }});
     }

@@ -11,6 +11,7 @@ class TwigBuilder
     protected $twigFilters = array(
         'var_export',
         'ucfirst',
+        '\Doctrine\Common\Util\Inflector::classify',
         'substr',
         '\Propel\Builder\TwigBuilder::exportArray',
         '\Propel\Util\Inflector::singularize'
