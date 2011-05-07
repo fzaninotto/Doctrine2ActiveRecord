@@ -10,7 +10,7 @@
         $metadata->setIdGeneratorType(ClassMetadata::{{ additionalMetadata.generatorType }});
 {% endif %}
 {% if metadata.sequenceGeneratorDefinition is defined %}
-        $metadata->setSequenceGeneratorDefinition({{ metadata.sequenceGeneratorDefinition|exportArray(12) }});
+        $metadata->setSequenceGeneratorDefinition({{ metadata.sequenceGeneratorDefinition|stringify(12) }});
 {% endif %}
 {% if additionalMetadata.changeTrackingPolicy %}
         $metadata->setChangeTrackingPolicy(ClassMetadata::{{ additionalMetadata.changeTrackingPolicy }});
@@ -19,11 +19,11 @@
         $metadata->setCustomRepositoryClass('{{ metadata.customRepositoryClassName }}');
 {% endif %}
 {% if metadata.table is defined %}
-        $metadata->setPrimaryTable({{ metadata.table|exportArray(12) }});
+        $metadata->setPrimaryTable({{ metadata.table|stringify(12) }});
 {% endif %}
 
 {% for fieldMapping in metadata.fieldMappings %}
-        $metadata->mapField({{ fieldMapping|exportArray(12) }});
+        $metadata->mapField({{ fieldMapping|stringify(12) }});
 {% endfor %}
 
 {% for key, associationMapping in metadata.associationMappings %}
@@ -38,19 +38,19 @@
             'inversedBy'        => '{{ associationMapping.inversedBy }}',
 {% endif %}
 {% if associationMapping.cascade is defined %}
-            'cascade'           => {{ associationMapping.cascade|exportArray }},
+            'cascade'           => {{ associationMapping.cascade|stringify }},
 {% endif %}
 {% if associationMapping.orderBy is defined %}
-            'orderBy'           => {{ associationMapping.orderBy|exportArray }},
+            'orderBy'           => {{ associationMapping.orderBy|stringify }},
 {% endif %}
 {% if associationDetail.fetch is defined %}
             'fetch'             => ClassMetadata::{{ associationDetail.fetch }},
 {% endif %}
 {% if associationMapping.joinTable is defined %}
-            'joinTable'         => {{ associationMapping.joinTable|exportArray }},
+            'joinTable'         => {{ associationMapping.joinTable|stringify }},
 {% endif %}
 {% if associationMapping.joinColumns is defined %}
-            'joinColumns'       => {{ associationMapping.joinColumns|exportArray }},
+            'joinColumns'       => {{ associationMapping.joinColumns|stringify }},
 {% endif %}
 {% if associationMapping.indexBy is defined %}
             'indexBy'           => '{{ associationMapping.indexBy }}',
@@ -59,7 +59,7 @@
 {% endfor %}
 {% if metadata.lifecycleCallbacks is not empty %}
 
-        $metadata->setLifecycleCallbacks({{ metadata.lifecycleCallbacks|exportArray(12) }});
+        $metadata->setLifecycleCallbacks({{ metadata.lifecycleCallbacks|stringify(12) }});
 {% endif %}
 {% block AdditionalMapping '' %}
     }
