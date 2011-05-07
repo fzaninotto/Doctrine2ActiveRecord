@@ -2,14 +2,14 @@
 
 namespace Propel\Tests\Builder;
 
-use Propel\Builder\TwigBuilder;
+use Propel\Util\ArrayType;
 
-class TwigBuilderTest extends \PHPUnit_Framework_TestCase
+class ArrayTypeTest extends \PHPUnit_Framework_TestCase
 {
-    public function testExportArrayHandlesValueType()
+    public function testStringifyHandlesValueType()
     {
         $input = array('id' => true, 'name' => 'foo', 'size' => 12);
-        $output = TwigBuilder::exportArray($input, 4);
+        $output = ArrayType::stringify($input, 4);
         $expected = "array(
     'id'   => true,
     'name' => 'foo',
@@ -18,7 +18,7 @@ class TwigBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $output);
     }
 
-    public static function exportArrayAlignsKeyValuePairsProvider()
+    public static function stringifyAlignsKeyValuePairsProvider()
     {
         return array(
             array(array('a' => true), "array('a' => true)"),
@@ -40,15 +40,15 @@ class TwigBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider exportArrayAlignsKeyValuePairsProvider
+     * @dataProvider stringifyAlignsKeyValuePairsProvider
      */
-    public function testExportArrayAlignsKeyValuePairs($input, $expected)
+    public function testStringifyAlignsKeyValuePairs($input, $expected)
     {
-        $output = TwigBuilder::exportArray($input, 4);
+        $output = ArrayType::stringify($input, 4);
         $this->assertEquals($expected, $output);
     }
 
-    public static function exportArrayInlineIfSingleValueProvider()
+    public static function stringifyInlineIfSingleValueProvider()
     {
         $data = array();
         $i = 0;
@@ -192,11 +192,11 @@ NOWDOC;
     }
 
     /**
-     * @dataProvider exportArrayInlineIfSingleValueProvider
+     * @dataProvider stringifyInlineIfSingleValueProvider
      */
-    public function testExportArrayInlineIfSingleValue($input, $expected)
+    public function testStringifyInlineIfSingleValue($input, $expected)
     {
-        $output = TwigBuilder::exportArray($input, 4);
+        $output = ArrayType::stringify($input, 4);
         $this->assertEquals($expected, $output);
     }
 
