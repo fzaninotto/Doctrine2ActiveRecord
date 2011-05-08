@@ -4,7 +4,7 @@
     /**
      * Get the {{ fieldMapping.fieldName }}
      * 
-     * @return {{ fieldMapping.type }}
+     * @return {{ fieldMapping.type|typeToPhp }}
      */
     public function get{{ fieldMapping.fieldName|classify }}()
     {
@@ -14,7 +14,7 @@
     /**
      * Set the {{ fieldMapping.fieldName }}
      * 
-     * @param {{ fieldMapping.type }} ${{ fieldMapping.fieldName }}
+     * @param {{ fieldMapping.type|typeToPhp }} ${{ fieldMapping.fieldName }}
      */
     public function set{{ fieldMapping.fieldName|classify }}(${{ fieldMapping.fieldName }})
     {
