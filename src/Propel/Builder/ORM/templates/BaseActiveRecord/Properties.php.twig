@@ -3,6 +3,7 @@
     /**
      * @var {{ fieldMapping.type }}{{ fieldMapping.columnDefinition is defined ? ' ' ~ fieldMapping.columnDefinition : '' }}
 {%   if builder.isMappingAnnotation %}
+     * 
 {%     include 'BaseActiveRecord/FieldMappingAnnotation.php.twig'  %}
 {%   endif %}
      */
@@ -14,6 +15,7 @@
     /**
      * @var {{ associationDetail.targetEntity }}
 {%   if builder.isMappingAnnotation %}
+     * 
 {%     include 'BaseActiveRecord/AssociationMappingAnnotation.php.twig' %}
 {%   endif %}
      */

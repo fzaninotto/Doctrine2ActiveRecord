@@ -1,3 +1,4 @@
+#!/usr/bin/php
 <?php
 
 require_once __DIR__ . '/../../autoload.php';
@@ -7,7 +8,6 @@ use Propel\Builder\ORM\ActiveRecord;
 use Propel\Builder\Extension\Timestampable;
 use Propel\Builder\Extension\GenerationTimestamp;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
-
 
 $metadata = new ClassMetadataInfo('Bookstore\\Book');
 $metadata->namespace = 'Bookstore';

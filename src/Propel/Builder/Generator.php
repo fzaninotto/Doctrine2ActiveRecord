@@ -42,6 +42,8 @@ class Generator
     public function writeClasses($outputDirectory)
     {
         foreach ($this->builders as $builder) {
+            /* @var $builder \Propel\Builder\ORM\BaseActiveRecord */
+
             $builder->writeClass($outputDirectory);
         }
     }

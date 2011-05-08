@@ -8,7 +8,11 @@ use Doctrine\ORM\Mapping\ClassMetadataInfo;
 
 class ORMBuilder extends TwigBuilder
 {
+    /**
+     * @var \Doctrine\ORM\Mapping\ClassMetadataInfo
+     */
     protected $metadata;
+
     protected $extensions = array();
     
     public function __construct(ClassMetadataInfo $metadata)

@@ -86,11 +86,8 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 use Propel\ActiveEntity;
 
 /**
- * Base class providing ActiveRecord features to Book.
- * Do not modify this class: it will be overwritten each time you regenerate
- * ActiveRecord.
  */
-class Book extends ActiveEntity 
+class Book extends ActiveEntity
 {
     /**
      * @var integer
@@ -248,10 +245,10 @@ class Book extends ActiveEntity
 
     /**
      * Set a property of the entity by name passed in as a string
-     *
+     * 
      * @param string $name  The property name
      * @param mixed  $value The value
-     *
+     * 
      * @throws \InvalidArgumentException If the property does not exists
      */
     public function setByName($name, $value)
@@ -271,11 +268,11 @@ class Book extends ActiveEntity
 
     /**
      * Retrieve a property from the entity by name passed in as a string
-     *
+     * 
      * @param string $name  The property name
-     *
+     * 
      * @return mixed The value
-     *
+     * 
      * @throws \InvalidArgumentException If the property does not exists
      */
     public function getByName($name)
@@ -357,40 +354,30 @@ class Book extends ActiveEntity
             'postLoad'  => array('loading'),
             'preRemove' => array('willBeRemoved'),
         ));
-
-        $metadata->mapField(array(
-            'fieldName' => 'updatedAt',
-            'type' => 'datetime',
-        ));
     }
 
-   /**
-     * Populates the object using an array.
-     *
-     * This is particularly useful when populating an object from one of the
-     * request arrays (e.g. $_POST). This method goes through the column
-     * names, checking to see whether a matching key exists in populated
-     * array. If so the set[ColumnName]() method is called for that column.
-     *
-     * @param array $array An array to populate the object from.
+    /**
+     * Populates the entity from an associative array
+     * 
+     * @param array $array
      */
     public function fromArray($array)
     {
-        if (array_key_exists('id', $array)) {
+        if (isset($array['id']) || array_key_exists('id', $array)) {
             $this->setId($array['id']);
         }
-        if (array_key_exists('name', $array)) {
+        if (isset($array['name']) || array_key_exists('name', $array)) {
             $this->setName($array['name']);
         }
-        if (array_key_exists('status', $array)) {
+        if (isset($array['status']) || array_key_exists('status', $array)) {
             $this->setStatus($array['status']);
         }
     }
 
     /**
-     * Exports the object as an array.
-     *
-     * @return array An associative array containing the field names (as keys) and field values.
+     * Exports the entity to an associative array
+     * 
+     * @return array
      */
     public function toArray()
     {
