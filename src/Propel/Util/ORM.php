@@ -28,7 +28,7 @@ class ORM
             'datetime' => '\DateTime',
             'text'     => 'string',
             'object'   => 'object',
-            'array'    => 'object',
+            'array'    => 'array',
             'float'    => 'float',
         );
 
