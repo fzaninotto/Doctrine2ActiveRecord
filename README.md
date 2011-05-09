@@ -86,6 +86,9 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 use Propel\ActiveEntity;
 
 /**
+ * Base class providing ActiveRecord features to Book.
+ * Do not modify this class: it will be overwritten each time you regenerate
+ * ActiveRecord.
  */
 class Book extends ActiveEntity
 {
@@ -358,6 +361,11 @@ class Book extends ActiveEntity
 
     /**
      * Populates the entity from an associative array
+     * 
+     * This is particularly useful when populating an object from one of the
+     * request arrays (e.g. $_POST). This method goes through the column
+     * names, checking to see whether a matching key exists in populated
+     * array. If so the set[ColumnName]() method is called for that column.
      * 
      * @param array $array
      */

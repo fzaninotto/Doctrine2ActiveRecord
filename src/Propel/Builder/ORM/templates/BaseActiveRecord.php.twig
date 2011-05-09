@@ -20,7 +20,11 @@ use Propel\ActiveEntity;
 
 {% block DocBlock %}
 /**
+ * Base class providing ActiveRecord features to {{ classname }}.
+ * Do not modify this class: it will be overwritten each time you regenerate
+ * ActiveRecord.
 {% if builder.isMappingAnnotation %}
+ * 
  * @{{ builder.AnnotationPrefix }}{{ builder.AnnotationBuilder.EntityAnnotation }}
 {% if metadata.table['name'] is defined %}
  * @{{ builder.AnnotationPrefix }}Table(name="{{ metadata.table['name'] }}")
