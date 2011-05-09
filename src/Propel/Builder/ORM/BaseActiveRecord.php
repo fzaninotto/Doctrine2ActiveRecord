@@ -49,8 +49,8 @@ class BaseActiveRecord extends ORMBuilder
     public function getAdditionalMetadata()
     {
         $additionalMetadata = array(
-            'generatorType'        => self::getGeneratorTypeName($this->metadata->generatorType),
-            'changeTrackingPolicy' => self::getChangeTrackingPolicyName($this->metadata->changeTrackingPolicy),
+            'generatorType'         => self::getGeneratorTypeName($this->metadata->generatorType),
+            'changeTrackingPolicy'  => self::getChangeTrackingPolicyName($this->metadata->changeTrackingPolicy),
             'hasToManyAssociations' => self::getHasToManyAssociations($this->metadata->associationMappings),
         );
         
@@ -62,6 +62,7 @@ class BaseActiveRecord extends ORMBuilder
         if ($generatorTypeNumber == ClassMetadata::GENERATOR_TYPE_NONE) {
             return false;
         }
+
         $generatorTypes  = array(
             'GENERATOR_TYPE_AUTO',
             'GENERATOR_TYPE_SEQUENCE',
@@ -69,6 +70,7 @@ class BaseActiveRecord extends ORMBuilder
             'GENERATOR_TYPE_IDENTITY', 
             'GENERATOR_TYPE_NONE',
         );
+
         return self::getConstantName($generatorTypeNumber, $generatorTypes);
     }
     
@@ -87,6 +89,7 @@ class BaseActiveRecord extends ORMBuilder
             'CHANGETRACKING_DEFERRED_EXPLICIT',
             'CHANGETRACKING_NOTIFY',
         );
+
         return self::getConstantName($changeTrackingPolicyNumber, $changeTrackingPolicies);
     }
     
@@ -97,6 +100,7 @@ class BaseActiveRecord extends ORMBuilder
                 return true;
             }
         }
+
         return false;
     }
     
@@ -107,6 +111,7 @@ class BaseActiveRecord extends ORMBuilder
                 return $name;
             }
         }
+
         return false;
     }
     
@@ -149,6 +154,7 @@ class BaseActiveRecord extends ORMBuilder
             }
             $associationDetails[$key] = $associationDetail;
         }
+
         return $associationDetails;
     }
     
@@ -165,6 +171,7 @@ class BaseActiveRecord extends ORMBuilder
             $inheritanceDetails['type'] = self::getConstantName($this->metadata->inheritanceType, $inheritanceTypes);
             
         }
+
         return $inheritanceDetails;
     }
     
@@ -182,6 +189,7 @@ class BaseActiveRecord extends ORMBuilder
         if ($namespace = parent::getNamespace()) {
             return $namespace . '\\Base';
         }
+
         return 'Base';
     }
 }

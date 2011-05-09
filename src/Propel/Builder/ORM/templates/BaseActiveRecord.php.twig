@@ -24,6 +24,7 @@ use Propel\ActiveEntity;
  * Do not modify this class: it will be overwritten each time you regenerate
  * ActiveRecord.
 {% if builder.isMappingAnnotation %}
+ * 
  * @{{ builder.AnnotationPrefix }}{{ builder.AnnotationBuilder.EntityAnnotation }}
 {% if metadata.table['name'] is defined %}
  * @{{ builder.AnnotationPrefix }}Table(name="{{ metadata.table['name'] }}")
@@ -41,7 +42,8 @@ use Propel\ActiveEntity;
  */
 {% endblock %}
 {% block ClassDeclaration %}
-class {{ classname }} extends ActiveEntity{% if implements is defined %} implements {{ implements }}{% endif %} 
+class {{ classname }} extends ActiveEntity{% if implements is defined %} implements {{ implements }}{% endif %}
+
 {% endblock %}
 {
 {% block Body %}
