@@ -1,7 +1,7 @@
 {% block Properties %}
 {% for fieldMapping in metadata.fieldMappings %}
     /**
-     * @var {{ fieldMapping.type }}{{ fieldMapping.columnDefinition is defined ? ' ' ~ fieldMapping.columnDefinition : '' }}
+     * @var {{ fieldMapping.type|typeToPhp }}{{ fieldMapping.columnDefinition is defined ? ' ' ~ fieldMapping.columnDefinition : '' }}
 {%   if builder.isMappingAnnotation %}
      * 
 {%     include 'BaseActiveRecord/FieldMappingAnnotation.php.twig'  %}

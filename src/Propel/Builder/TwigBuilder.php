@@ -14,7 +14,8 @@ class TwigBuilder
         '\Doctrine\Common\Util\Inflector::classify',
         'substr',
         '\Propel\Util\ArrayType::stringify',
-        '\Propel\Util\Inflector::singularize'
+        '\Propel\Util\Inflector::singularize',
+        '\Propel\Util\ORM::typeToPhp',
     );
     protected $variables = array();
     protected $tempDir;
