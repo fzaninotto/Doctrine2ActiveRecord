@@ -229,7 +229,7 @@ class Book extends ActiveEntity
     /**
      * Add a comment to the collection of related comments
      * 
-     * @param Doctrine\Tests\ORM\Tools\EntityGeneratorComment $comment
+     * @param \Doctrine\Tests\ORM\Tools\EntityGeneratorComment $comment
      */
     public function addComment($comment)
     {
@@ -239,7 +239,7 @@ class Book extends ActiveEntity
     /**
      * Remove a comment from the collection of related comments
      * 
-     * @param Doctrine\Tests\ORM\Tools\EntityGeneratorComment $comment
+     * @param \Doctrine\Tests\ORM\Tools\EntityGeneratorComment $comment
      */
     public function removeComment($comment)
     {
@@ -249,48 +249,55 @@ class Book extends ActiveEntity
     /**
      * Set a property of the entity by name passed in as a string
      * 
-     * @param string $name  The property name
-     * @param mixed  $value The value
+     * @param string $name
+     * @param mixed  $value
      * 
      * @throws \InvalidArgumentException If the property does not exists
      */
     public function setByName($name, $value)
     {
-        if ($name === 'id') {
-            return $this->setId($value);
-        }
-        if ($name === 'name') {
-            return $this->setName($value);
-        }
-        if ($name === 'status') {
-            return $this->setStatus($value);
-        }
+        switch ($name) {
+            case 'id':
+                $this->setId($value);
+                break;
 
-        throw new \InvalidArgumentException(sprintf('The property "%s" does not exists.', $name));
+            case 'name':
+                $this->setName($value);
+                break;
+
+            case 'status':
+                $this->setStatus($value);
+                break;
+
+            default:
+                throw new \InvalidArgumentException(sprintf('Generic setter for "%s" is not defined', $name));
+        }
     }
 
     /**
-     * Retrieve a property from the entity by name passed in as a string
+     * Get a property from the entity by name passed in as a string
      * 
-     * @param string $name  The property name
+     * @param string $name
      * 
-     * @return mixed The value
+     * @return mixed
      * 
      * @throws \InvalidArgumentException If the property does not exists
      */
     public function getByName($name)
     {
-        if ($name === 'id') {
-            return $this->getId();
-        }
-        if ($name === 'name') {
-            return $this->getName();
-        }
-        if ($name === 'status') {
-            return $this->getStatus();
-        }
+        switch ($name) {
+            case 'id':
+                return $this->getId($value);
 
-        throw new \InvalidArgumentException(sprintf('The property "%s" does not exists.', $name));
+            case 'name':
+                return $this->getName($value);
+
+            case 'status':
+                return $this->getStatus($value);
+
+            default:
+                throw new \InvalidArgumentException(sprintf('Generic getter for "%s" is not defined', $name));
+        }
     }
 
     /**
@@ -369,16 +376,10 @@ class Book extends ActiveEntity
      * 
      * @param array $array
      */
-    public function fromArray($array)
+    public function fromArray(array $array)
     {
-        if (isset($array['id']) || array_key_exists('id', $array)) {
-            $this->setId($array['id']);
-        }
-        if (isset($array['name']) || array_key_exists('name', $array)) {
-            $this->setName($array['name']);
-        }
-        if (isset($array['status']) || array_key_exists('status', $array)) {
-            $this->setStatus($array['status']);
+        foreach ($array as $name => $value) {
+            $this->setByName($name, $value);
         }
     }
 
