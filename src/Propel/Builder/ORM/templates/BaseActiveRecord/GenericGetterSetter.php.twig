@@ -2,40 +2,45 @@
     /**
      * Set a property of the entity by name passed in as a string
      * 
-     * @param string $name  The property name
-     * @param mixed  $value The value
+     * @param string $name
+     * @param mixed  $value
      * 
      * @throws \InvalidArgumentException If the property does not exists
      */
     public function setByName($name, $value)
     {
-{% for fieldMapping in metadata.fieldMappings %}
-        if ($name === '{{ fieldMapping.fieldName }}') {
-            return $this->set{{ fieldMapping.fieldName|ucfirst }}($value);
-        }
-{% endfor %}
+        switch ($name) {
+{%      for fieldMapping in metadata.fieldMappings %}
+            case '{{ fieldMapping.fieldName }}':
+                $this->set{{ fieldMapping.fieldName|classify }}($value);
+                break;
 
-        throw new \InvalidArgumentException(sprintf('The property "%s" does not exists.', $name));
+{%      endfor %}
+            default:
+                throw new \InvalidArgumentException(sprintf('Generic setter for "%s" is not defined', $name));
+        }
     }
 
     /**
-     * Retrieve a property from the entity by name passed in as a string
+     * Get a property from the entity by name passed in as a string
      * 
-     * @param string $name  The property name
+     * @param string $name
      * 
-     * @return mixed The value
+     * @return mixed
      * 
      * @throws \InvalidArgumentException If the property does not exists
      */
     public function getByName($name)
     {
-{% for fieldMapping in metadata.fieldMappings %}
-        if ($name === '{{ fieldMapping.fieldName }}') {
-            return $this->get{{ fieldMapping.fieldName|ucfirst }}();
-        }
-{% endfor %}
+        switch ($name) {
+{%      for fieldMapping in metadata.fieldMappings %}
+            case '{{ fieldMapping.fieldName }}':
+                return $this->get{{ fieldMapping.fieldName|classify }}($value);
 
-        throw new \InvalidArgumentException(sprintf('The property "%s" does not exists.', $name));
+{%      endfor %}
+            default:
+                throw new \InvalidArgumentException(sprintf('Generic getter for "%s" is not defined', $name));
+        }
     }
 
 {% endblock %}
