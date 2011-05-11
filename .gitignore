@@ -1,2 +1,3 @@
 config.php
-tests/demo/Model/*
+tests/database.sqlite
+tests/fixtures/Entities/

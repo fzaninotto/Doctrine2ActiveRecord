@@ -27,12 +27,6 @@ From the root of the project, type:
 
 This outputs the generated code for a Base ActiveRecord class, based on a `Doctrine\ORM\Mapping\ClassMetadataInfo` instance.
 
-To see the classes generated for XML mappings, you can also type:
-
-    $ php tests/demo/demoFromXML.php
-
-The classes are generated under set in `tests/demo/Model/`, based on the metadata set under `tests/demo/schema/`.
-
 Features
 --------
 
