@@ -9,16 +9,19 @@
 {% if additionalMetadata.generatorType %}
         $metadata->setIdGeneratorType(ClassMetadata::{{ additionalMetadata.generatorType }});
 {% endif %}
-{% if metadata.sequenceGeneratorDefinition is defined %}
+{% if metadata.sequenceGeneratorDefinition is defined
+  and metadata.sequenceGeneratorDefinition is not empty %}
         $metadata->setSequenceGeneratorDefinition({{ metadata.sequenceGeneratorDefinition|stringify(12) }});
 {% endif %}
 {% if additionalMetadata.changeTrackingPolicy %}
         $metadata->setChangeTrackingPolicy(ClassMetadata::{{ additionalMetadata.changeTrackingPolicy }});
 {% endif %}
-{% if metadata.customRepositoryClassName is defined %}
+{% if metadata.customRepositoryClassName is defined
+  and metadata.customRepositoryClassName is not empty %}
         $metadata->setCustomRepositoryClass('{{ metadata.customRepositoryClassName }}');
 {% endif %}
-{% if metadata.table is defined %}
+{% if metadata.table is defined
+  and metadata.table is not empty %}
         $metadata->setPrimaryTable({{ metadata.table|stringify(12) }});
 {% endif %}
 
