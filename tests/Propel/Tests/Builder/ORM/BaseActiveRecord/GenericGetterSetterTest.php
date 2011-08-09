@@ -4,7 +4,7 @@ namespace Propel\Tests\Builder\ORM\BaseActiveRecord;
 
 use Propel\Builder\ORM\BaseActiveRecord;
 use Propel\Builder\ORM\ActiveRecord;
-use Propel\Mapping\ClassMetadataInfo;
+use Doctrine\ORM\Mapping\ClassMetadataInfo;
 
 class GenericGetterSetterTest extends \PHPUnit_Framework_TestCase
 {

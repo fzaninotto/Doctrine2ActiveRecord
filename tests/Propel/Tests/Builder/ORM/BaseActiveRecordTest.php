@@ -4,7 +4,7 @@ namespace Propel\Tests\Builder\ORM;
 
 use Propel\Tests\TestCase;
 use Propel\Builder\ORM\BaseActiveRecord;
-use Propel\Mapping\ClassMetadataInfo;
+use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Doctrine\ORM\Tools\SchemaTool;
 use Doctrine\ORM\UnitOfWork;
 

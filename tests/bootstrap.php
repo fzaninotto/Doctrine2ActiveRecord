@@ -20,7 +20,6 @@ $driverImpl = new XmlDriver(__DIR__ . '/fixtures');
 $config->setMetadataDriverImpl($driverImpl);
 $config->setProxyDir(__DIR__ . '/Proxies');
 $config->setProxyNamespace('Proxies');
-$config->setClassMetadataFactoryName('Propel\Mapping\DisconnectedClassMetadataFactory');
 
 $connectionOptions = array(
     'driver' => 'pdo_sqlite',
