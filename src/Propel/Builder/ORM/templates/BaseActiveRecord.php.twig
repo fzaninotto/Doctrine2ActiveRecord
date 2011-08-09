@@ -5,6 +5,7 @@
 {% use 'BaseActiveRecord/Metadata.php.twig' %}
 {% use 'BaseActiveRecord/ArrayConverter.php.twig' %}
 {% use 'BaseActiveRecord/ArrayAccess.php.twig' %}
+{% use 'BaseActiveRecord/ActiveEntity.php.twig' %}
 <?php
 
 {% block NamespaceDeclaration %}
@@ -15,7 +16,6 @@ namespace {{ namespace }};
 {% if builder.isMappingStaticPhp %}
 use Doctrine\ORM\Mapping\ClassMetadata;
 {% endif %}
-use Propel\ActiveEntity;
 {% endblock %}
 
 {% block DocBlock %}
@@ -42,7 +42,7 @@ use Propel\ActiveEntity;
  */
 {% endblock %}
 {% block ClassDeclaration %}
-class {{ classname }} extends ActiveEntity{% if implements is defined %} implements {{ implements }}{% endif %}
+class {{ classname }} {% if implements is defined %} implements {{ implements }}{% endif %}
 
 {% endblock %}
 {
@@ -56,6 +56,7 @@ class {{ classname }} extends ActiveEntity{% if implements is defined %} impleme
 {% endif %}
 {{ block('ArrayConverter') -}}
 {# block('ArrayAccess') #}
+{{ block('ActiveEntity') -}}
 {% block AdditionalMethods '' %}
 {% endblock Body %}
 }
