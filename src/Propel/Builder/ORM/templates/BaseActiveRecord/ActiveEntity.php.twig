@@ -56,13 +56,104 @@
     }
 
     /**
+     * Perform custom actions before persisting a new object.
+     * Returning a non-true value will cancel persisting the object.
+     * 
+     * @return bool
+     */
+    public function preInsert()
+    {
+        return true;
+    }
+
+    /**
+     * Perform custom actions before persisting an existing.
+     * Returning a non-true value will cancel persisting the object.
+     * 
+     * @return bool
+     */
+    public function preUpdate()
+    {
+        return true;
+    }
+
+    /**
+     * Perform custom actions before persisting any object.
+     * Returning a non-true value will cancel persisting the object.
+     * 
+     * @return bool
+     */
+    public function preSave()
+    {
+        return true;
+    }
+
+    /**
      * Persist the current object and flush the entity manager
      */
     public function save()
     {
-        $em = self::getEntityManager();
-        $em->persist($this);
-        $em->flush();
+        return $this->doSave(true);
+    }
+
+    /**
+     * Persist the current object without flushing the entity manager
+     */
+    public function persist()
+    {
+        return $this->doSave(false);
+    }
+
+    /**
+     * Perform a save task, with our without flushing the entity manager.
+     */
+    protected function doSave($flush = true)
+    {
+        if ($this->isNew()) {
+            $isInsert = true;
+            $ret = $this->preInsert();
+        } else {
+            $isInsert = false;
+            $ret = $this->preUpdate();
+        }
+
+        if ($ret && $this->preSave())
+        {
+            $em = self::getEntityManager();
+            $em->persist($this);
+            
+            if ($flush) {
+                $em->flush();
+            }
+            
+            if ($isInsert) {
+                $this->postInsert();
+            } else {
+                $this->postUpdate();
+            }
+            $this->postSave();
+        }
+    }
+
+    /**
+     * Perform custom actions after persisting a new object.
+     */
+    public function postInsert()
+    {
+    }
+
+    /**
+     * Perform custom actions after persisting an existing object.
+     */
+    public function postUpdate()
+    {
+    }
+
+    /**
+     * Perform custom actions after persisting any object.
+     */
+    public function postSave()
+    {
     }
 
     /**

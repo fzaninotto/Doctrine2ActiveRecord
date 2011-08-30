@@ -11,7 +11,7 @@ class GetterSetterTest extends \PHPUnit_Framework_TestCase
     static public function setUpBeforeClass()
     {
         $metadata = new ClassMetadataInfo('Propel\\Tests\\Builder\\ORM\\BaseActiveRecord\\GetterSetterEntity');
-        $metadata->setTableName('author');
+        $metadata->setPrimaryTable(array('name' => 'author'));
         $metadata->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_AUTO);
         $metadata->mapField(array('fieldName' => 'id', 'type' => 'integer', 'id' => true));
         $metadata->mapField(array('fieldName' => 'firstName', 'type' => 'string'));
