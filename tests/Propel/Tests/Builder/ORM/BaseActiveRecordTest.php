@@ -15,7 +15,7 @@ class BaseActiveRecordTest extends TestCase
     static public function setUpBeforeClass()
     {
         $metadata = new ClassMetadataInfo('Propel\\Tests\\Builder\\ORM\\Author');
-        $metadata->setTableName('author');
+        $metadata->setPrimaryTable(array('name' => 'author'));
         $metadata->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_AUTO);
         $metadata->mapField(array('fieldName' => 'id', 'type' => 'integer', 'id' => true));
         $metadata->mapField(array('fieldName' => 'firstName', 'type' => 'string', 'nullable' => true));
@@ -42,6 +42,15 @@ class BaseActiveRecordTest extends TestCase
         $this->assertEquals(UnitOfWork::STATE_MANAGED, $this->entityManager->getUnitOfWork()->getEntityState($author));
     }
 
+    public function testPersist()
+    {
+        $author = new Base\Author();
+        $this->assertEquals(UnitOfWork::STATE_NEW, $this->entityManager->getUnitOfWork()->getEntityState($author));
+        $author->persist();
+        $this->assertNull($author->getId());
+        $this->assertEquals(UnitOfWork::STATE_MANAGED, $this->entityManager->getUnitOfWork()->getEntityState($author));
+    }
+
     public function testIsNew()
     {
         $author = new Base\Author();
@@ -57,5 +66,4 @@ class BaseActiveRecordTest extends TestCase
         $author->save();
         $this->assertFalse($author->isModified());
     }
-
 }

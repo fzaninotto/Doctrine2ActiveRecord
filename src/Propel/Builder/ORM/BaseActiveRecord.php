@@ -67,7 +67,7 @@ class BaseActiveRecord extends ORMBuilder
             'GENERATOR_TYPE_AUTO',
             'GENERATOR_TYPE_SEQUENCE',
             'GENERATOR_TYPE_TABLE',
-            'GENERATOR_TYPE_IDENTITY', 
+            'GENERATOR_TYPE_IDENTITY',
             'GENERATOR_TYPE_NONE',
         );
 
@@ -123,7 +123,7 @@ class BaseActiveRecord extends ORMBuilder
     static protected function isToManyAssociation($associationType)
     {
         return (bool) ($associationType & ClassMetadata::TO_MANY);
-    }    
+    }
     
     protected function getAssociationDetails()
     {
