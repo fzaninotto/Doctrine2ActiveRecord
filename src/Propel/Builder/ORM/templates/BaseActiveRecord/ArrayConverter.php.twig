@@ -13,7 +13,7 @@
     {
 {% for fieldMapping in metadata.fieldMappings %}
         if (isset($array['{{ fieldMapping.fieldName }}']) || array_key_exists('{{ fieldMapping.fieldName }}', $array)) {
-            $this->set{{ fieldMapping.fieldName|ucfirst }}($array['{{ fieldMapping.fieldName }}']);
+            $this->set{{ fieldMapping.fieldName|classify }}($array['{{ fieldMapping.fieldName }}']);
         }
 {% endfor %}
     }
@@ -27,7 +27,7 @@
     {
         return array(
 {% for fieldMapping in metadata.fieldMappings %}
-            '{{ fieldMapping.fieldName }}' => $this->get{{ fieldMapping.fieldName|ucfirst }}(),
+            '{{ fieldMapping.fieldName }}' => $this->get{{ fieldMapping.fieldName|classify }}(),
 {% endfor %}
         );
     }
